@@ -6,7 +6,6 @@ import java.io.BufferedOutputStream;
  
 public class Client extends Function {
     private String address = "140.112.18.198";
-    private int port = 8765;
     private Socket client;
     
     public Client() {

@@ -1,8 +1,9 @@
 package TaipeiHot.JazzChat;
 
+import java.io.BufferedInputStream;
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.io.*;
 
 public class Server extends Function {
  
@@ -12,7 +13,7 @@ public class Server extends Function {
  
     public Server() {
         try {
-            server = new ServerSocket(ServerPort);
+            server = new ServerSocket(port);
  
         } catch (java.io.IOException e) {
             System.out.println("Socket啟動有問題 !");
