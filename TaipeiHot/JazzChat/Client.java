@@ -5,31 +5,38 @@ import java.net.Socket;
 import java.io.BufferedOutputStream;
  
 public class Client extends Function {
-    private String address = "140.112.18.198";// ³s½uªºip
-    private int port = 8765;// ³s½uªºport
- 
+    private String address = "140.112.18.198";
+    private int port = 8765;
+    private Socket client;
+    
     public Client() {
         client = new Socket();
         InetSocketAddress isa = new InetSocketAddress(this.address, this.port);
         try {
             client.connect(isa, 10000);
-            BufferedOutputStream out = new BufferedOutputStream(client
-                    .getOutputStream());
-            // °e¥X¦r¦ê
-            out.write("Send From Client ".getBytes());
-            out.flush();
-            out.close();
-            out = null;
+            for (int i = 0; i < 100; ++i)
+                sendMessageToServer("æ´¨");
             client.close();
-            client = null;
- 
         } catch (java.io.IOException e) {
-            System.out.println("Socket³s½u¦³°ÝÃD !");
+            System.out.println("GG!");
             System.out.println("IOException :" + e.toString());
         }
     }
  
     public static void main(String args[]) {
         new Client();
+    }
+
+    public boolean sendMessageToServer(final String msg) {
+        try {
+            BufferedOutputStream out = new BufferedOutputStream(client
+                .getOutputStream());
+            System.out.println(msg);
+            out.write(msg.getBytes());
+            out.flush();
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 }
