@@ -2,7 +2,7 @@ package TaipeiHot.JazzChat;
 
 import java.net.ServerSocket;
 import java.net.Socket;
-
+import java.io.*;
 
 public class Server extends Function {
  
@@ -15,43 +15,43 @@ public class Server extends Function {
             server = new ServerSocket(ServerPort);
  
         } catch (java.io.IOException e) {
-            System.out.println("Socket±Ò°Ê¦³°ÝÃD !");
+            System.out.println("Socketå•Ÿå‹•æœ‰å•é¡Œ !");
             System.out.println("IOException :" + e.toString());
         }
     }
  
     public void run() {
         Socket socket;
-        java.io.BufferedInputStream in;
+        BufferedInputStream in;
  
-        System.out.println("¦øªA¾¹¤w±Ò°Ê !");
+        System.out.println("ä¼ºæœå™¨å·²å•Ÿå‹•!");
         while (!OutServer) {
             socket = null;
             try {
                 synchronized (server) {
                     socket = server.accept();
                 }
-                System.out.println("¨ú±o³s½u : InetAddress = "
+                System.out.println("å–å¾—é€£ç·š: InetAddress = "
                         + socket.getInetAddress());
-                // TimeOut®É¶¡
+                // TimeOutæ™‚é–“
                 socket.setSoTimeout(15000);
  
                 in = new java.io.BufferedInputStream(socket.getInputStream());
                 byte[] b = new byte[1024];
                 String data = "";
                 int length;
-                while ((length = in.read(b)) > 0)// <=0ªº¸Ü´N¬Oµ²§ô¤F
+                while ((length = in.read(b)) > 0)// <=0çš„è©±å°±æ˜¯çµæŸäº†
                 {
                     data += new String(b, 0, length);
                 }
  
-                System.out.println("§Ú¨ú±oªº­È:" + data);
+                System.out.println("æˆ‘å–å¾—çš„å€¼:" + data);
                 in.close();
                 in = null;
                 socket.close();
  
-            } catch (java.io.IOException e) {
-                System.out.println("Socket³s½u¦³°ÝÃD !");
+            } catch (IOException e) {
+                System.out.println("Socketé€£ç·šæœ‰å•é¡Œ !");
                 System.out.println("IOException :" + e.toString());
             }
  
