@@ -1,20 +1,22 @@
-package TaipeiHot.JazzChat;
+package TaipeiHot.JazzChat.Client;
 
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.io.BufferedOutputStream;
+
+import TaipeiHot.JazzChat.Parameter;
  
-public class Client extends Function {
+public class Client {
     private String address = "140.112.18.198";
     private Socket client;
     
     public Client() {
         client = new Socket();
-        InetSocketAddress isa = new InetSocketAddress(this.address, this.port);
+        InetSocketAddress isa = new InetSocketAddress(this.address, Parameter.port);
         try {
             client.connect(isa, 10000);
             for (int i = 0; i < 100; ++i)
-                sendMessageToServer("洨");
+                sendMessageToServer(" "+'\0');
             client.close();
         } catch (java.io.IOException e) {
             System.out.println("GG!");
