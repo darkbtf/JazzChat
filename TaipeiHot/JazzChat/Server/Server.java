@@ -10,12 +10,12 @@ import java.util.TreeSet;
 import TaipeiHot.JazzChat.Parameter;
 
 public class Server {
-    static public Set<Integer> ClientSet;
-    static public ArrayList<Account> UserArray ;
+    static public Set<Integer> clientSet;
+    static public ArrayList<Account> userArray ;
     public Server() {
-    	ClientSet= new TreeSet<Integer>();// TODO read from SQL
-    	UserArray = new ArrayList<Account>();
-    	UserArray.add(new Account());
+    	clientSet= new TreeSet<Integer>();// TODO read from SQL
+    	userArray = new ArrayList<Account>();
+    	userArray.add(new Account());
     }
     public static void main(String args[]) {
     	Server server = new Server();
@@ -46,10 +46,10 @@ public class Server {
 	                }
 	                System.out.println("取得連線: InetAddress = "
 	                        + socket.getInetAddress());
-	                Account NewAccount=new Account(socket);
-	                Server.ClientSet.add(NewAccount.id);
-	                String first_msg = NewAccount.getMessage();
-	                System.out.println(first_msg);
+	                Account newAccount=new Account(socket);
+	                Server.clientSet.add(newAccount.id);
+	                newAccount.start();
+	                userArray.add(newAccount);
 	            } catch (IOException e) {
 	                System.out.println("Socket連線有問題 !");
 	                System.out.println("IOException :" + e.toString());
