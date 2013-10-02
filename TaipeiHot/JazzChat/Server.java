@@ -4,13 +4,31 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Queue;
+import java.util.LinkedList;
+import java.util.Set;
 
+public class User {
+	private int id;
+	public String email, nickname;
+	private String encrypted_password;
+	public User(){}
+	public User(int _id, String E,String P,String N="ekg2=1"){
+		id=_id;
+		if(N == "ekg2=1")N = E;
+		email = E;
+		encrypted_password = P;
+		nickname = N;
+	}
+	public void SetNickname(String N){
+		nickname = N;
+	}
+}
 public class Server extends Function {
  
     private boolean OutServer = false;
     protected ServerSocket server;
-    
- 
+	private Set<User> ClientSet;
     public Server() {
         try {
             server = new ServerSocket(port);
@@ -19,6 +37,7 @@ public class Server extends Function {
             System.out.println("Socket啟動有問題 !");
             System.out.println("IOException :" + e.toString());
         }
+		ClientSet = new TreeSet<User>();
     }
  
     public void run() {
