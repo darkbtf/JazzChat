@@ -4,16 +4,16 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.Map;
+import java.util.TreeMap;
 
 import TaipeiHot.JazzChat.Parameter;
 
 public class Server {
-    static public Set<Integer> clientSet;
+    static public Map<String, Integer> clientMap;
     static public ArrayList<Account> userArray ;
     public Server() {
-    	clientSet= new TreeSet<Integer>();// TODO read from SQL
+    	clientMap= new TreeMap<String, Integer>();// TODO read from SQL
     	userArray = new ArrayList<Account>();
     	userArray.add(new Account());
     }
@@ -28,10 +28,8 @@ public class Server {
 	    public SocketThread() {
 	        try {
 	            server = new ServerSocket(Parameter.port);
-	 
 	        } catch (java.io.IOException e) {
 	            System.out.println("Socket啟動有問題 !");
-	            System.out.println("IOException :" + e.toString());
 	        }
 	    }
 	 
@@ -46,13 +44,9 @@ public class Server {
 	                }
 	                System.out.println("取得連線: InetAddress = "
 	                        + socket.getInetAddress());
-	                Account newAccount=new Account(socket);
-	                Server.clientSet.add(newAccount.id);
-	                newAccount.start();
-	                userArray.add(newAccount);
+	                new Account(socket);
 	            } catch (IOException e) {
 	                System.out.println("Socket連線有問題 !");
-	                System.out.println("IOException :" + e.toString());
 	            }
 	        }
 	    }
