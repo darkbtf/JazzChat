@@ -22,8 +22,8 @@ public class AccountRegister extends ServerCommand {
 		account.nickname = account.email;
 		account.status = "How are you today?";
 		Server.clientMap.put(account.email, account.id);
-        Server.userArray.add(account);
-        if(Account.TotalID+1 != Server.userArray.size())
+        Server.accountArray.add(account);
+        if(Account.TotalID+1 != Server.accountArray.size())
         	Util.errorReport("Total id and array size not match");
         System.out.println("Register success! Become User "+account.id);
         account.sendMessage(("Register success! Become User "+account.id).getBytes());

@@ -15,11 +15,16 @@ public class ServerCommandManager {
 		account=a;
 		cmdMap.put("register", new AccountRegister(account));
 		cmdMap.put("login", new AccountLogin(account));
+		cmdMap.put("newRoom", new CreateRoom(account));
+		cmdMap.put("send_to_room", new SendToRoom(account));
 	}
 
 	public Boolean parseCmd(String cmd) {
 		ServerCommand cmdKind = cmdMap.get(cmd); 
-		if(cmdKind == null)return Util.errorReport("Undefined Command"+cmd);
+		if(cmdKind == null){
+			account.sendMessage(cmd.getBytes());
+			return Util.errorReport("Undefined Command: "+cmd);
+		}
 		return cmdMap.get(cmd).exec();
 	}
 }

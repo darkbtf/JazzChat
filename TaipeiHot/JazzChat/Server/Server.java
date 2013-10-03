@@ -11,11 +11,14 @@ import TaipeiHot.JazzChat.Parameter;
 
 public class Server {
     static public Map<String, Integer> clientMap;
-    static public ArrayList<Account> userArray ;
+    static public ArrayList<Account> accountArray ;
+    static public ArrayList<Room> roomList; 
     public Server() {
     	clientMap= new HashMap<String, Integer>();// TODO read from SQL
-    	userArray = new ArrayList<Account>();
-    	userArray.add(new Account());
+    	roomList = new ArrayList<Room>();
+    	roomList.add(new Room());
+    	accountArray = new ArrayList<Account>();
+    	accountArray.add(new Account());
     }
     public static void main(String args[]) {
     	Server server = new Server();

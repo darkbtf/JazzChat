@@ -19,8 +19,8 @@ public class Account extends Thread{
 	public int id;
 	public String email, nickname,status;
 	public String password;
-	protected ArrayList<User> Friends = new ArrayList<User>();
-	
+	protected ArrayList<User> friends = new ArrayList<User>();
+	public ArrayList<Room> roomList = new ArrayList<Room>();
 	//Communicate
 	public Socket socket;
 	private Deque<Byte> bufferInput = new LinkedList<Byte>();
@@ -58,7 +58,7 @@ public class Account extends Thread{
 						for(int i=0;i<length;i++)
 							bufferInput.add(new Byte(b[i]));
 						try {
-							Thread.sleep(500);
+							Thread.sleep(50);
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}
@@ -75,14 +75,8 @@ public class Account extends Thread{
 				while(!trylogin());
 				connecting=true;
 				while(connecting){
-		        	String msg = getMessage();
-		        	if(msg != "")
-		        		System.out.print(msg);
-		        	try {
-						Thread.sleep(500);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
+					String cmd=getMessage();
+					cmdMgr.parseCmd(cmd);
 				}
 			}
 		});
@@ -94,7 +88,7 @@ public class Account extends Thread{
 		while(messages.isEmpty()){
 			while(!Util.parseByte(bufferInput, messages)){
 				try {
-					Thread.sleep(1000);
+					Thread.sleep(50);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -109,11 +103,11 @@ public class Account extends Thread{
 	
 	public void clone(Account tmp){ // copy all data except socket
 		this.nickname = tmp.nickname;
-		this.Friends  = tmp.Friends;
+		this.friends  = tmp.friends;
 		this.status   = tmp.status;
 		this.id       = tmp.id;
 	}
-	private Boolean trylogin(){// NOTICE: cmdMgr can only run one command in one time
+	private Boolean trylogin(){// NOTICE: cmdMgr's read function can only run one command in one time
 		String cmd=getMessage();
 		return cmdMgr.parseCmd(cmd);
 	}
@@ -124,7 +118,7 @@ public class Account extends Thread{
 			out.write(byteStream);
 			out.flush();
 		} catch (IOException e) {
-			return false;
+			return Util.errorReport("IOException in Account "+id+" sendMessage");
 		}
 		return true;
 	}
