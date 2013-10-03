@@ -5,7 +5,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.TreeMap;
+import java.util.HashMap;
 
 import TaipeiHot.JazzChat.Parameter;
 
@@ -13,7 +13,7 @@ public class Server {
     static public Map<String, Integer> clientMap;
     static public ArrayList<Account> userArray ;
     public Server() {
-    	clientMap= new TreeMap<String, Integer>();// TODO read from SQL
+    	clientMap= new HashMap<String, Integer>();// TODO read from SQL
     	userArray = new ArrayList<Account>();
     	userArray.add(new Account());
     }

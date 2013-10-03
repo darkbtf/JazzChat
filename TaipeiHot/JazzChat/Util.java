@@ -3,8 +3,12 @@ package TaipeiHot.JazzChat;
 import java.util.Deque;
 import java.util.Queue;
 
-public class Function {
+public class Util {
 
+	public static Boolean errorReport(String msg){
+		System.out.println(msg);
+		return false;
+	}
 	public static byte[] intToByteArray(int value) {
 		return new byte[] { (byte) (value >>> 24), (byte) (value >>> 16),
 				(byte) (value >>> 8), (byte) value };

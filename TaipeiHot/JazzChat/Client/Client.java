@@ -13,7 +13,7 @@ import java.util.Deque;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import TaipeiHot.JazzChat.Function;
+import TaipeiHot.JazzChat.Util;
 import TaipeiHot.JazzChat.Parameter;
 import TaipeiHot.JazzChat.Command.CommandManager;
 
@@ -67,7 +67,7 @@ public class Client {
 			@Override
 			public void run() {
 				while (true) {
-					while (Function.parseByte(bufferInput, messages)) {
+					while (Util.parseByte(bufferInput, messages)) {
 
 					}
 					try {
@@ -87,7 +87,7 @@ public class Client {
 		while (true) {
 			try {
 				byte[] cmdString = buf.readLine().getBytes();
-				byte[] length = Function.intToByteArray(cmdString.length);
+				byte[] length = Util.intToByteArray(cmdString.length);
 				cmdMgr.parseCmd(length);
 				cmdMgr.parseCmd(cmdString);
 			} catch (Exception e) {
