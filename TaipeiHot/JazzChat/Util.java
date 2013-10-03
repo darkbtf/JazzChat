@@ -25,7 +25,7 @@ public class Util {
 		if(bufferInput.size() < length){
 			for(int i=Parameter.bytesForLength-1;i>=0;i--)
 				bufferInput.addFirst(tmp[i]);
-			return false;
+			return Util.errorReport("Byte not enough");
 		}
 		String data = "";
 		byte[] b = new byte[length];

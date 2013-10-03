@@ -22,10 +22,16 @@ public class CreateRoom extends ServerCommand {
 				int id = Integer.parseInt(account.getMessage());
 				tmpList.add(Server.accountArray.get(id));
 			}
-			Room r = new Room(tmpList);
-			Server.roomList.add(r);
-			account.sendMessage("newRoom".getBytes());
-			account.sendMessage(Integer.toString(r.id).getBytes());
+			Room r = null;
+			if(tmpList.size()==2)
+				for(Room tmp : account.roomMap.values())
+					if(tmp.accountBelong.equals(tmpList)){
+						r=tmp;
+						break;
+					}
+			if(r==null)r = new Room(tmpList);
+			for(Account a : r.accountBelong)
+				a.sendMessage(("Room "+r.id).getBytes());
 			return true;
 		}catch (NumberFormatException e){
 			return Util.errorReport("Wrong Format parameter in CreateRoom");

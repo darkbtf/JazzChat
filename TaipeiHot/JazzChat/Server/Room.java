@@ -11,8 +11,10 @@ public class Room {
 		id = ++Room.totalID;
 		accountBelong.addAll(accounts);
 		System.out.println("new Room "+id+", have accounts:");
-		for(Account a : accountBelong)
+		for(Account a : accountBelong){
 			System.out.print(a.email + " ");
+			a.roomMap.put(id, this);
+		}
 		System.out.println("");
 	}
 }

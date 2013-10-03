@@ -14,9 +14,8 @@ public class AccountRegister extends ServerCommand {
 		account.email = account.getMessage();
 		account.password = account.getMessage();
 		if(Server.clientMap.containsKey(account.email)){
-			System.out.println("Duplicate email");
 			account.sendMessage(("Duplicate email").getBytes());
-			return false;
+			return Util.errorReport("Duplicate email");
 		}
 		account.id = ++Account.TotalID;
 		account.nickname = account.email;

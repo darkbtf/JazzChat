@@ -3,7 +3,6 @@ package TaipeiHot.JazzChat.ServerCommand;
 import TaipeiHot.JazzChat.Util;
 import TaipeiHot.JazzChat.Server.Account;
 import TaipeiHot.JazzChat.Server.Room;
-import TaipeiHot.JazzChat.Server.Server;
 
 public class SendToRoom extends ServerCommand {
 
@@ -14,7 +13,8 @@ public class SendToRoom extends ServerCommand {
 	public Boolean exec() {
 		try{
 			int roomID = Integer.parseInt(account.getMessage());
-			Room r = Server.roomList.get(roomID);
+			Room r = account.roomMap.get(new Integer(roomID));
+			if(r == null)return Util.errorReport("Room id "+roomID+" not found");
 			String msg = account.getMessage();
 			for(Account a : r.accountBelong)
 				a.sendMessage(msg.getBytes());

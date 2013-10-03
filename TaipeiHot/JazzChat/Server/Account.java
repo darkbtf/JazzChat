@@ -6,11 +6,13 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Deque;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Queue;
 
-import TaipeiHot.JazzChat.Util;
 import TaipeiHot.JazzChat.User;
+import TaipeiHot.JazzChat.Util;
 import TaipeiHot.JazzChat.ServerCommand.ServerCommandManager;
 
 public class Account extends Thread{
@@ -20,7 +22,7 @@ public class Account extends Thread{
 	public String email, nickname,status;
 	public String password;
 	protected ArrayList<User> friends = new ArrayList<User>();
-	public ArrayList<Room> roomList = new ArrayList<Room>();
+	public Map<Integer, Room> roomMap = new HashMap<Integer, Room>();
 	//Communicate
 	public Socket socket;
 	private Deque<Byte> bufferInput = new LinkedList<Byte>();
@@ -29,7 +31,7 @@ public class Account extends Thread{
 	private OutputStream out = null;
 	Thread getMessageToBuffer, startThread;
 	private Boolean connecting;
-	private ServerCommandManager cmdMgr = new ServerCommandManager(this);
+	private ServerCommandManager cmdMgr = null;
 	
 	public Account(){}
 	public Account(Socket _s){
@@ -41,6 +43,7 @@ public class Account extends Thread{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		cmdMgr = new ServerCommandManager(this);
 		openInputThread();
 	}
 	public void SetNickname(String N){
@@ -106,6 +109,8 @@ public class Account extends Thread{
 		this.friends  = tmp.friends;
 		this.status   = tmp.status;
 		this.id       = tmp.id;
+		this.password = tmp.password;
+		this.roomMap  = tmp.roomMap;
 	}
 	private Boolean trylogin(){// NOTICE: cmdMgr's read function can only run one command in one time
 		String cmd=getMessage();
