@@ -14,7 +14,7 @@ public class AccountLogin extends ServerCommand {
 		account.password = account.getMessage();
 		if(Server.clientMap.containsKey(account.email)){
 			System.out.println("get index in map = "+Server.clientMap.get(account.email));
-			Account tmp = Server.userArray.get(Server.clientMap.get(account.email));
+			Account tmp = Server.accountArray.get(Server.clientMap.get(account.email));
 			if(account.password.equals(tmp.password)){
 				account.clone(tmp);
 				System.out.println("login success, become User "+account.id);
