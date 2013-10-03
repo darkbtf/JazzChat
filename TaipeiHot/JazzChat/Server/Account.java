@@ -1,6 +1,8 @@
 package TaipeiHot.JazzChat.Server;
 import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Deque;
@@ -22,9 +24,11 @@ public class Account extends Thread{
 	public Socket socket;
 	private Deque<Byte> BufferInput = new LinkedList<Byte>();
 	private Queue<String> Messages = new LinkedList<String>();
-	BufferedInputStream in;
+	private BufferedInputStream in = null;
+	private OutputStream out = null;
 	Thread GetMessageToBuffer, startThread;
 	
+	//TODO add a bool for connecting
 	
 	public Account(){}
 	public Account(Socket _s){
@@ -32,6 +36,7 @@ public class Account extends Thread{
 		//socket.setSoTimeout(15000);
 		try {
 			in = new BufferedInputStream(socket.getInputStream());
+			out = new BufferedOutputStream(socket.getOutputStream());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -132,6 +137,10 @@ public class Account extends Thread{
 		if(cmd.equals("register")){
 			email = getMessage();
 			password = getMessage();
+			if(Server.clientMap.containsKey(email)){
+				System.out.println("Duplicate email");
+				return false;
+			}
 			id = ++Account.TotalID;
 			nickname = email;
 			status = "How are you today?";
@@ -140,6 +149,7 @@ public class Account extends Thread{
 	        if(Account.TotalID+1 != Server.userArray.size())
 	        	System.out.println("Total id and array size not match");
 	        System.out.println("Register success! Become User "+id);
+	        sendMessage(("Register success! Become User "+id).getBytes());
 	        return true;
 		}
 		else if(cmd.equals("login")){
@@ -151,22 +161,44 @@ public class Account extends Thread{
 				if(password.equals(tmp.password)){
 					clone(tmp);
 					System.out.println("login success, become User "+this.id);
+					sendMessage(("login success, become User "+this.id).getBytes());
 					//TODO Send success message
 					return true;
 				}
 				else{
 					System.out.println("login fail, wrong password");
+					sendMessage("login fail, wrong password".getBytes());
 					//TODO send fail message
 					return false;
 				}
 		    }
 			else{
 				System.out.println("login fail, wrong email");
+				sendMessage("login fail, wrong email".getBytes());
 				//TODO send fail message
 				return false;
 			}
 		}
-		else System.out.println("In login, what are you talking QQ");
+		else {
+			System.out.println("In login, what are you talking QQ");
+			sendMessage("In login, what are you talking QQ".getBytes());
+			//TODO send fail message
+		}
 		return false;
+	}
+	public Boolean sendMessage(byte[] byteStream){
+		byte[] length = intToByteArray(byteStream.length);
+		try {
+			out.write(length);
+			out.write(byteStream);
+			out.flush();
+		} catch (IOException e) {
+			return false;
+		}
+		return true;
+	}
+	private static byte[] intToByteArray(int value) {
+		return new byte[] { (byte) (value >>> 24), (byte) (value >>> 16),
+				(byte) (value >>> 8), (byte) value };
 	}
 }
