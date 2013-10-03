@@ -9,7 +9,7 @@ import TaipeiHot.JazzChat.Util;
 import TaipeiHot.JazzChat.Server.Account;
 
 public class ServerCommandManager {
-	static private Map<String, ServerCommand> cmdMap = new HashMap<String, ServerCommand>();
+	private Map<String, ServerCommand> cmdMap = new HashMap<String, ServerCommand>();
 	private Account account;
 	public ServerCommandManager(Account a) {
 		account=a;
@@ -25,6 +25,6 @@ public class ServerCommandManager {
 			account.sendMessage(cmd.getBytes());
 			return Util.errorReport("Undefined Command: "+cmd);
 		}
-		return cmdMap.get(cmd).exec();
+		return cmdKind.exec();
 	}
 }

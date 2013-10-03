@@ -12,17 +12,17 @@ import TaipeiHot.JazzChat.Parameter;
 public class Server {
     static public Map<String, Integer> clientMap;
     static public ArrayList<Account> accountArray ;
-    static public ArrayList<Room> roomList; 
+    //static public Map<ArrayList, Room> roomMap; 
     public Server() {
     	clientMap= new HashMap<String, Integer>();// TODO read from SQL
-    	roomList = new ArrayList<Room>();
-    	roomList.add(new Room());
+    	//roomMap = new HashMap<Integer, Room>();
     	accountArray = new ArrayList<Account>();
     	accountArray.add(new Account());
     }
     public static void main(String args[]) {
     	Server server = new Server();
     	(new SocketThread()).start();
+    	server.equals(new Integer(123)); // to remove unused warning = =
     }
 
 	static class SocketThread extends Thread{
@@ -37,10 +37,9 @@ public class Server {
 	    }
 	 
 	    public void run() {
-	        Socket socket;
 	        System.out.println("伺服器已啟動!");
 	        while (true) {
-	        	socket = null;
+	        	Socket socket = null;
 	            try {
 	                synchronized (server) {
 	                	socket = server.accept();
