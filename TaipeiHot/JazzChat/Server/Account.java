@@ -25,6 +25,7 @@ public class Account extends Thread{
 	BufferedInputStream in;
 	Thread GetMessageToBuffer, startThread;
 	
+	//TODO add a bool for connecting
 	
 	public Account(){}
 	public Account(Socket _s){
@@ -132,6 +133,10 @@ public class Account extends Thread{
 		if(cmd.equals("register")){
 			email = getMessage();
 			password = getMessage();
+			if(Server.clientMap.containsKey(email)){
+				System.out.println("Duplicate email");
+				return false;
+			}
 			id = ++Account.TotalID;
 			nickname = email;
 			status = "How are you today?";
