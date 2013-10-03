@@ -9,7 +9,7 @@ import java.util.Deque;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import TaipeiHot.JazzChat.Parameter;
+import TaipeiHot.JazzChat.Function;
 import TaipeiHot.JazzChat.User;
 
 public class Account extends Thread{
@@ -22,13 +22,12 @@ public class Account extends Thread{
 	
 	//Communicate
 	public Socket socket;
-	private Deque<Byte> BufferInput = new LinkedList<Byte>();
-	private Queue<String> Messages = new LinkedList<String>();
+	private Deque<Byte> bufferInput = new LinkedList<Byte>();
+	private Queue<String> messages = new LinkedList<String>();
 	private BufferedInputStream in = null;
 	private OutputStream out = null;
-	Thread GetMessageToBuffer, startThread;
-	
-	//TODO add a bool for connecting
+	Thread getMessageToBuffer, startThread;
+	private Boolean connecting;
 	
 	public Account(){}
 	public Account(Socket _s){
@@ -45,31 +44,10 @@ public class Account extends Thread{
 	public void SetNickname(String N){
 		nickname = N;
 	}
-	private Boolean ParseByte(){
-		if(BufferInput.size() < Parameter.bytesForLength)return false;
-		Byte[] tmp=new Byte[Parameter.bytesForLength];
-		int length=0;
-		for(int i=0;i<Parameter.bytesForLength;i++){
-			tmp[i] = BufferInput.pollFirst();
-			length = (length << 1) + tmp[i].intValue(); 
-		}
-		if(BufferInput.size() < length){
-			for(int i=Parameter.bytesForLength-1;i>=0;i--)
-				BufferInput.addFirst(tmp[i]);
-			return false;
-		}
-		String data = "";
-		byte[] b = new byte[length];
-		for(int i=0;i<length;i++)
-			b[i]=BufferInput.pollFirst();
-        data += new String(b, 0, length);
-        System.out.println(data);
-        Messages.add(data);
-        return true;
-	}
+	
 	private void openInputThread(){
 		System.out.println("new Thread");
-		GetMessageToBuffer=new Thread(new Runnable(){
+		getMessageToBuffer=new Thread(new Runnable(){
 			@Override
 			public void run() {
 		        byte[] b = new byte[1024];
@@ -77,7 +55,7 @@ public class Account extends Thread{
 				try{
 					while ((length = in.read(b)) > 0){
 						for(int i=0;i<length;i++)
-							BufferInput.add(new Byte(b[i]));
+							bufferInput.add(new Byte(b[i]));
 						try {
 							Thread.sleep(500);
 						} catch (InterruptedException e) {
@@ -85,6 +63,7 @@ public class Account extends Thread{
 						}
 			        }
 				}catch(IOException e){
+					connecting=false;
 					System.out.println("getMessage Error");
 				}
 			}
@@ -93,7 +72,8 @@ public class Account extends Thread{
 			@Override
 			public void run(){
 				while(!trylogin());
-				while(true){
+				connecting=true;
+				while(connecting){
 		        	String msg = getMessage();
 		        	if(msg != "")
 		        		System.out.print(msg);
@@ -105,13 +85,13 @@ public class Account extends Thread{
 				}
 			}
 		});
-		GetMessageToBuffer.start();
+		getMessageToBuffer.start();
 		startThread.start();
 	}
 	
 	public String getMessage(){
-		while(Messages.isEmpty()){
-			while(!ParseByte()){
+		while(messages.isEmpty()){
+			while(!Function.parseByte(bufferInput, messages)){
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
@@ -119,7 +99,7 @@ public class Account extends Thread{
 				}
 			}
 		}
-		return Messages.poll();
+		return messages.poll();
 	}
 	
 	public void run(){
@@ -139,6 +119,7 @@ public class Account extends Thread{
 			password = getMessage();
 			if(Server.clientMap.containsKey(email)){
 				System.out.println("Duplicate email");
+				sendMessage(("Duplicate email").getBytes());
 				return false;
 			}
 			id = ++Account.TotalID;
@@ -187,7 +168,7 @@ public class Account extends Thread{
 		return false;
 	}
 	public Boolean sendMessage(byte[] byteStream){
-		byte[] length = intToByteArray(byteStream.length);
+		byte[] length = Function.intToByteArray(byteStream.length);
 		try {
 			out.write(length);
 			out.write(byteStream);
@@ -196,9 +177,5 @@ public class Account extends Thread{
 			return false;
 		}
 		return true;
-	}
-	private static byte[] intToByteArray(int value) {
-		return new byte[] { (byte) (value >>> 24), (byte) (value >>> 16),
-				(byte) (value >>> 8), (byte) value };
 	}
 }
