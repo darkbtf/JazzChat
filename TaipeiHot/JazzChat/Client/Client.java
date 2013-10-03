@@ -13,6 +13,7 @@ import java.util.Deque;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import TaipeiHot.JazzChat.Function;
 import TaipeiHot.JazzChat.Parameter;
 import TaipeiHot.JazzChat.Command.CommandManager;
 
@@ -66,7 +67,7 @@ public class Client {
 			@Override
 			public void run() {
 				while (true) {
-					while (parseByte()) {
+					while (Function.parseByte(bufferInput, messages)) {
 
 					}
 					try {
@@ -86,7 +87,7 @@ public class Client {
 		while (true) {
 			try {
 				byte[] cmdString = buf.readLine().getBytes();
-				byte[] length = intToByteArray(cmdString.length);
+				byte[] length = Function.intToByteArray(cmdString.length);
 				cmdMgr.parseCmd(length);
 				cmdMgr.parseCmd(cmdString);
 			} catch (Exception e) {
@@ -97,33 +98,5 @@ public class Client {
 	public static void sendCommandToServer(byte[] byteStream) throws Exception {
 		out.write(byteStream);
 		out.flush();
-	}
-
-	private static byte[] intToByteArray(int value) {
-		return new byte[] { (byte) (value >>> 24), (byte) (value >>> 16),
-				(byte) (value >>> 8), (byte) value };
-	}
-
-	private static Boolean parseByte() {
-		if (bufferInput.size() < Parameter.bytesForLength)
-			return false;
-		Byte[] tmp = new Byte[Parameter.bytesForLength];
-		int length = 0;
-		for (int i = 0; i < Parameter.bytesForLength; i++) {
-			tmp[i] = bufferInput.pollFirst();
-			length = (length << 1) + tmp[i].intValue();
-		}
-		if (bufferInput.size() < length) {
-			for (int i = Parameter.bytesForLength - 1; i >= 0; i--)
-				bufferInput.addFirst(tmp[i]);
-			return false;
-		}
-		String data = "";
-		byte[] b = new byte[length];
-		for (int i = 0; i < length; i++)
-			b[i] = bufferInput.pollFirst();
-		data += new String(b, 0, length);
-		messages.add(data);
-		return true;
 	}
 }
