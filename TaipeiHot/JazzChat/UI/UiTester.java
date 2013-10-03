@@ -18,6 +18,10 @@ public class UiTester {
         RoomWindow a=new RoomWindow();
         a.show(true);
         a.getMessege("hahaha");
+        MainWindow xx=new MainWindow();
+        xx.show();
+        String aaa="lalal";
+        
         while(true)
         {
             BufferedReader buffer=new BufferedReader(new InputStreamReader(System.in));
