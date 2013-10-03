@@ -9,15 +9,16 @@ import java.util.Deque;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import TaipeiHot.JazzChat.Function;
+import TaipeiHot.JazzChat.Util;
 import TaipeiHot.JazzChat.User;
+import TaipeiHot.JazzChat.ServerCommand.ServerCommandManager;
 
 public class Account extends Thread{
 	//User Data
 	static public int TotalID = 0;
 	public int id;
 	public String email, nickname,status;
-	protected String password;
+	public String password;
 	protected ArrayList<User> Friends = new ArrayList<User>();
 	
 	//Communicate
@@ -28,6 +29,7 @@ public class Account extends Thread{
 	private OutputStream out = null;
 	Thread getMessageToBuffer, startThread;
 	private Boolean connecting;
+	private ServerCommandManager cmdMgr = new ServerCommandManager(this);
 	
 	public Account(){}
 	public Account(Socket _s){
@@ -46,7 +48,6 @@ public class Account extends Thread{
 	}
 	
 	private void openInputThread(){
-		System.out.println("new Thread");
 		getMessageToBuffer=new Thread(new Runnable(){
 			@Override
 			public void run() {
@@ -91,7 +92,7 @@ public class Account extends Thread{
 	
 	public String getMessage(){
 		while(messages.isEmpty()){
-			while(!Function.parseByte(bufferInput, messages)){
+			while(!Util.parseByte(bufferInput, messages)){
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
@@ -106,69 +107,18 @@ public class Account extends Thread{
 		
 	}
 	
-	private void clone(Account tmp){ // copy all data except socket
+	public void clone(Account tmp){ // copy all data except socket
 		this.nickname = tmp.nickname;
 		this.Friends  = tmp.Friends;
 		this.status   = tmp.status;
 		this.id       = tmp.id;
 	}
-	private Boolean trylogin(){// TODO commandMgr
+	private Boolean trylogin(){// NOTICE: cmdMgr can only run one command in one time
 		String cmd=getMessage();
-		if(cmd.equals("register")){
-			email = getMessage();
-			password = getMessage();
-			if(Server.clientMap.containsKey(email)){
-				System.out.println("Duplicate email");
-				sendMessage(("Duplicate email").getBytes());
-				return false;
-			}
-			id = ++Account.TotalID;
-			nickname = email;
-			status = "How are you today?";
-			Server.clientMap.put(email, id);
-	        Server.userArray.add(this);
-	        if(Account.TotalID+1 != Server.userArray.size())
-	        	System.out.println("Total id and array size not match");
-	        System.out.println("Register success! Become User "+id);
-	        sendMessage(("Register success! Become User "+id).getBytes());
-	        return true;
-		}
-		else if(cmd.equals("login")){
-			email = getMessage();
-			password = getMessage();
-			if(Server.clientMap.containsKey(email)){
-				System.out.println("get index in map = "+Server.clientMap.get(email));
-				Account tmp = Server.userArray.get(Server.clientMap.get(email));
-				if(password.equals(tmp.password)){
-					clone(tmp);
-					System.out.println("login success, become User "+this.id);
-					sendMessage(("login success, become User "+this.id).getBytes());
-					//TODO Send success message
-					return true;
-				}
-				else{
-					System.out.println("login fail, wrong password");
-					sendMessage("login fail, wrong password".getBytes());
-					//TODO send fail message
-					return false;
-				}
-		    }
-			else{
-				System.out.println("login fail, wrong email");
-				sendMessage("login fail, wrong email".getBytes());
-				//TODO send fail message
-				return false;
-			}
-		}
-		else {
-			System.out.println("In login, what are you talking QQ");
-			sendMessage("In login, what are you talking QQ".getBytes());
-			//TODO send fail message
-		}
-		return false;
+		return cmdMgr.parseCmd(cmd);
 	}
 	public Boolean sendMessage(byte[] byteStream){
-		byte[] length = Function.intToByteArray(byteStream.length);
+		byte[] length = Util.intToByteArray(byteStream.length);
 		try {
 			out.write(length);
 			out.write(byteStream);
