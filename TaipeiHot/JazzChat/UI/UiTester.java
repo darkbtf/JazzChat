@@ -21,12 +21,11 @@ public class UiTester {
         MainWindow xx=new MainWindow();
         xx.show();
         String aaa="lalal";
-        
+        //xx.closeDialog();
         while(true)
         {
             BufferedReader buffer=new BufferedReader(new InputStreamReader(System.in));
             String line=buffer.readLine();
-            
             a.getMessege(line);
         }
         
