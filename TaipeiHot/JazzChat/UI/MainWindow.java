@@ -15,6 +15,17 @@ public class MainWindow extends javax.swing.JFrame {
      */
     public MainWindow() {
         initComponents();
+        try{
+            System.out.print("strat");
+            
+            LoginDialog b= new LoginDialog(this,true);
+            b.show(true);
+            //this.add(b);
+            System.out.print("done");
+        }catch(Exception e)
+        {
+            System.out.print("haha");
+        }
     }
 
     /**
