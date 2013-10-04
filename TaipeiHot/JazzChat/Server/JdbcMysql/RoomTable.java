@@ -7,49 +7,42 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import TaipeiHot.JazzChat.Util;
-import TaipeiHot.JazzChat.Server.Account;
+import TaipeiHot.JazzChat.Server.Room;
 
-public class AccountTable extends Table{
-	/*private String createdbSQL = "CREATE TABLE User (" + 
-    "    id     INTEGER " + 
-    "  , name    VARCHAR(20) " + 
-    "  , passwd  VARCHAR(20))";
-	private String insertdbSQL = "insert into User(id,name,passwd) " + 
-      "select ifNULL(max(id),0)+1,?,? FROM User"; */
-	//private String selectSQL = "select * from User ";
+public class RoomTable extends Table{
 	static private String tableName = "";
 	static private String dropdbSQL, createdbSQL, insertdbSQL, selectSQL;
 	static private ArrayList<ColumnElement> columns = new ArrayList<ColumnElement>();
 	static private Statement stat = null; 
 	static private ResultSet rs = null; 
 	static private PreparedStatement pst = null;
-	public AccountTable() {
+	public RoomTable() {
 		super();
-		tableName="account";
-		columns.add(new ColumnElement("email","VARCHAR(40)"));
-		columns.add(new ColumnElement("password","VARCHAR(20)"));
-		columns.add(new ColumnElement("nickname","VARCHAR(40)"));
-		columns.add(new ColumnElement("status","TINYTEXT"));
+		tableName="room";
+		columns.add(new ColumnElement("count","INTEGER"));
+		columns.add(new ColumnElement("user1_id","INTEGER"));
+		columns.add(new ColumnElement("user2_id","INTEGER"));
 		dropdbSQL = "DROP TABLE IF EXISTS "+tableName; 
 		dropTable(dropdbSQL);
 		try {
 			createTable(createdbSQL, tableName, columns, stat);
 		} catch (SQLException e) {
+			Util.errorReport("creat fail");
 		}
-		insertdbSQL = makeInsertdbCmd( tableName, columns);
+		insertdbSQL = makeInsertdbCmd(tableName, columns);
+		Util.errorReport(insertdbSQL);
 		selectSQL = "select * from "+tableName+" ";
 	}
 	//新增資料 
-	static public void insert(Account a) { 
+	static public void insert(Room a) { 
 		try {
 			Util.errorReport(insertdbSQL);
 			pst = con.prepareStatement(insertdbSQL);
-			if(a.id==0)a.id=++Account.totalID;
+			if(a.id==0)a.id=++Room.totalID;
 			pst.setInt(1, a.id);
-			pst.setString(2, a.email); 
-			pst.setString(3, a.password); 
-			pst.setString(4, a.nickname); 
-			pst.setString(5, a.status); 
+			pst.setInt(2, a.count); 
+			pst.setInt(3, a.user1_id);
+			pst.setInt(4, a.user2_id);
 			pst.executeUpdate(); 
 		} 
 		catch(SQLException e) { 
@@ -78,8 +71,8 @@ public class AccountTable extends Table{
 			Util.errorReport("Close Exception :" + e.toString()); 
 		} 
 	} 
-	static public ArrayList<Account> All(){
-		ArrayList<Account> ret = new ArrayList<Account>();
+	static public ArrayList<Room> All(){
+		ArrayList<Room> ret = new ArrayList<Room>();
 		try { 
 			stat = con.createStatement(); 
 			rs = stat.executeQuery(selectSQL); 
@@ -95,8 +88,8 @@ public class AccountTable extends Table{
 		}
 		return ret; 
 	}
-	static public Account[] where(String format, String[]parameters){
-		ArrayList<Account> ret = new ArrayList<Account>();
+	static public Room[] where(String format, String[]parameters){
+		ArrayList<Room> ret = new ArrayList<Room>();
 		try { 
 			String cmd = new String(selectSQL);
 			cmd += "WHERE "+format;
@@ -107,7 +100,7 @@ public class AccountTable extends Table{
 			while(rs.next()) { 
 				ret.add(instance(rs));
 			} 
-			Account a[]=new Account[ret.size()];
+			Room a[]=new Room[ret.size()];
 			for(int i=0;i<ret.size();i++)
 				a[i]=ret.get(i);
 			return a;
@@ -118,9 +111,9 @@ public class AccountTable extends Table{
 		finally { 
 			Close(); 
 		}
-		return new Account[0]; 
+		return new Room[0]; 
 	}
-	static public Account find(int id){
+	static public Room find(int id){
 		try { 
 			stat = con.createStatement(); 
 			rs = stat.executeQuery(selectSQL+"where id="+id);
@@ -144,19 +137,18 @@ public class AccountTable extends Table{
 			} 
 		} 
 		catch(SQLException e){ 
-			Util.errorReport("Select Exception :" + e.toString()); 
+			Util.errorReport("SelectDB Exception :" + e.toString()); 
 		} 
 		finally { 
 			Close(); 
 		} 
 	}
-	static public Account instance(ResultSet rs){
+	static public Room instance(ResultSet rs){
 		try {
-			return new Account(rs.getInt("id"),
-					rs.getString("email"),
-					rs.getString("password"),
-					rs.getString("nickname"),
-					rs.getString("status"));
+			return new Room(rs.getInt("id"),
+					rs.getInt("count"),
+					rs.getInt("user1_id"),
+					rs.getInt("user2_id"));
 		} catch (SQLException e) {
 		}
 		return null;

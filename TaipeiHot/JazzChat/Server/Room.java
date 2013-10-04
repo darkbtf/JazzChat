@@ -1,20 +1,21 @@
 package TaipeiHot.JazzChat.Server;
 
-import java.util.ArrayList;
+import TaipeiHot.JazzChat.Server.JdbcMysql.ActiveRecord;
 
-public class Room {
-	public ArrayList<Integer> accountBelong = new ArrayList<Integer>();
+public class Room extends ActiveRecord{
+	//public ArrayList<Integer> accountBelong = new ArrayList<Integer>();
 	static public int totalID = 0;
-	public int id;
+	public int count = 0;
+	public int user1_id=0,user2_id=0; // QQ
 	public Room(){}
-	public Room(ArrayList<Integer> accounts){
-		id = ++Room.totalID;
-		accountBelong.addAll(accounts);
-		System.out.println("new Room "+id+", have accounts:");
-		for(Integer a : accountBelong){
-			System.out.print(Server.accountMap.get(a).email + " ");
-			Server.accountMap.get(a).roomMap.put(id, this);
-		}
-		System.out.println("");
+	public Room(int id,int count, int user1_id,int user2_id){
+		this.id = id;
+		this.user1_id = user1_id;
+		this.user2_id = user2_id;
+		this.count = 2;
+	}
+	
+	public Boolean have(int user_id){
+		return user_id == user1_id || user_id == user2_id;
 	}
 }

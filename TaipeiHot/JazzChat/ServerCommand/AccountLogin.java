@@ -3,7 +3,7 @@ package TaipeiHot.JazzChat.ServerCommand;
 
 import TaipeiHot.JazzChat.Server.Account;
 import TaipeiHot.JazzChat.Server.Server;
-import TaipeiHot.JazzChat.Server.JdbcMysql.ActiveRecord;
+import TaipeiHot.JazzChat.Server.JdbcMysql.AccountTable;
 
 public class AccountLogin extends ServerCommand {
 
@@ -14,9 +14,9 @@ public class AccountLogin extends ServerCommand {
 	public Boolean exec() {
 		account.email = account.getMessage();
 		account.password = account.getMessage();
-		ActiveRecord[] qry = Server.dbMgr.table("account").where("email = ?",new String[]{account.email});
+		Account[] qry = AccountTable.where("email = ?",new String[]{account.email});
 		if(qry.length!=0){
-			Account tmp = (Account)qry[0];
+			Account tmp = qry[0];
 			if(account.password.equals(tmp.password)){
 				account.clone(tmp);
 				Server.accountMap.put(account.id, account);

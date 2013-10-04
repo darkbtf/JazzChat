@@ -8,39 +8,24 @@ import java.util.Map;
 
 import TaipeiHot.JazzChat.Parameter;
 import TaipeiHot.JazzChat.Util;
-import TaipeiHot.JazzChat.Server.JdbcMysql.ActiveRecord;
 import TaipeiHot.JazzChat.Server.JdbcMysql.SqlManager;
 
 public class Server {
-    //static public Map<String, Integer> clientMap;
     static public Map<Integer, Account> accountMap ;
-    public static SqlManager dbMgr = new SqlManager(); 
-    //static public Map<ArrayList, Room> roomMap; 
+    //static public Map<Integer, Room> roomMap ;
+    static public SqlManager dbMgr = new SqlManager(); 
     public Server() {
     	accountMap = new HashMap<Integer, Account>();
-    	readUserData();
-    	//initClientMap();
+    	readDataFromSql();
     }
     public static void main(String args[]) {
     	Server server = new Server();
     	(new SocketThread()).start();
     	server.equals(new Integer(123)); // to remove unused warning = =
     }
-    
-    static private void readUserData(){
-    	try {
-    		for(ActiveRecord a:dbMgr.table("account").All()){
-    			accountMap.put(a.id,(Account)a);
-    			Account.TotalID = Math.max(Account.TotalID,a.id);
-    		}
-		}
-    	catch(Exception e){Util.errorReport("In read user data, Exception");}
+    static private void readDataFromSql(){
+    	
     }
-    /*private void initClientMap(){
-    	clientMap= new HashMap<String, Integer>();
-    	for(Account a:accountArray)
-    		clientMap.put(a.email, a.id);
-    }*/
 	static class SocketThread extends Thread{
 	    protected ServerSocket server;
 	    

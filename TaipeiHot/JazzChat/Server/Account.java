@@ -18,11 +18,11 @@ import TaipeiHot.JazzChat.ServerCommand.ServerCommandManager;
 
 public class Account extends ActiveRecord {
 	//User Data
-	static public int TotalID = 0;
+	static public int totalID = 0;
 	public String email, nickname,status;
 	public String password;
 	protected ArrayList<User> friends = new ArrayList<User>();
-	public Map<Integer, Room> roomMap = new HashMap<Integer, Room>();
+	//public Map<Integer, Room> roomMap = new HashMap<Integer, Room>();
 	//Communicate
 	public Socket socket;
 	private Deque<Byte> bufferInput = new LinkedList<Byte>();
@@ -52,7 +52,7 @@ public class Account extends ActiveRecord {
 		this.password = password;
 		this.nickname = nickname;
 		this.status = status;
-		this.roomMap = new HashMap<Integer, Room>(); // TODO database
+		//this.roomMap = new HashMap<Integer, Room>(); // TODO database
 		this.friends = new ArrayList<User>(); //TODO database
 	}
 	
@@ -116,7 +116,7 @@ public class Account extends ActiveRecord {
 		this.status   = tmp.status;
 		this.id       = tmp.id;
 		this.password = tmp.password;
-		this.roomMap  = tmp.roomMap;
+		//this.roomMap  = tmp.roomMap;
 	}
 	private Boolean trylogin(){// NOTICE: cmdMgr's read function can only run one command in one time
 		String cmd=getMessage();
