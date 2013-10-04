@@ -30,7 +30,7 @@ public class Account extends Thread{
 	private BufferedInputStream in = null;
 	private OutputStream out = null;
 	Thread getMessageToBuffer, startThread;
-	private Boolean connecting;
+	public Boolean connecting;
 	private ServerCommandManager cmdMgr = null;
 	
 	public Account(){}
@@ -115,6 +115,7 @@ public class Account extends Thread{
 		tmp.out = this.out;
 		tmp.in = this.in;
 		tmp.cmdMgr = this.cmdMgr;
+		tmp.connecting = this.connecting;
 	}
 	private Boolean trylogin(){// NOTICE: cmdMgr's read function can only run one command in one time
 		String cmd=getMessage();

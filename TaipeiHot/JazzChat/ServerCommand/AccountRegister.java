@@ -11,6 +11,7 @@ public class AccountRegister extends ServerCommand {
 	}
 	@Override
 	public Boolean exec() {
+		//if(account.connecting)return false;
 		account.email = account.getMessage();
 		account.password = account.getMessage();
 		if(Server.clientMap.containsKey(account.email)){
