@@ -14,17 +14,26 @@ public class Server {
     static public ArrayList<Account> accountArray ;
     //static public Map<ArrayList, Room> roomMap; 
     public Server() {
-    	clientMap= new HashMap<String, Integer>();// TODO read from SQL
-    	//roomMap = new HashMap<Integer, Room>();
     	accountArray = new ArrayList<Account>();
     	accountArray.add(new Account());
+    	readUserData();
+    	initClientMap();
     }
     public static void main(String args[]) {
     	Server server = new Server();
     	(new SocketThread()).start();
     	server.equals(new Integer(123)); // to remove unused warning = =
     }
-
+    
+    private void readUserData(){// TODO read from SQL
+    	
+    }
+    
+    private void initClientMap(){
+    	clientMap= new HashMap<String, Integer>();
+    	for(Account a:accountArray)
+    		clientMap.put(a.email, a.id);
+    }
 	static class SocketThread extends Thread{
 	    protected ServerSocket server;
 	    
