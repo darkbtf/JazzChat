@@ -18,10 +18,12 @@ import java.util.Map;
 
 import TaipeiHot.JazzChat.Parameter;
 import TaipeiHot.JazzChat.Util;
+import TaipeiHot.JazzChat.Server.JdbcMysql.JdbcMysql;
 
 public class Server {
     static public Map<String, Integer> clientMap;
     static public ArrayList<Account> accountArray ;
+    static private JdbcMysql dbMgr = new JdbcMysql(); 
     //static public Map<ArrayList, Room> roomMap; 
     public Server() {
     	accountArray = new ArrayList<Account>();
