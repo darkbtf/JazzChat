@@ -13,12 +13,12 @@ import java.util.Queue;
 
 import TaipeiHot.JazzChat.User;
 import TaipeiHot.JazzChat.Util;
+import TaipeiHot.JazzChat.Server.JdbcMysql.ActiveRecord;
 import TaipeiHot.JazzChat.ServerCommand.ServerCommandManager;
 
-public class Account extends Thread{
+public class Account extends ActiveRecord {
 	//User Data
 	static public int TotalID = 0;
-	public int id;
 	public String email, nickname,status;
 	public String password;
 	protected ArrayList<User> friends = new ArrayList<User>();
@@ -36,7 +36,6 @@ public class Account extends Thread{
 	public Account(){}
 	public Account(Socket _s){
 		socket=_s;
-		//socket.setSoTimeout(15000);
 		try {
 			in = new BufferedInputStream(socket.getInputStream());
 			out = new BufferedOutputStream(socket.getOutputStream());
@@ -46,6 +45,17 @@ public class Account extends Thread{
 		cmdMgr = new ServerCommandManager(this);
 		openInputThread();
 	}
+	
+	public Account(int id,String email, String password,String nickname,String status){
+		this.id = id;
+		this.email = email;
+		this.password = password;
+		this.nickname = nickname;
+		this.status = status;
+		this.roomMap = new HashMap<Integer, Room>(); // TODO database
+		this.friends = new ArrayList<User>(); //TODO database
+	}
+	
 	public void SetNickname(String N){
 		nickname = N;
 	}
@@ -100,10 +110,6 @@ public class Account extends Thread{
 		return messages.poll();
 	}
 	
-	public void run(){
-		
-	}
-	
 	public void clone(Account tmp){ // copy data
 		this.nickname = tmp.nickname;
 		this.friends  = tmp.friends;
@@ -111,11 +117,6 @@ public class Account extends Thread{
 		this.id       = tmp.id;
 		this.password = tmp.password;
 		this.roomMap  = tmp.roomMap;
-		tmp.socket = this.socket;
-		tmp.out = this.out;
-		tmp.in = this.in;
-		tmp.cmdMgr = this.cmdMgr;
-		tmp.connecting = this.connecting;
 	}
 	private Boolean trylogin(){// NOTICE: cmdMgr's read function can only run one command in one time
 		String cmd=getMessage();

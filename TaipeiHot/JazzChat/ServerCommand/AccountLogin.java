@@ -1,7 +1,9 @@
 package TaipeiHot.JazzChat.ServerCommand;
 
+
 import TaipeiHot.JazzChat.Server.Account;
 import TaipeiHot.JazzChat.Server.Server;
+import TaipeiHot.JazzChat.Server.JdbcMysql.ActiveRecord;
 
 public class AccountLogin extends ServerCommand {
 
@@ -12,11 +14,12 @@ public class AccountLogin extends ServerCommand {
 	public Boolean exec() {
 		account.email = account.getMessage();
 		account.password = account.getMessage();
-		if(Server.clientMap.containsKey(account.email)){
-			System.out.println("get index in map = "+Server.clientMap.get(account.email));
-			Account tmp = Server.accountArray.get(Server.clientMap.get(account.email));
+		ActiveRecord[] qry = Server.dbMgr.table("account").where("email = ?",new String[]{account.email});
+		if(qry.length!=0){
+			Account tmp = (Account)qry[0];
 			if(account.password.equals(tmp.password)){
 				account.clone(tmp);
+				Server.accountMap.put(account.id, account);
 				System.out.println("login success, become User "+account.id);
 				account.sendMessage(("login success, become User "+account.id).getBytes());
 				//TODO Send success message

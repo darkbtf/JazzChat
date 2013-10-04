@@ -12,8 +12,8 @@ public class Room {
 		accountBelong.addAll(accounts);
 		System.out.println("new Room "+id+", have accounts:");
 		for(Integer a : accountBelong){
-			System.out.print(Server.accountArray.get(a).email + " ");
-			Server.accountArray.get(a).roomMap.put(id, this);
+			System.out.print(Server.accountMap.get(a).email + " ");
+			Server.accountMap.get(a).roomMap.put(id, this);
 		}
 		System.out.println("");
 	}

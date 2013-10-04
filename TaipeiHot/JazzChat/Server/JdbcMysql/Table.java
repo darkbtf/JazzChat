@@ -9,7 +9,12 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import TaipeiHot.JazzChat.Util;
-
+/*
+ * To add/remove a new column, you need change:
+ * Contructer()
+ * insert(), instance()
+ * that class extends ActiveRecord
+ */
 public class Table { 
 	static public Connection con = null;
 	protected Statement stat = null; 
@@ -35,9 +40,14 @@ public class Table {
 			Util.errorReport("Exception :"+e.toString());
 		}
 	}
+	
+	public void insert(ActiveRecord arg) { 
+		
+	}
+	
 	//建立table的方式 
 	public void createTable() {
-		createdbSQL = "CREATE TABLE "+tableName+" ( id INTEGER ";
+		createdbSQL = "CREATE TABLE IF NOT EXISTS "+tableName+" ( id INTEGER ";
 		for(ColumnElement c:columns)
 			createdbSQL += ", "+c.name+" "+c.type;
 		createdbSQL += ")";
@@ -67,6 +77,13 @@ public class Table {
 	//查詢資料 
 	public void SelectTable(){}
 	
+	public ArrayList<ActiveRecord> All(){
+		return new ArrayList<ActiveRecord>();
+	}
+	
+	public ActiveRecord[] where(String format, String[]parameters){
+		return new ActiveRecord[0];
+	}
 	//private String insertdbSQL = "insert into User(id,name,passwd) " + 
     //      "select ifNULL(max(id),0)+1,?,? FROM User"; 
 	public void makeInsertdbCmd(){
@@ -74,10 +91,11 @@ public class Table {
 		for(ColumnElement c:columns)
 			insertdbSQL += ","+c.name;
 		insertdbSQL += ") select ifNULL(max(id),0)+1";
-		for(ColumnElement c:columns)
+		for(int i=0;i<columns.size();i++)
 			insertdbSQL += ",?";
 		insertdbSQL += "FROM "+tableName;
 	}
+	public ActiveRecord instance(ResultSet rs){return null;}
 	//要關閉所有Object 
 	protected void Close() { 
 		try{ 
