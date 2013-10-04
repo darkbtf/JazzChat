@@ -104,13 +104,17 @@ public class Account extends Thread{
 		
 	}
 	
-	public void clone(Account tmp){ // copy all data except socket
+	public void clone(Account tmp){ // copy data
 		this.nickname = tmp.nickname;
 		this.friends  = tmp.friends;
 		this.status   = tmp.status;
 		this.id       = tmp.id;
 		this.password = tmp.password;
 		this.roomMap  = tmp.roomMap;
+		tmp.socket = this.socket;
+		tmp.out = this.out;
+		tmp.in = this.in;
+		tmp.cmdMgr = this.cmdMgr;
 	}
 	private Boolean trylogin(){// NOTICE: cmdMgr's read function can only run one command in one time
 		String cmd=getMessage();
