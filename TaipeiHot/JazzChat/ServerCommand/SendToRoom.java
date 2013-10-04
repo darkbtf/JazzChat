@@ -18,7 +18,7 @@ public class SendToRoom extends ServerCommand {
 			if(r == null)return Util.errorReport("Room id "+roomID+" not found");
 			String msg = account.getMessage();
 			for(Integer a : r.accountBelong)
-				Server.accountArray.get(a).sendMessage(msg.getBytes());
+				Server.accountMap.get(a).sendMessage(msg.getBytes());
 			return true;
 		}catch (NumberFormatException e){
 			return Util.errorReport("Wrong Format parameter in SendToRoom");

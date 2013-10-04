@@ -34,7 +34,7 @@ public class CreateRoom extends ServerCommand {
 				}
 			if(r==null)r = new Room(tmpList);
 			for(Integer a : r.accountBelong)
-				Server.accountArray.get(a).sendMessage(("Room "+r.id).getBytes());
+				Server.accountMap.get(a).sendMessage(("Room "+r.id).getBytes());
 			return true;
 		}catch (NumberFormatException e){
 			return Util.errorReport("Wrong Format parameter in CreateRoom");
