@@ -18,12 +18,13 @@ import java.util.Map;
 
 import TaipeiHot.JazzChat.Parameter;
 import TaipeiHot.JazzChat.Util;
-import TaipeiHot.JazzChat.Server.JdbcMysql.JdbcMysql;
+import TaipeiHot.JazzChat.Server.JdbcMysql.Table;
+import TaipeiHot.JazzChat.Server.JdbcMysql.UserTable;
 
 public class Server {
     static public Map<String, Integer> clientMap;
     static public ArrayList<Account> accountArray ;
-    static private JdbcMysql dbMgr = new JdbcMysql(); 
+    static private Table dbMgr = new Table(); 
     //static public Map<ArrayList, Room> roomMap; 
     public Server() {
     	accountArray = new ArrayList<Account>();
@@ -44,6 +45,7 @@ public class Server {
     
     static private void readUserData(){// TODO read from SQL
     	try {
+    		dbMgr = new UserTable();
     		DataInputStream in = new DataInputStream(new FileInputStream("userData.dat"));
     		BufferedReader br = new BufferedReader(new InputStreamReader(in));
     		int n= Integer.valueOf(br.readLine());
