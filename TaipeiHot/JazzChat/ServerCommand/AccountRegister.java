@@ -16,18 +16,20 @@ public class AccountRegister extends ServerCommand {
 		account.email = account.getMessage();
 		account.password = account.getMessage();
 		Account[] qry = AccountTable.where("email = ?",new String[]{account.email});
+		account.sendMessage(("register").getBytes());
 		if(qry.length!=0){
-			account.sendMessage(("Duplicate email").getBytes());
-			return Util.errorReport("Duplicate email");
+			account.sendMessage("failed".getBytes());
+			account.sendMessage("username".getBytes());
+			return Util.errorReport("Duplicate UserName");
 		}
 		account.id = 0;
 		account.nickname = account.email;
-		account.status = "How are you today?";
-		//Server.clientMap.put(account.email, account.id);
+		account.status = "I love Joy Wang ^^";
         Server.accountMap.put(account.id, account);
         AccountTable.insert(account);
-        System.out.println("Register success! Become User "+account.id);
-        account.sendMessage(("Register success! Become User "+account.id).getBytes());
+        account.sendMessage("success".getBytes());
+        account.sendMessage((""+account.id).getBytes());
+        Util.errorReport("Register success! Become User "+account.id);
         return true;
 	}
 }

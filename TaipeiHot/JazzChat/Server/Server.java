@@ -8,6 +8,7 @@ import java.util.Map;
 
 import TaipeiHot.JazzChat.Parameter;
 import TaipeiHot.JazzChat.Util;
+import TaipeiHot.JazzChat.Server.JdbcMysql.AccountTable;
 import TaipeiHot.JazzChat.Server.JdbcMysql.SqlManager;
 
 public class Server {
@@ -24,7 +25,8 @@ public class Server {
     	server.equals(new Integer(123)); // to remove unused warning = =
     }
     static private void readDataFromSql(){
-    	
+    	for(Account a:AccountTable.All())
+    		Account.totalID = Math.max(Account.totalID,a.id);
     }
 	static class SocketThread extends Thread{
 	    protected ServerSocket server;
