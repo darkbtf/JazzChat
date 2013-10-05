@@ -3,25 +3,29 @@ package TaipeiHot.JazzChat.Server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 
 import TaipeiHot.JazzChat.Parameter;
+import TaipeiHot.JazzChat.Util;
+import TaipeiHot.JazzChat.Server.JdbcMysql.SqlManager;
 
 public class Server {
-    static public Map<String, Integer> clientMap;
-    static public ArrayList<Account> userArray ;
+    static public Map<Integer, Account> accountMap ;
+    //static public Map<Integer, Room> roomMap ;
+    static public SqlManager dbMgr = new SqlManager(); 
     public Server() {
-    	clientMap= new HashMap<String, Integer>();// TODO read from SQL
-    	userArray = new ArrayList<Account>();
-    	userArray.add(new Account());
+    	accountMap = new HashMap<Integer, Account>();
+    	readDataFromSql();
     }
     public static void main(String args[]) {
     	Server server = new Server();
     	(new SocketThread()).start();
+    	server.equals(new Integer(123)); // to remove unused warning = =
     }
-
+    static private void readDataFromSql(){
+    	
+    }
 	static class SocketThread extends Thread{
 	    protected ServerSocket server;
 	    
@@ -34,10 +38,9 @@ public class Server {
 	    }
 	 
 	    public void run() {
-	        Socket socket;
 	        System.out.println("伺服器已啟動!");
 	        while (true) {
-	        	socket = null;
+	        	Socket socket = null;
 	            try {
 	                synchronized (server) {
 	                	socket = server.accept();

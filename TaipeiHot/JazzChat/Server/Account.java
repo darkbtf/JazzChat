@@ -6,21 +6,23 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Deque;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Queue;
 
-import TaipeiHot.JazzChat.Util;
 import TaipeiHot.JazzChat.User;
+import TaipeiHot.JazzChat.Util;
+import TaipeiHot.JazzChat.Server.JdbcMysql.ActiveRecord;
 import TaipeiHot.JazzChat.ServerCommand.ServerCommandManager;
 
-public class Account extends Thread{
+public class Account extends ActiveRecord {
 	//User Data
-	static public int TotalID = 0;
-	public int id;
+	static public int totalID = 0;
 	public String email, nickname,status;
 	public String password;
-	protected ArrayList<User> Friends = new ArrayList<User>();
-	
+	protected ArrayList<User> friends = new ArrayList<User>();
+	//public Map<Integer, Room> roomMap = new HashMap<Integer, Room>();
 	//Communicate
 	public Socket socket;
 	private Deque<Byte> bufferInput = new LinkedList<Byte>();
@@ -28,21 +30,32 @@ public class Account extends Thread{
 	private BufferedInputStream in = null;
 	private OutputStream out = null;
 	Thread getMessageToBuffer, startThread;
-	private Boolean connecting;
-	private ServerCommandManager cmdMgr = new ServerCommandManager(this);
+	public Boolean connecting;
+	private ServerCommandManager cmdMgr = null;
 	
 	public Account(){}
 	public Account(Socket _s){
 		socket=_s;
-		//socket.setSoTimeout(15000);
 		try {
 			in = new BufferedInputStream(socket.getInputStream());
 			out = new BufferedOutputStream(socket.getOutputStream());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		cmdMgr = new ServerCommandManager(this);
 		openInputThread();
 	}
+	
+	public Account(int id,String email, String password,String nickname,String status){
+		this.id = id;
+		this.email = email;
+		this.password = password;
+		this.nickname = nickname;
+		this.status = status;
+		//this.roomMap = new HashMap<Integer, Room>(); // TODO database
+		this.friends = new ArrayList<User>(); //TODO database
+	}
+	
 	public void SetNickname(String N){
 		nickname = N;
 	}
@@ -58,7 +71,7 @@ public class Account extends Thread{
 						for(int i=0;i<length;i++)
 							bufferInput.add(new Byte(b[i]));
 						try {
-							Thread.sleep(500);
+							Thread.sleep(50);
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}
@@ -75,14 +88,8 @@ public class Account extends Thread{
 				while(!trylogin());
 				connecting=true;
 				while(connecting){
-		        	String msg = getMessage();
-		        	if(msg != "")
-		        		System.out.print(msg);
-		        	try {
-						Thread.sleep(500);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
+					String cmd=getMessage();
+					cmdMgr.parseCmd(cmd);
 				}
 			}
 		});
@@ -94,7 +101,7 @@ public class Account extends Thread{
 		while(messages.isEmpty()){
 			while(!Util.parseByte(bufferInput, messages)){
 				try {
-					Thread.sleep(1000);
+					Thread.sleep(50);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -103,17 +110,15 @@ public class Account extends Thread{
 		return messages.poll();
 	}
 	
-	public void run(){
-		
-	}
-	
-	public void clone(Account tmp){ // copy all data except socket
+	public void clone(Account tmp){ // copy data
 		this.nickname = tmp.nickname;
-		this.Friends  = tmp.Friends;
+		this.friends  = tmp.friends;
 		this.status   = tmp.status;
 		this.id       = tmp.id;
+		this.password = tmp.password;
+		//this.roomMap  = tmp.roomMap;
 	}
-	private Boolean trylogin(){// NOTICE: cmdMgr can only run one command in one time
+	private Boolean trylogin(){// NOTICE: cmdMgr's read function can only run one command in one time
 		String cmd=getMessage();
 		return cmdMgr.parseCmd(cmd);
 	}
@@ -124,7 +129,7 @@ public class Account extends Thread{
 			out.write(byteStream);
 			out.flush();
 		} catch (IOException e) {
-			return false;
+			return Util.errorReport("IOException in Account "+id+" sendMessage");
 		}
 		return true;
 	}
