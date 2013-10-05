@@ -34,9 +34,10 @@ public class LoginDialog extends javax.swing.JDialog {
     private void initComponents() {
 
         loginButton = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        registerButton = new javax.swing.JButton();
         passwordTextField = new javax.swing.JPasswordField();
         accountTextField = new javax.swing.JTextField();
+        errorMessege = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -48,7 +49,14 @@ public class LoginDialog extends javax.swing.JDialog {
             }
         });
 
-        jButton2.setText("Register");
+        registerButton.setText("Register");
+        registerButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                registerButtonMouseClicked(evt);
+            }
+        });
+
+        errorMessege.setText("            ");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -65,7 +73,10 @@ public class LoginDialog extends javax.swing.JDialog {
                         .addGap(161, 161, 161)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(loginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton2))))
+                            .addComponent(registerButton)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(177, 177, 177)
+                        .addComponent(errorMessege)))
                 .addContainerGap(108, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -78,8 +89,10 @@ public class LoginDialog extends javax.swing.JDialog {
                 .addGap(14, 14, 14)
                 .addComponent(loginButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton2)
-                .addGap(91, 91, 91))
+                .addComponent(registerButton)
+                .addGap(28, 28, 28)
+                .addComponent(errorMessege)
+                .addGap(48, 48, 48))
         );
 
         pack();
@@ -92,9 +105,18 @@ public class LoginDialog extends javax.swing.JDialog {
         Client.userLogin(ID,pass);
     }//GEN-LAST:event_loginButtonMouseClicked
 
+    private void registerButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerButtonMouseClicked
+        // TODO add your handling code here:
+        
+        
+    }//GEN-LAST:event_registerButtonMouseClicked
+
     /**
      * @param args the command line arguments
      */
+    public void setErrorMessege(String messege){
+        errorMessege.setText(messege);
+    }
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -135,8 +157,9 @@ public class LoginDialog extends javax.swing.JDialog {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField accountTextField;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel errorMessege;
     private javax.swing.JButton loginButton;
     private javax.swing.JPasswordField passwordTextField;
+    private javax.swing.JButton registerButton;
     // End of variables declaration//GEN-END:variables
 }

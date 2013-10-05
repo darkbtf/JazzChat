@@ -16,19 +16,20 @@ public class MainWindow extends javax.swing.JFrame {
      * Creates new form FreindList
      */
     FreindNameAndStatus f=new FreindNameAndStatus();
-    LoginDialog b= new LoginDialog(this,true);
+    LoginDialog loginDialog= new LoginDialog(this,true);
+    RegisterDialog reg=new RegisterDialog(this,true);
     public MainWindow() {
         initComponents();
         try{
-            System.out.print("strat");
-           
-            b.show(true);
+            //System.out.print("strat");
+            reg.setVisible(true);
+            loginDialog.setVisible(true);
             //this.add(b);
             System.out.print("done");
             this.add(f);
             Point p=f.getLocation();
             System.out.printf("%d %d\n", p.x,p.y);
-            f.show();
+            f.setVisible(true);
         }catch(Exception e)
         {
             System.out.print("haha");
@@ -340,10 +341,28 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
     }
-    public void closeDialog()
-    {
+    public void loginSuccess(){
+        loginDialog.hide();
+        
+    }   
+    public void loginFail(String messege){
+        loginDialog.setErrorMessege(messege);
+    }
+    public void regesterSuccess(){
+        
+    }
+    public void registerFail(String messege){
+        reg.setErrorMessege(messege);
+    }
+    
+    
+
+    public void newRoom(){
+        
+    }
+    public void closeDialog(){
         try{
-            b.hide();
+            loginDialog.hide();
         }catch(Exception e){}
         
     }
