@@ -19,7 +19,7 @@ import TaipeiHot.JazzChat.Command.CommandManager;
 import TaipeiHot.JazzChat.UI.*;
 
 public class Client {
-        private static MainWindow a; 
+    private static MainWindow a; 
 	private final static String address = "140.112.18.198";
 	private static Socket client = new Socket();
 	private final static CommandManager cmdMgr = new CommandManager();
@@ -85,8 +85,7 @@ public class Client {
 
 		getCommandThread.start();
 		parseCommandThread.start();
-                a=new MainWindow();
-                
+        a=new MainWindow();
 		while (true) {
 			try {
 				byte[] cmdString = buf.readLine().getBytes();
@@ -102,24 +101,24 @@ public class Client {
 		out.write(byteStream);
 		out.flush();
 	}
-        public static void userLogin(String account,String password){
-            System.out.print("userLogin");
-            System.out.println(password);
-            byte[] cmd="login".getBytes();
-            byte[] length = Util.intToByteArray(cmd.length);
+    public static void userLogin(String account,String password){
+        System.out.print("userLogin");
+        System.out.println(password);
+        byte[] cmd="login".getBytes();
+        byte[] length = Util.intToByteArray(cmd.length);
+        
+        try{
+            sendCommandToServer(length);
+            sendCommandToServer(cmd);
+            cmd = account.getBytes();
+            length = Util.intToByteArray(cmd.length);
+            sendCommandToServer(length);
+            sendCommandToServer(cmd);
+            cmd = password.getBytes();
+            length = Util.intToByteArray(cmd.length);
+            sendCommandToServer(length);
+            sendCommandToServer(cmd);
             
-            try{
-                sendCommandToServer(length);
-                sendCommandToServer(cmd);
-                cmd = account.getBytes();
-                length = Util.intToByteArray(cmd.length);
-                sendCommandToServer(length);
-                sendCommandToServer(cmd);
-                cmd = password.getBytes();
-                length = Util.intToByteArray(cmd.length);
-                sendCommandToServer(length);
-                sendCommandToServer(cmd);
-                
-            }catch(Exception e){}
-        }
+        }catch(Exception e){}
+    }
 }
