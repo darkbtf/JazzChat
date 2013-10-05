@@ -1,16 +1,16 @@
 package TaipeiHot.JazzChat.Command;
 
 import TaipeiHot.JazzChat.Client.Client;
+import TaipeiHot.JazzChat.Client.ClientUtils;
 
 public class SendMessage implements Command {
 
 	@Override
-	public void exec(byte[] parameter) {
+	public void exec() {
 		try {
-			Client.sendCommandToServer(parameter);
+			ClientUtils.sendCommandToServer(Client.out, null);
 		} catch (Exception e) {
 
 		}
 	}
-
 }
