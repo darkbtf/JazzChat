@@ -22,6 +22,7 @@ public class RoomTable extends Table{
 		columns.add(new ColumnElement("count","INTEGER"));
 		columns.add(new ColumnElement("user1_id","INTEGER"));
 		columns.add(new ColumnElement("user2_id","INTEGER"));
+		columns.add(new ColumnElement("name","TINYTEXT"));
 		dropdbSQL = "DROP TABLE IF EXISTS "+tableName; 
 		dropTable(dropdbSQL);
 		try {
@@ -43,6 +44,7 @@ public class RoomTable extends Table{
 			pst.setInt(2, a.count); 
 			pst.setInt(3, a.user1_id);
 			pst.setInt(4, a.user2_id);
+			pst.setString(5, a.name);
 			pst.executeUpdate(); 
 		} 
 		catch(SQLException e) { 
@@ -113,6 +115,29 @@ public class RoomTable extends Table{
 		}
 		return new Room[0]; 
 	}
+	static public Room[] where(String format){
+		ArrayList<Room> ret = new ArrayList<Room>();
+		try { 
+			String cmd = new String(selectSQL);
+			cmd += "WHERE BINARY "+format;
+			pst = con.prepareStatement(cmd);
+			rs = pst.executeQuery(); 
+			while(rs.next()) { 
+				ret.add(instance(rs));
+			} 
+			Room a[]=new Room[ret.size()];
+			for(int i=0;i<ret.size();i++)
+				a[i]=ret.get(i);
+			return a;
+		} 
+		catch(SQLException e){ 
+			Util.errorReport("whereDB Exception :" + e.toString()); 
+		} 
+		finally { 
+			Close(); 
+		}
+		return new Room[0]; 
+	}
 	static public Room find(int id){
 		try { 
 			stat = con.createStatement(); 
@@ -148,7 +173,8 @@ public class RoomTable extends Table{
 			return new Room(rs.getInt("id"),
 					rs.getInt("count"),
 					rs.getInt("user1_id"),
-					rs.getInt("user2_id"));
+					rs.getInt("user2_id"),
+					rs.getString("name"));
 		} catch (SQLException e) {
 		}
 		return null;
