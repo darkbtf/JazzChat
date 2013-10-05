@@ -4,6 +4,9 @@
  */
 package TaipeiHot.JazzChat.UI;
 
+import TaipeiHot.JazzChat.Client.Client;
+import java.awt.event.KeyEvent;
+
 /**
  *
  * @author Paul
@@ -55,6 +58,12 @@ public class RegisterDialog extends javax.swing.JDialog {
         });
 
         jButton2.setText("Cancel");
+
+        confirmText.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                confirmTextKeyTyped(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -114,17 +123,16 @@ public class RegisterDialog extends javax.swing.JDialog {
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         // TODO add your handling code here:
-        if(accountText.getText().equals("")){
-            setErrorMessege("Account is empty!");
-        }
-        else if(passwordText.getText().equals("")){
-            setErrorMessege("Password is empty!");            
-        }
-        else if(!passwordText.getText().equals(confirmText.getText())){
-            setErrorMessege("Passwords don't match!!");
-        }
-        else setErrorMessege("");
+        sendRegisterMessege();
     }//GEN-LAST:event_jButton1MouseClicked
+
+    private void confirmTextKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_confirmTextKeyTyped
+        // TODO add your handling code here:
+        if(evt.getKeyChar()==KeyEvent.VK_ENTER)
+        {
+            sendRegisterMessege();
+        }
+    }//GEN-LAST:event_confirmTextKeyTyped
 
     /**
      * @param args the command line arguments
@@ -167,8 +175,22 @@ public class RegisterDialog extends javax.swing.JDialog {
             }
         });
     }
-    public void setErrorMessege(String messege)
-    {
+    private void sendRegisterMessege(){
+        if(accountText.getText().equals("")){
+            setErrorMessege("Account is empty!");
+        }
+        else if(passwordText.getText().equals("")){
+            setErrorMessege("Password is empty!");            
+        }
+        else if(!passwordText.getText().equals(confirmText.getText())){
+            setErrorMessege("Passwords don't match!!");
+        }
+        else{
+            setErrorMessege("");
+            Client.userRegister(accountText.getText(),passwordText.getText());
+        }
+    }
+    public void setErrorMessege(String messege){
         errorMessege.setText(messege);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables

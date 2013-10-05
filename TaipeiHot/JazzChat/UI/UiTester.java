@@ -19,7 +19,9 @@ public class UiTester {
         a.show(true);
         a.getMessege("hahaha");
         MainWindow xx=new MainWindow();
-        xx.show();
+        
+        xx.setVisible(true);
+        xx.loginShow();
         String aaa="lalal";
         //xx.closeDialog();
         while(true)

@@ -17,7 +17,7 @@ public class MainWindow extends javax.swing.JFrame {
      */
     FreindNameAndStatus f=new FreindNameAndStatus();
     LoginDialog loginDialog= new LoginDialog(this,true);
-    RegisterDialog reg=new RegisterDialog(this,true);
+    RegisterDialog reg = new RegisterDialog(this,true);
     public MainWindow() {
         initComponents();
 
@@ -342,8 +342,7 @@ public class MainWindow extends javax.swing.JFrame {
         reg.setErrorMessege(messege);
     }
 
-    public void loginShow()
-    {
+    public void loginShow(){
         try{
             //reg.setVisible(true);
             loginDialog.setVisible(true);
@@ -359,6 +358,9 @@ public class MainWindow extends javax.swing.JFrame {
         {
             //System.out.print("haha");
         }
+    }
+    public void registerShow(){
+        reg.setVisible(true);
     }
     
 
