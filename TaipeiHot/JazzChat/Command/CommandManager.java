@@ -7,7 +7,7 @@ public class CommandManager {
 	static private Map<String, Command> cmdMap = new HashMap<String, Command>();
 
 	public CommandManager() {
-		cmdMap.put("loginFail", new LoginFail());
+		cmdMap.put("login", new Login());
 	}
 
 	public void parseCmd(String cmd) throws CommandParsingErrorException {

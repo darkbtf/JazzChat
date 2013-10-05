@@ -94,12 +94,17 @@ public class Client {
 		getCommand();
 		parseCommand();
 		mainWindow = new MainWindow();
-                mainWindow.loginShow();
+		mainWindow.loginShow();
 	}
 
 	public static void userLogin(String account, String password) {
 		ClientUtils.sendStringsToServer(out, new String[] { "login", account,
 				password });
+	}
+
+	public static void userRegister(String account, String password) {
+		ClientUtils.sendStringsToServer(out, new String[] { "register",
+				account, password });
 	}
 
 	public static String getMessage() {
