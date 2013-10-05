@@ -2,10 +2,8 @@ package TaipeiHot.JazzChat.Client;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
@@ -13,27 +11,26 @@ import java.util.Deque;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import TaipeiHot.JazzChat.Util;
 import TaipeiHot.JazzChat.Parameter;
+import TaipeiHot.JazzChat.Util;
 import TaipeiHot.JazzChat.Command.CommandManager;
-import TaipeiHot.JazzChat.UI.*;
+import TaipeiHot.JazzChat.Command.CommandParsingErrorException;
+import TaipeiHot.JazzChat.UI.MainWindow;
 
 public class Client {
-    private static MainWindow a; 
 	private final static String address = "140.112.18.198";
 	private static Socket client = new Socket();
 	private final static CommandManager cmdMgr = new CommandManager();
-	private static OutputStream out = null;
-	private static InputStream in = null;
+	public static OutputStream out = null;
+	public static InputStream in = null;
 	private final static Deque<Byte> bufferInput = new LinkedList<Byte>();
 	private final static Queue<String> messages = new LinkedList<String>();
+	public static MainWindow mainWindow;
 
 	public Client() {
 	}
 
-	public static void main(String args[]) {
-		BufferedReader buf = new BufferedReader(
-				new InputStreamReader(System.in));
+	private static void connectServer() {
 		InetSocketAddress isa = new InetSocketAddress(address, Parameter.port);
 		try {
 			client.connect(isa, 10000);
@@ -41,7 +38,9 @@ public class Client {
 			in = new BufferedInputStream(client.getInputStream());
 		} catch (IOException e2) {
 		}
+	}
 
+	private static void getCommand() {
 		Thread getCommandThread = new Thread(new Runnable() {
 
 			@Override
@@ -59,66 +58,60 @@ public class Client {
 						}
 					}
 				} catch (IOException e) {
+					// TODO: reconnect
 					System.out.println("getMessage Error");
 				}
 			}
 		});
+		getCommandThread.start();
+	}
+
+	private static void parseCommand() {
 
 		Thread parseCommandThread = new Thread(new Runnable() {
 
 			@Override
 			public void run() {
 				while (true) {
-					while (Util.parseByte(bufferInput, messages)) {
-
-					}
 					try {
-						Thread.sleep(500);
-					} catch (Exception e) {
+						cmdMgr.parseCmd(getMessage());
+						try {
+							Thread.sleep(100);
+						} catch (Exception e) {
+						}
+					} catch (CommandParsingErrorException e) {
+						e.printStackTrace();
 					}
-					String data = messages.poll();
-					if (data != null)
-						System.out.println(data);
 				}
 			}
 		});
-
-		getCommandThread.start();
 		parseCommandThread.start();
-        a=new MainWindow();
-		while (true) {
-			try {
-				byte[] cmdString = buf.readLine().getBytes();
-				byte[] length = Util.intToByteArray(cmdString.length);
-				cmdMgr.parseCmd(length);
-				cmdMgr.parseCmd(cmdString);
-			} catch (Exception e) {
+	}
+
+	public static void main(String args[]) {
+
+		connectServer();
+		getCommand();
+		parseCommand();
+		mainWindow = new MainWindow();
+	}
+
+	public static void userLogin(String account, String password) {
+		ClientUtils.sendStringsToServer(out, new String[] { "login", account,
+				password });
+	}
+
+	public static String getMessage() {
+		while (messages.isEmpty()) {
+			while (!Util.parseByte(bufferInput, messages)) {
+				try {
+					Thread.sleep(50);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 			}
 		}
-	}
+		return messages.poll();
 
-	public static void sendCommandToServer(byte[] byteStream) throws Exception {
-		out.write(byteStream);
-		out.flush();
 	}
-    public static void userLogin(String account,String password){
-        System.out.print("userLogin");
-        System.out.println(password);
-        byte[] cmd="login".getBytes();
-        byte[] length = Util.intToByteArray(cmd.length);
-        
-        try{
-            sendCommandToServer(length);
-            sendCommandToServer(cmd);
-            cmd = account.getBytes();
-            length = Util.intToByteArray(cmd.length);
-            sendCommandToServer(length);
-            sendCommandToServer(cmd);
-            cmd = password.getBytes();
-            length = Util.intToByteArray(cmd.length);
-            sendCommandToServer(length);
-            sendCommandToServer(cmd);
-            
-        }catch(Exception e){}
-    }
 }
