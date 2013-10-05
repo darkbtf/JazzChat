@@ -8,6 +8,7 @@ public class CommandManager {
 
 	public CommandManager() {
 		cmdMap.put("login", new Login());
+                cmdMap.put("register", new Register());
 	}
 
 	public void parseCmd(String cmd) throws CommandParsingErrorException {

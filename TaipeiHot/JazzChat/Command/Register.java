@@ -13,8 +13,9 @@ public class Register implements Command {
 			}
 		} else if (cmd.equals("success")) {
 			cmd = Client.getMessage();
-			Client.mainWindow.loginSuccess();
-			System.out.println(cmd);
+                        System.out.println(cmd);
+			Client.mainWindow.registerSuccess();
+                        System.out.println("register lala");
 			// TODO(darkbtf): implement this
 		}
 	}

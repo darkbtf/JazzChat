@@ -17,7 +17,7 @@ public class MainWindow extends javax.swing.JFrame {
      */
     FreindNameAndStatus f=new FreindNameAndStatus();
     LoginDialog loginDialog= new LoginDialog(this,true);
-    RegisterDialog reg = new RegisterDialog(this,true);
+    RegisterDialog registerDialog = new RegisterDialog(this,true);
     public MainWindow() {
         initComponents();
 
@@ -54,12 +54,15 @@ public class MainWindow extends javax.swing.JFrame {
         canvas9 = new java.awt.Canvas();
         canvas10 = new java.awt.Canvas();
         jTextField5 = new javax.swing.JTextField();
+        jPanel1 = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 0, 51));
+        setPreferredSize(new java.awt.Dimension(500, 538));
+        setResizable(false);
 
         FreindPanel.setPreferredSize(new java.awt.Dimension(350, 500));
 
@@ -245,7 +248,7 @@ public class MainWindow extends javax.swing.JFrame {
                     .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(73, Short.MAX_VALUE))
+                .addContainerGap(76, Short.MAX_VALUE))
         );
         FreindPanelLayout.setVerticalGroup(
             FreindPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -265,6 +268,17 @@ public class MainWindow extends javax.swing.JFrame {
 
         FreindScrollPanel.setViewportView(FreindPanel);
 
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
 
@@ -277,13 +291,18 @@ public class MainWindow extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(FreindScrollPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(FreindScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 72, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(FreindScrollPanel))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(FreindScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 363, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(36, 36, 36))
         );
 
         pack();
@@ -329,17 +348,20 @@ public class MainWindow extends javax.swing.JFrame {
         });
     }
     public void loginSuccess(){
-        loginDialog.hide();
+        loginDialog.setVisible(false);
         
     }   
     public void loginFail(String messege){
         loginDialog.setErrorMessege(messege);
     }
-    public void regesterSuccess(){
-        
+    public void registerSuccess(){
+        registerDialog.setVisible(false);
+        System.out.println("register close");
+        loginDialog.setVisible(true);
+        System.out.println("login show");
     }
     public void registerFail(String messege){
-        reg.setErrorMessege(messege);
+        registerDialog.setErrorMessege(messege);
     }
 
     public void loginShow(){
@@ -360,10 +382,8 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }
     public void registerShow(){
-        reg.setVisible(true);
+        registerDialog.setVisible(true);
     }
-    
-
     public void newRoom(){
         
     }
@@ -378,14 +398,6 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JScrollPane FreindScrollPanel;
     private java.awt.Canvas canvas1;
     private java.awt.Canvas canvas10;
-    private java.awt.Canvas canvas11;
-    private java.awt.Canvas canvas12;
-    private java.awt.Canvas canvas13;
-    private java.awt.Canvas canvas14;
-    private java.awt.Canvas canvas15;
-    private java.awt.Canvas canvas16;
-    private java.awt.Canvas canvas17;
-    private java.awt.Canvas canvas18;
     private java.awt.Canvas canvas2;
     private java.awt.Canvas canvas3;
     private java.awt.Canvas canvas4;
@@ -397,23 +409,16 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
     // End of variables declaration//GEN-END:variables
 }

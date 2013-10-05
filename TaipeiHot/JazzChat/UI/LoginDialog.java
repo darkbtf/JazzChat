@@ -107,7 +107,7 @@ public class LoginDialog extends javax.swing.JDialog {
 
     private void registerButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerButtonMouseClicked
         // TODO add your handling code here:
-        this.setVisible(false);
+        //this.setVisible(false);
         ((MainWindow)(getOwner())).registerShow();
     }//GEN-LAST:event_registerButtonMouseClicked
 
