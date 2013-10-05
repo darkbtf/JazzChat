@@ -99,7 +99,7 @@ public class AccountTable extends Table{
 		ArrayList<Account> ret = new ArrayList<Account>();
 		try { 
 			String cmd = new String(selectSQL);
-			cmd += "WHERE "+format;
+			cmd += "WHERE BINARY "+format;
 			pst = con.prepareStatement(cmd);
 			for(int i=0;i<parameters.length;i++)
 				pst.setString(i+1, parameters[i]); 
