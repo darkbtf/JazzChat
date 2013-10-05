@@ -20,20 +20,7 @@ public class MainWindow extends javax.swing.JFrame {
     RegisterDialog reg=new RegisterDialog(this,true);
     public MainWindow() {
         initComponents();
-        try{
-            //System.out.print("strat");
-            reg.setVisible(true);
-            loginDialog.setVisible(true);
-            //this.add(b);
-            System.out.print("done");
-            this.add(f);
-            Point p=f.getLocation();
-            System.out.printf("%d %d\n", p.x,p.y);
-            f.setVisible(true);
-        }catch(Exception e)
-        {
-            System.out.print("haha");
-        }
+
     }
 
     /**
@@ -354,7 +341,25 @@ public class MainWindow extends javax.swing.JFrame {
     public void registerFail(String messege){
         reg.setErrorMessege(messege);
     }
-    
+
+    public void loginShow()
+    {
+        try{
+            //reg.setVisible(true);
+            loginDialog.setVisible(true);
+            //this.add(b);
+            //System.out.print("done");
+            //this.add(f);
+            //System.out.print("strat");
+
+            //Point p=f.getLocation();
+            //System.out.printf("%d %d\n", p.x,p.y);
+            //f.setVisible(true);
+        }catch(Exception e)
+        {
+            //System.out.print("haha");
+        }
+    }
     
 
     public void newRoom(){

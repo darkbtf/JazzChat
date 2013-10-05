@@ -94,6 +94,7 @@ public class Client {
 		getCommand();
 		parseCommand();
 		mainWindow = new MainWindow();
+                mainWindow.loginShow();
 	}
 
 	public static void userLogin(String account, String password) {
