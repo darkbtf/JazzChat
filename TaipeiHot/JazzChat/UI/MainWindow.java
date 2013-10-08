@@ -415,14 +415,14 @@ public class MainWindow extends javax.swing.JFrame {
     }
     
     public RoomWindow newRoom(int roomId){
-        RoomWindow newRoom=new RoomWindow(roomId);
-        roomWindowMap.put((Integer)roomId,newRoom);
-        newRoom.setVisible(true);
-        return newRoom;
+        RoomWindow room=new RoomWindow(roomId);
+        roomWindowMap.put((Integer)roomId,room);
+        room.setVisible(true);
+        return room;
     }
     public void closeDialog(){
         try{
-            loginDialog.hide();
+            loginDialog.setVisible(false);
         }catch(Exception e){}
         
     }
