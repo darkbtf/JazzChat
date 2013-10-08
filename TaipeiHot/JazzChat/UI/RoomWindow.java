@@ -16,12 +16,12 @@ public class RoomWindow extends javax.swing.JFrame {
     /**
      * Creates new form RoomWindow
      */
-    private int roomId;
+
     public RoomWindow(int _roomId,String _roomName,ArrayList<String> _userNameList) {
         initComponents();
         roomId=_roomId;
     }
-    public RoomWindow(int _roomId,String _roomName) {
+    public RoomWindow(int _roomId) {
         initComponents();
         roomId=_roomId;
     }
@@ -147,9 +147,20 @@ public class RoomWindow extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new RoomWindow(1,"testname").setVisible(true);
+                new RoomWindow(1).setVisible(true);
             }
         });
+    }
+    
+    /*funcrions and parameters by paul*/
+    private int roomId;
+    private ArrayList<String> userNameList;
+    private String roomName;
+    public void roomNameChange(String _roomName){
+        roomName=_roomName;
+    }
+    public void roomUserNameListChange(ArrayList<String> _userNameList){
+        userNameList=_userNameList;
     }
     public void showMessege(String name,String text){
         showText.append(name+":"+text+"\n");

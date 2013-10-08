@@ -418,9 +418,20 @@ public class MainWindow extends javax.swing.JFrame {
     public void registerShow(){
         registerDialog.setVisible(true);
     }
-    
+    public RoomWindow getRoomById(int roomId){
+        if(roomWindowMap.get(roomId)==(null) ) {
+            return newRoom(roomId);
+        }
+        else return roomWindowMap.get(roomId);
+    }
     public RoomWindow newRoom(int roomId,String _roomName,ArrayList<String> _userNameList){
         RoomWindow room=new RoomWindow(roomId,_roomName,_userNameList);
+        roomWindowMap.put((Integer)roomId,room);
+        room.setVisible(true);
+        return room;
+    }
+    public RoomWindow newRoom(int roomId){
+        RoomWindow room=new RoomWindow(roomId);
         roomWindowMap.put((Integer)roomId,room);
         room.setVisible(true);
         return room;
