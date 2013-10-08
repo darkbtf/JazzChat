@@ -5,6 +5,7 @@
 package TaipeiHot.JazzChat.UI;
 
 import java.awt.Point;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -418,8 +419,8 @@ public class MainWindow extends javax.swing.JFrame {
         registerDialog.setVisible(true);
     }
     
-    public RoomWindow newRoom(int roomId){
-        RoomWindow room=new RoomWindow(roomId);
+    public RoomWindow newRoom(int roomId,String _roomName,ArrayList<String> _userNameList){
+        RoomWindow room=new RoomWindow(roomId,_roomName,_userNameList);
         roomWindowMap.put((Integer)roomId,room);
         room.setVisible(true);
         return room;

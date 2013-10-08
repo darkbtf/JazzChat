@@ -5,6 +5,7 @@
 package TaipeiHot.JazzChat.UI;
 
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 /**
  *
@@ -16,7 +17,11 @@ public class RoomWindow extends javax.swing.JFrame {
      * Creates new form RoomWindow
      */
     private int roomId;
-    public RoomWindow(int _roomId) {
+    public RoomWindow(int _roomId,String _roomName,ArrayList<String> _userNameList) {
+        initComponents();
+        roomId=_roomId;
+    }
+    public RoomWindow(int _roomId,String _roomName) {
         initComponents();
         roomId=_roomId;
     }
@@ -142,7 +147,7 @@ public class RoomWindow extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new RoomWindow(1).setVisible(true);
+                new RoomWindow(1,"testname").setVisible(true);
             }
         });
     }
