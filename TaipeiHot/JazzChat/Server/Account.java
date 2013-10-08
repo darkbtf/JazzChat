@@ -6,9 +6,7 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Deque;
-import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Map;
 import java.util.Queue;
 
 import TaipeiHot.JazzChat.User;
@@ -122,6 +120,14 @@ public class Account extends ActiveRecord {
 		String cmd=getMessage();
 		return cmdMgr.parseCmd(cmd);
 	}
+	
+	public Boolean sendMessage(String[] messages){
+		for(String str: messages)
+			if(!sendMessage(str.getBytes()))
+				return false;
+		return true;
+	}
+	
 	public Boolean sendMessage(byte[] byteStream){
 		byte[] length = Util.intToByteArray(byteStream.length);
 		try {

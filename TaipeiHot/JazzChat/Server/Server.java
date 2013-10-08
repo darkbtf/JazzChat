@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import TaipeiHot.JazzChat.Parameter;
-import TaipeiHot.JazzChat.Util;
 import TaipeiHot.JazzChat.Server.JdbcMysql.AccountTable;
 import TaipeiHot.JazzChat.Server.JdbcMysql.SqlManager;
 
