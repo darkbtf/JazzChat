@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.Queue;
 
 import TaipeiHot.JazzChat.Parameter;
+import TaipeiHot.JazzChat.User;
 import TaipeiHot.JazzChat.Util;
 import TaipeiHot.JazzChat.Command.CommandManager;
 import TaipeiHot.JazzChat.Command.CommandParsingErrorException;
@@ -30,6 +31,7 @@ public class Client {
 	private final static Queue<String> messages = new LinkedList<String>();
 	public static MainWindow mainWindow;
 	public static Map<Integer, RoomWindow> roomSet = new HashMap<Integer, RoomWindow>();
+	public static Map<Integer, User> userSet = new HashMap<Integer, User>();
 
 	public Client() {
 	}
@@ -109,6 +111,14 @@ public class Client {
 	public static void userRegister(String account, String password) {
 		ClientUtils.sendStringsToServer(out, new String[] { "register",
 				account, password });
+	}
+
+	public static void addFriend() {
+
+	}
+
+	public static User getUserById(int userId) {
+		return userSet.get(userId);
 	}
 
 	public static String getMessage() {
