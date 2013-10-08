@@ -5,6 +5,7 @@
 package TaipeiHot.JazzChat.UI;
 
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 /**
  *
@@ -15,7 +16,11 @@ public class RoomWindow extends javax.swing.JFrame {
     /**
      * Creates new form RoomWindow
      */
-    private int roomId;
+
+    public RoomWindow(int _roomId,String _roomName,ArrayList<String> _userNameList) {
+        initComponents();
+        roomId=_roomId;
+    }
     public RoomWindow(int _roomId) {
         initComponents();
         roomId=_roomId;
@@ -146,12 +151,23 @@ public class RoomWindow extends javax.swing.JFrame {
             }
         });
     }
-    public void getMessege(String name,String text){
+    
+    /*funcrions and parameters by paul*/
+    private int roomId;
+    private ArrayList<String> userNameList;
+    private String roomName;
+    public void roomNameChange(String _roomName){
+        roomName=_roomName;
+    }
+    public void roomUserNameListChange(ArrayList<String> _userNameList){
+        userNameList=_userNameList;
+    }
+    public void showMessege(String name,String text){
         showText.append(name+":"+text+"\n");
     }
     private void send(){
         if(!typeText.getText().equals("")){
-            getMessege("Username",typeText.getText());
+            showMessege("Username",typeText.getText());
             typeText.setText("");
         }
     }

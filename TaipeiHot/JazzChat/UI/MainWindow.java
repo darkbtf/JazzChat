@@ -5,6 +5,7 @@
 package TaipeiHot.JazzChat.UI;
 
 import java.awt.Point;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,7 +18,7 @@ public class MainWindow extends javax.swing.JFrame {
     /**
      * Creates new form FreindList
      */
-    public Map<Integer,RoomWindow> roomWindowMap=new HashMap<Integer,RoomWindow>();
+
     FreindNameAndStatus f=new FreindNameAndStatus();
     LoginDialog loginDialog= new LoginDialog(this,true);
     RegisterDialog registerDialog = new RegisterDialog(this,true);
@@ -376,6 +377,10 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
     }
+    
+    
+    /*functions and parameters by paul*/
+    public Map<Integer,RoomWindow> roomWindowMap=new HashMap<Integer,RoomWindow>();
     public void loginSuccess(){
         loginDialog.setVisible(false);
         
@@ -413,7 +418,18 @@ public class MainWindow extends javax.swing.JFrame {
     public void registerShow(){
         registerDialog.setVisible(true);
     }
-    
+    public RoomWindow getRoomById(int roomId){
+        if(roomWindowMap.get(roomId)==(null) ) {
+            return newRoom(roomId);
+        }
+        else return roomWindowMap.get(roomId);
+    }
+    public RoomWindow newRoom(int roomId,String _roomName,ArrayList<String> _userNameList){
+        RoomWindow room=new RoomWindow(roomId,_roomName,_userNameList);
+        roomWindowMap.put((Integer)roomId,room);
+        room.setVisible(true);
+        return room;
+    }
     public RoomWindow newRoom(int roomId){
         RoomWindow room=new RoomWindow(roomId);
         roomWindowMap.put((Integer)roomId,room);
@@ -426,6 +442,8 @@ public class MainWindow extends javax.swing.JFrame {
         }catch(Exception e){}
         
     }
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel FreindPanel;
     private javax.swing.JScrollPane FreindScrollPanel;
