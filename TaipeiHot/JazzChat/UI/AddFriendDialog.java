@@ -4,6 +4,8 @@
  */
 package TaipeiHot.JazzChat.UI;
 
+import TaipeiHot.JazzChat.Client.Client;
+
 /**
  *
  * @author Paul
@@ -28,9 +30,9 @@ public class AddFriendDialog extends javax.swing.JDialog {
     private void initComponents() {
 
         friendNameText = new javax.swing.JTextField();
-        FrindName = new javax.swing.JLabel();
+        FriendName = new javax.swing.JLabel();
         inviteButton = new javax.swing.JButton();
-        errorMessege = new javax.swing.JLabel();
+        errorMessage = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -40,11 +42,16 @@ public class AddFriendDialog extends javax.swing.JDialog {
             }
         });
 
-        FrindName.setText("Friend Name:");
+        FriendName.setText("Friend Name:");
 
         inviteButton.setText("Invite");
+        inviteButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                inviteButtonMouseClicked(evt);
+            }
+        });
 
-        errorMessege.setText("        ");
+        errorMessage.setText("        ");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -56,9 +63,9 @@ public class AddFriendDialog extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(inviteButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(errorMessege, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(errorMessage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(FrindName)
+                        .addComponent(FriendName)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(friendNameText, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -69,11 +76,11 @@ public class AddFriendDialog extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(friendNameText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(FrindName))
+                    .addComponent(FriendName))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(inviteButton)
-                    .addComponent(errorMessege))
+                    .addComponent(errorMessage))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -83,6 +90,11 @@ public class AddFriendDialog extends javax.swing.JDialog {
     private void friendNameTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_friendNameTextActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_friendNameTextActionPerformed
+
+    private void inviteButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inviteButtonMouseClicked
+        // TODO add your handling code here:
+        Client.addFriend(FriendName.getText(),"");
+    }//GEN-LAST:event_inviteButtonMouseClicked
 
     /**
      * @param args the command line arguments
@@ -125,9 +137,15 @@ public class AddFriendDialog extends javax.swing.JDialog {
             }
         });
     }
+    
+    /*fuctions and parameters by Paul*/
+    public void setErrorMessage(String error){
+        errorMessage.setText(error);
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel FrindName;
-    private javax.swing.JLabel errorMessege;
+    private javax.swing.JLabel FriendName;
+    private javax.swing.JLabel errorMessage;
     private javax.swing.JTextField friendNameText;
     private javax.swing.JButton inviteButton;
     // End of variables declaration//GEN-END:variables
