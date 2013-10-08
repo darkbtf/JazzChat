@@ -8,7 +8,9 @@ import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.Deque;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Queue;
 
 import TaipeiHot.JazzChat.Parameter;
@@ -16,6 +18,7 @@ import TaipeiHot.JazzChat.Util;
 import TaipeiHot.JazzChat.Command.CommandManager;
 import TaipeiHot.JazzChat.Command.CommandParsingErrorException;
 import TaipeiHot.JazzChat.UI.MainWindow;
+import TaipeiHot.JazzChat.UI.RoomWindow;
 
 public class Client {
 	private final static String address = "140.112.18.198";
@@ -26,6 +29,7 @@ public class Client {
 	private final static Deque<Byte> bufferInput = new LinkedList<Byte>();
 	private final static Queue<String> messages = new LinkedList<String>();
 	public static MainWindow mainWindow;
+	public static Map<Integer, RoomWindow> roomSet = new HashMap<Integer, RoomWindow>();
 
 	public Client() {
 	}
