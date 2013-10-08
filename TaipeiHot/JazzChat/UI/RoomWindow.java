@@ -151,7 +151,7 @@ public class RoomWindow extends javax.swing.JFrame {
     }
     private void send(){
         if(!typeText.getText().equals("")){
-            getMessege("lala",typeText.getText());
+            getMessege("Username",typeText.getText());
             typeText.setText("");
         }
     }
