@@ -5,6 +5,8 @@
 package TaipeiHot.JazzChat.UI;
 
 import java.awt.Point;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -15,9 +17,11 @@ public class MainWindow extends javax.swing.JFrame {
     /**
      * Creates new form FreindList
      */
+    public Map<Integer,RoomWindow> roomWindowMap=new HashMap<Integer,RoomWindow>();
     FreindNameAndStatus f=new FreindNameAndStatus();
     LoginDialog loginDialog= new LoginDialog(this,true);
     RegisterDialog registerDialog = new RegisterDialog(this,true);
+    AddFriendDialog addFriendDialog = new AddFriendDialog(this,true);
     public MainWindow() {
         initComponents();
 
@@ -55,6 +59,8 @@ public class MainWindow extends javax.swing.JFrame {
         canvas10 = new java.awt.Canvas();
         jTextField5 = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
+        addFirendButton = new javax.swing.JButton();
+        jToggleButton1 = new javax.swing.JToggleButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -268,15 +274,34 @@ public class MainWindow extends javax.swing.JFrame {
 
         FreindScrollPanel.setViewportView(FreindPanel);
 
+        addFirendButton.setText("++++");
+        addFirendButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                addFirendButtonMouseClicked(evt);
+            }
+        });
+
+        jToggleButton1.setText("jToggleButton1");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(addFirendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jToggleButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(addFirendButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jMenu1.setText("File");
@@ -292,13 +317,12 @@ public class MainWindow extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(FreindScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 72, Short.MAX_VALUE))
+            .addComponent(FreindScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(45, 45, 45)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(FreindScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 363, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -312,6 +336,11 @@ public class MainWindow extends javax.swing.JFrame {
         System.out.println("hahah");
         // TODO add your handling code here:
     }//GEN-LAST:event_jPanel2MouseClicked
+
+    private void addFirendButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addFirendButtonMouseClicked
+        // TODO add your handling code here:
+        addFriendDialog.setVisible(true);
+    }//GEN-LAST:event_addFirendButtonMouseClicked
 
     /**
      * @param args the command line arguments
@@ -384,18 +413,23 @@ public class MainWindow extends javax.swing.JFrame {
     public void registerShow(){
         registerDialog.setVisible(true);
     }
-    public void newRoom(){
-        
+    
+    public RoomWindow newRoom(int roomId){
+        RoomWindow room=new RoomWindow(roomId);
+        roomWindowMap.put((Integer)roomId,room);
+        room.setVisible(true);
+        return room;
     }
     public void closeDialog(){
         try{
-            loginDialog.hide();
+            loginDialog.setVisible(false);
         }catch(Exception e){}
         
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel FreindPanel;
     private javax.swing.JScrollPane FreindScrollPanel;
+    private javax.swing.JButton addFirendButton;
     private java.awt.Canvas canvas1;
     private java.awt.Canvas canvas10;
     private java.awt.Canvas canvas2;
@@ -420,5 +454,6 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
+    private javax.swing.JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables
 }

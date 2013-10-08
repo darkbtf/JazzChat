@@ -15,20 +15,17 @@ import java.io.InputStreamReader;
  */
 public class UiTester {
     public static void main(String args[]) throws IOException{
-        RoomWindow a=new RoomWindow();
-        a.show(true);
-        a.getMessege("hahaha");
-        MainWindow xx=new MainWindow();
-        
-        xx.setVisible(true);
-        xx.loginShow();
-        String aaa="lalal";
+        MainWindow mainWindow=new MainWindow();
+        mainWindow.newRoom(123);
+        mainWindow.newRoom(234);
+        mainWindow.loginShow();
         //xx.closeDialog();
         while(true)
         {
+            
             BufferedReader buffer=new BufferedReader(new InputStreamReader(System.in));
             String line=buffer.readLine();
-            a.getMessege(line);
+            mainWindow.roomWindowMap.get(123).getMessege("test username",line);
         }
         
     }
