@@ -27,7 +27,14 @@ public class Friend implements Command {
 		} else if (cmd.equals("show")) {
 			int userId = Integer.parseInt(Client.getMessage());
 			String userName = Client.getMessage();
-			// TODO: implement this
+			
+			Client.mainWindow.friendListShow(Client.userSet);
+		} else if (cmd.equals("online"))) {
+			int userId = Integer.parseInt(Client.getMessage());
+			Client.mainWindow.setOnlineById(userId);
+		} else if (cmd.equals("offline"))) {
+			int userId = Integer.parseInt(Client.getMessage());
+			Client.mainWindow.setOfflineById(userId);
 		}
 	}
 }

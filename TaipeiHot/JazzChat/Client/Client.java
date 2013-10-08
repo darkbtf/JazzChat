@@ -131,6 +131,20 @@ public class Client {
 				Integer.toString(userId) });
 	}
 
+	public static void sendMessage(int roomId, String content) {
+		ClientUtils.sendStringsToServer(out,
+				new String[] { "message", Integer.toString(roomId), content });
+	}
+
+	public static void setOnline() {
+		ClientUtils.sendStringsToServer(out, new String[] { "user", "online" });
+	}
+
+	public static void setOffline() {
+		ClientUtils
+				.sendStringsToServer(out, new String[] { "user", "offline" });
+	}
+
 	public static User getUserById(int userId) {
 		return userSet.get(userId);
 	}
