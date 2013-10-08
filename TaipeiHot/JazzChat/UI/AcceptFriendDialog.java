@@ -4,6 +4,8 @@
  */
 package TaipeiHot.JazzChat.UI;
 
+import TaipeiHot.JazzChat.Client.Client;
+
 /**
  *
  * @author Paul
@@ -16,6 +18,12 @@ public class AcceptFriendDialog extends javax.swing.JDialog {
     public AcceptFriendDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.id=id;
+    }
+    public AcceptFriendDialog(java.awt.Frame parent, boolean modal,int id) {
+        super(parent, modal);
+        initComponents();
+        this.id=id;
     }
 
     /**
@@ -73,7 +81,7 @@ public class AcceptFriendDialog extends javax.swing.JDialog {
 
     private void acceptButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_acceptButtonMouseClicked
         // TODO add your handling code here:
-        Client.a
+        Client.acceptFriend(id);
     }//GEN-LAST:event_acceptButtonMouseClicked
 
     /**
@@ -120,7 +128,8 @@ public class AcceptFriendDialog extends javax.swing.JDialog {
     
     
     /*functions and parameters by Paul*/
-    public setFriendName(String FriendName){
+    private int id;    
+    public void setFriendName(String FriendName){
         friend.setText(FriendName+" want to friend");
     }
     

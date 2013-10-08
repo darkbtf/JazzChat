@@ -5,6 +5,7 @@
 package TaipeiHot.JazzChat.UI;
 
 import TaipeiHot.JazzChat.Client.Client;
+import TaipeiHot.JazzChat.Util;
 
 /**
  *
@@ -93,7 +94,9 @@ public class AddFriendDialog extends javax.swing.JDialog {
 
     private void inviteButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inviteButtonMouseClicked
         // TODO add your handling code here:
-        Client.addFriend(FriendName.getText(),"");
+        Util.errorReport(friendNameText.getText());
+        
+        Client.addFriend(friendNameText.getText(),"");
     }//GEN-LAST:event_inviteButtonMouseClicked
 
     /**
