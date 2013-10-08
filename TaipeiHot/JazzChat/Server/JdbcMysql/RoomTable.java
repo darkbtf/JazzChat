@@ -7,7 +7,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import TaipeiHot.JazzChat.Util;
+import TaipeiHot.JazzChat.Server.Account;
 import TaipeiHot.JazzChat.Server.Room;
+import TaipeiHot.JazzChat.Server.RoomAccount;
 
 public class RoomTable extends Table{
 	static private String tableName = "";
@@ -19,9 +21,6 @@ public class RoomTable extends Table{
 	public RoomTable() {
 		super();
 		tableName="room";
-		columns.add(new ColumnElement("count","INTEGER"));
-		columns.add(new ColumnElement("user1_id","INTEGER"));
-		columns.add(new ColumnElement("user2_id","INTEGER"));
 		columns.add(new ColumnElement("name","TINYTEXT"));
 		dropdbSQL = "DROP TABLE IF EXISTS "+tableName; 
 		dropTable(dropdbSQL);
@@ -41,10 +40,7 @@ public class RoomTable extends Table{
 			pst = con.prepareStatement(insertdbSQL);
 			if(a.id==0)a.id=++Room.totalID;
 			pst.setInt(1, a.id);
-			pst.setInt(2, a.count); 
-			pst.setInt(3, a.user1_id);
-			pst.setInt(4, a.user2_id);
-			pst.setString(5, a.name);
+			pst.setString(2, a.name);
 			pst.executeUpdate(); 
 		} 
 		catch(SQLException e) { 
@@ -151,6 +147,13 @@ public class RoomTable extends Table{
 		} 
 		return null;
 	}
+	static public Account[] accounts(int id){
+		RoomAccount[] ras=RoomAccountTable.where("room_id="+id);
+		Account[] ret = new Account[ras.length];
+		for(int i=0;i<ras.length;i++)
+			ret[i]=AccountTable.find(ras[i].account_id);
+		return ret;
+	}
 	static public void SelectTable(){ 
 		try { 
 			stat = con.createStatement(); 
@@ -171,9 +174,6 @@ public class RoomTable extends Table{
 	static public Room instance(ResultSet rs){
 		try {
 			return new Room(rs.getInt("id"),
-					rs.getInt("count"),
-					rs.getInt("user1_id"),
-					rs.getInt("user2_id"),
 					rs.getString("name"));
 		} catch (SQLException e) {
 		}

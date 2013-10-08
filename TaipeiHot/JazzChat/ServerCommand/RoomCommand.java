@@ -17,7 +17,6 @@ public class RoomCommand extends ServerCommand {
 	public Boolean exec() {
 		try{
 			String cmd = account.getMessage();
-			Server.accountMap.get(account.id).sendMessage("room".getBytes());
 			if(cmd.equals("new"))
 				return createRoom();
 			else if(cmd.equals("adduser"))
@@ -31,34 +30,35 @@ public class RoomCommand extends ServerCommand {
 	}
 	private Boolean createRoom(){
 		String roomkind = account.getMessage();
-		Server.accountMap.get(account.id).sendMessage("new".getBytes());
-		Server.accountMap.get(account.id).sendMessage(roomkind.getBytes());
 		if(roomkind.equals("private")){
 			int user_id = Integer.valueOf(account.getMessage());
 			RoomAccount[] qry = RoomAccountTable.where("account_id="+account.id);
 			Room r = null;
 			for(RoomAccount ra : qry){
-				Room[] rs = RoomTable.where("id="+ra.room_id+" && count=2");
-				for(int i=0;i<rs.length;i++)
-					if(rs[i].have(user_id))
-						r=rs[i];
-				break;
+				Account[] acc = RoomTable.accounts(ra.room_id);
+				if(acc.length!=2)continue;
+				if(acc[0].id==user_id || acc[1].id==user_id){
+					r=RoomTable.find(ra.room_id);
+					break;
+				}
 			}
 			if(r==null){
-				r = new Room(0,2,account.id,user_id,"");
+				r = new Room(0,"");
 				RoomTable.insert(r);
 				RoomAccountTable.insert(new RoomAccount(0,r.id,account.id));
 				RoomAccountTable.insert(new RoomAccount(0,r.id,user_id));
 			}
-			Server.accountMap.get(account.id).sendMessage((r.id+"").getBytes());
+			account.sendMessage(new String[]{"room","new","private",r.id+""});
 			return true;
 		}
 		else if(roomkind.equals("public")){
 			String roomName = account.getMessage();
-			Room r = new Room(0,1,account.id,0,roomName);
+			Room r = new Room(0,roomName);
+			
 			RoomTable.insert(r);
 			RoomAccountTable.insert(new RoomAccount(0,r.id,account.id));
-			Server.accountMap.get(account.id).sendMessage((r.id+"").getBytes());
+
+			account.sendMessage(new String[]{"room","new","public",r.id+""});
 			return true;
 		}
 		else return Util.errorReport("room new command fail: "+roomkind);
@@ -69,12 +69,8 @@ public class RoomCommand extends ServerCommand {
 		int user_id = Integer.valueOf(account.getMessage());
 		if(RoomAccountTable.where("account_id="+user_id+" && room_id="+room_id).length!=0)
 			return true;// User has already in room
-		for(RoomAccount a:RoomAccountTable.where("room_id="+room_id)){
-			Account ac=Server.accountMap.get(a.account_id);
-			ac.sendMessage("adduser".getBytes());
-			ac.sendMessage((""+room_id).getBytes());
-			ac.sendMessage((""+user_id).getBytes()); // TODO: not id only
-		}
+		for(RoomAccount a:RoomAccountTable.where("room_id="+room_id))
+			Server.accountMap.get(a).sendMessage(new String[]{"room","adduser",""+room_id,""+user_id});// TODO: not id only
 		RoomAccountTable.insert(new RoomAccount(0,room_id,user_id));
 		return true;
 	}
