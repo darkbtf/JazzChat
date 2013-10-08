@@ -8,9 +8,9 @@ import TaipeiHot.JazzChat.Server.Server;
 import TaipeiHot.JazzChat.Server.JdbcMysql.RoomAccountTable;
 import TaipeiHot.JazzChat.Server.JdbcMysql.RoomTable;
 
-public class SendToRoom extends ServerCommand {
+public class Message extends ServerCommand {
 
-	public SendToRoom(Account a){
+	public Message(Account a){
 		super(a);
 	}
 	@Override
@@ -26,8 +26,13 @@ public class SendToRoom extends ServerCommand {
 		Room r = RoomTable.find(room_id);
 		if(r == null)return Util.errorReport("Room id "+room_id+" not found");
 		String msg = account.getMessage();
-		for(RoomAccount a : RoomAccountTable.where("room_id="+room_id))
-			Server.accountMap.get(a.account_id).sendMessage(msg.getBytes());
+		for(RoomAccount a : RoomAccountTable.where("room_id="+room_id)){
+			Account ac = Server.accountMap.get(a.account_id);
+			ac.sendMessage("message".getBytes());
+			ac.sendMessage((""+r.id).getBytes());
+			ac.sendMessage((""+account.id).getBytes());
+			ac.sendMessage(msg.getBytes());
+		}
 		return true;
 	}
 }
