@@ -7,9 +7,11 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
@@ -32,6 +34,7 @@ public class Client {
 	public static MainWindow mainWindow;
 	public static Map<Integer, RoomWindow> roomSet = new HashMap<Integer, RoomWindow>();
 	public static Map<Integer, User> userSet = new HashMap<Integer, User>();
+	public static List<User> friendsToAdd = new ArrayList<User>();
 
 	public Client() {
 	}
@@ -113,8 +116,19 @@ public class Client {
 				account, password });
 	}
 
-	public static void addFriend() {
+	public static void addFriend(String userName, String greeting) {
+		ClientUtils.sendStringsToServer(out, new String[] { "friend", "add",
+				userName, greeting });
+	}
 
+	public static void acceptFriend(int userId) {
+		ClientUtils.sendStringsToServer(out, new String[] { "friend", "accept",
+				Integer.toString(userId) });
+	}
+
+	public static void rejectFriend(int userId) {
+		ClientUtils.sendStringsToServer(out, new String[] { "friend", "reject",
+				Integer.toString(userId) });
 	}
 
 	public static User getUserById(int userId) {

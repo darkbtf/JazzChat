@@ -16,9 +16,9 @@ public class Room implements Command {
 				Client.mainWindow.newRoom(roomId);
 			}
 		} else if (cmd.equals("name")) {
-
+			// TODO!
 		} else if (cmd.equals("adduser")) {
-
+			// TODO!
 		}
 	}
 }
