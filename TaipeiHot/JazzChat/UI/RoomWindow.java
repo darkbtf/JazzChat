@@ -15,8 +15,10 @@ public class RoomWindow extends javax.swing.JFrame {
     /**
      * Creates new form RoomWindow
      */
-    public RoomWindow() {
+    private int roomId;
+    public RoomWindow(int _roomId) {
         initComponents();
+        roomId=_roomId;
     }
 
     /**
@@ -38,8 +40,10 @@ public class RoomWindow extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(102, 153, 255));
 
+        jLayeredPane1.setBackground(new java.awt.Color(102, 204, 255));
+
         showText.setEditable(false);
-        showText.setBackground(new java.awt.Color(153, 204, 0));
+        showText.setBackground(new java.awt.Color(153, 204, 255));
         showText.setColumns(20);
         showText.setRows(5);
         showText.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, null, null, new java.awt.Color(51, 51, 51)));
@@ -49,6 +53,7 @@ public class RoomWindow extends javax.swing.JFrame {
         jScrollPane2.setBounds(20, 10, 390, 230);
         jLayeredPane1.add(jScrollPane2, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
+        typeText.setBackground(new java.awt.Color(153, 204, 255));
         typeText.setColumns(20);
         typeText.setRows(2);
         typeText.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, null, new java.awt.Color(0, 0, 0), new java.awt.Color(0, 51, 255)));
@@ -137,18 +142,20 @@ public class RoomWindow extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new RoomWindow().setVisible(true);
+                new RoomWindow(1).setVisible(true);
             }
         });
     }
-    public void getMessege(String text){
-        showText.append(text+"\n");
+    public void getMessege(String name,String text){
+        showText.append(name+":"+text+"\n");
     }
-    private void send()
-    {
-        getMessege(typeText.getText());
-        typeText.setText("");
+    private void send(){
+        if(!typeText.getText().equals("")){
+            getMessege("Username",typeText.getText());
+            typeText.setText("");
+        }
     }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JScrollPane jScrollPane1;
