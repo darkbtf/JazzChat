@@ -5,5 +5,6 @@ public class SqlManager {
 		new AccountTable();
 		new RoomTable();
 		new RoomAccountTable();
+		new FriendTable();
 	}
 }
