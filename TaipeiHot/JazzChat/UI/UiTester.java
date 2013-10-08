@@ -25,7 +25,7 @@ public class UiTester {
             
             BufferedReader buffer=new BufferedReader(new InputStreamReader(System.in));
             String line=buffer.readLine();
-            mainWindow.roomWindowMap.get(123).getMessege("test username",line);
+            mainWindow.roomWindowMap.get(123).showMessege("test username",line);
         }
         
     }

@@ -17,7 +17,7 @@ public class MainWindow extends javax.swing.JFrame {
     /**
      * Creates new form FreindList
      */
-    public Map<Integer,RoomWindow> roomWindowMap=new HashMap<Integer,RoomWindow>();
+
     FreindNameAndStatus f=new FreindNameAndStatus();
     LoginDialog loginDialog= new LoginDialog(this,true);
     RegisterDialog registerDialog = new RegisterDialog(this,true);
@@ -376,6 +376,10 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
     }
+    
+    
+    /*functions and parameters by paul*/
+    public Map<Integer,RoomWindow> roomWindowMap=new HashMap<Integer,RoomWindow>();
     public void loginSuccess(){
         loginDialog.setVisible(false);
         
@@ -426,6 +430,8 @@ public class MainWindow extends javax.swing.JFrame {
         }catch(Exception e){}
         
     }
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel FreindPanel;
     private javax.swing.JScrollPane FreindScrollPanel;

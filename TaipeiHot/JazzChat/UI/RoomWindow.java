@@ -146,12 +146,12 @@ public class RoomWindow extends javax.swing.JFrame {
             }
         });
     }
-    public void getMessege(String name,String text){
+    public void showMessege(String name,String text){
         showText.append(name+":"+text+"\n");
     }
     private void send(){
         if(!typeText.getText().equals("")){
-            getMessege("Username",typeText.getText());
+            showMessege("Username",typeText.getText());
             typeText.setText("");
         }
     }
