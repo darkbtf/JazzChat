@@ -388,7 +388,7 @@ public class MainWindow extends javax.swing.JFrame {
 
 	/* functions and parameters by paul */
 	public Map<Integer, RoomWindow> roomWindowMap = new HashMap<Integer, RoomWindow>();
-
+        public Map<Integer, AcceptFriendDialog> AcceptMap= new HashMap<Integer,AcceptFriendDialog>();
 	FreindNameAndStatus f = new FreindNameAndStatus();
 	LoginDialog loginDialog = new LoginDialog(this, true);
 	RegisterDialog registerDialog = new RegisterDialog(this, true);
@@ -399,23 +399,10 @@ public class MainWindow extends javax.swing.JFrame {
 		setVisible(true);
                 acceptFriendWindow.setVisible(true);
 	}
-
 	public void loginFail(String messege) {
 		loginDialog.setErrorMessege(messege);
 	}
-
-	public void registerSuccess() {
-		registerDialog.setVisible(false);
-		System.out.println("register close");
-		loginDialog.setVisible(true);
-		System.out.println("login show");
-	}
-
-	public void registerFail(String messege) {
-		registerDialog.setErrorMessege(messege);
-	}
-
-	public void loginShow() {
+        public void loginShow() {
 		try {
 			// reg.setVisible(true);
 			loginDialog.setVisible(true);
@@ -432,9 +419,37 @@ public class MainWindow extends javax.swing.JFrame {
 		}
 	}
 
+	public void registerSuccess() {
+		registerDialog.setVisible(false);
+		System.out.println("register close");
+		loginDialog.setVisible(true);
+		System.out.println("login show");
+	}
+	public void registerFail(String messege) {
+		registerDialog.setErrorMessege(messege);
+	}
 	public void registerShow() {
 		registerDialog.setVisible(true);
 	}
+
+        public void acceptFriendShow(int userId,String userName,String greeting){
+            AcceptFriendDialog acceptFriendDialog=new AcceptFriendDialog(this,true,userId);
+            AcceptMap.put(userId, acceptFriendDialog);
+            acceptFriendDialog.setVisible(true);
+        }
+        public void accepFriendSccess(int userId,String message){
+            AcceptMap.get(userId).setVisible(false);
+        }
+        public void accepFriendFail(int userId,String message){
+
+        }
+        
+        public void addFriendSuccess(String message){
+            addFriendDialog.setVisible(false);
+        }
+        public void addFriendFail(String message){
+            addFriendDialog.setErrorMessage(message);
+        }
 
 	public RoomWindow getRoomById(int roomId) {
 		if (roomWindowMap.get(roomId) == (null)) {
