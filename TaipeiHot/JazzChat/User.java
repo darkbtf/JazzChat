@@ -11,6 +11,11 @@ public class User {
 	public User() {
 	}
 
+	public User(String nickname, String status) {
+		this.nickname = nickname;
+		this.status = status;
+	}
+
 	public void setNickname(String N) {
 	}
 
