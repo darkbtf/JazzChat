@@ -33,7 +33,7 @@ public class FriendCommand implements Command {
 			String status = Client.getMessage();
 			User tmpUser = new User(userName, status);
 			tmpUser.id = userId;
-			System.out.println(Integer.toString(userId) + " " + userName);
+			// System.out.println(Integer.toString(userId) + " " + userName);
 			Client.userSet.put(userId, tmpUser);
 			Client.mainWindow.friendShow(tmpUser);
 		} else if (cmd.equals("online")) {
