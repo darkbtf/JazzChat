@@ -29,10 +29,14 @@ public class FriendCommand extends ServerCommand {
 		String text = account.getMessage();
 		Account[] qry = AccountTable.where("email=?",new String[]{name});
 		if(qry.length==0){
-			account.sendMessage(new String[]{"friend","response",name,"fail"});
+			account.sendMessage(new String[]{"friend","response",name,"fail","Account not exist."});
 			return true;
 		}
 		Account ac=qry[0];
+		if(FriendTable.where("account_id1="+ac.id+" && account_id2="+account.id).length != 0 || FriendTable.where("account_id2="+ac.id+" && account_id1="+account.id).length != 0){
+			account.sendMessage(new String[]{"friend","response",name,"fail","You are friends or wating for response."});
+			return true;
+		}
 		if(Server.accountMap.get(ac.id) != null)
 			Server.accountMap.get(ac.id).sendMessage(new String[]{"friend", "add", ""+account.id,account.email,text});
 		FriendTable.insert(new Friend(0,account.id,ac.id,"waiting",text));
