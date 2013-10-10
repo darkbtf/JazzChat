@@ -8,6 +8,7 @@ import java.util.Map;
 
 import TaipeiHot.JazzChat.Parameter;
 import TaipeiHot.JazzChat.Server.JdbcMysql.AccountTable;
+import TaipeiHot.JazzChat.Server.JdbcMysql.FileTable;
 import TaipeiHot.JazzChat.Server.JdbcMysql.FriendTable;
 import TaipeiHot.JazzChat.Server.JdbcMysql.RoomAccountTable;
 import TaipeiHot.JazzChat.Server.JdbcMysql.RoomTable;
@@ -35,6 +36,8 @@ public class Server {
     		Room.totalID = Math.max(Room.totalID,a.id);
     	for(RoomAccount a:RoomAccountTable.All())
     		RoomAccount.totalID = Math.max(RoomAccount.totalID,a.id);
+    	for(FileChat a:FileTable.All())
+    		FileChat.totalID = Math.max(FileChat.totalID,a.id);
     }
 	static class SocketThread extends Thread{
 	    protected ServerSocket server;

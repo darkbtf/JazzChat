@@ -6,5 +6,6 @@ public class SqlManager {
 		new RoomTable();
 		new RoomAccountTable();
 		new FriendTable();
+		new FileTable();
 	}
 }
