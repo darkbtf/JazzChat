@@ -69,8 +69,10 @@ public class Account extends ActiveRecord {
 	public void online(){
 		if(this.visible==0)
 			return;
+		Util.errorReport("online");
 		for(Account c: friends()){
-			Account tar = Server.accountMap.get(c);
+			Util.errorReport(c.nickname);
+			Account tar = Server.accountMap.get(c.id);
 			if(tar !=null)
 				tar.sendMessage(new String[]{"friend","online",this.id+""});
 		}
@@ -80,7 +82,7 @@ public class Account extends ActiveRecord {
 		if(this.visible==0)
 			return;
 		for(Account c: friends()){
-			Account tar = Server.accountMap.get(c);
+			Account tar = Server.accountMap.get(c.id);
 			if(tar !=null)
 				tar.sendMessage(new String[]{"friend","offline",this.id+""});
 		}
@@ -89,7 +91,7 @@ public class Account extends ActiveRecord {
 		this.status = status;
 		this.save();
 		for(Account c: friends()){
-			Account tar = Server.accountMap.get(c);
+			Account tar = Server.accountMap.get(c.id);
 			if(tar !=null)
 				tar.sendMessage(new String[]{"friend","status",this.id+"",status});
 		}
@@ -99,7 +101,7 @@ public class Account extends ActiveRecord {
 		this.nickname = nickname;
 		this.save();
 		for(Account c: friends()){
-			Account tar = Server.accountMap.get(c);
+			Account tar = Server.accountMap.get(c.id);
 			if(tar !=null)
 				tar.sendMessage(new String[]{"friend","name",this.id+"",nickname});
 		}
@@ -129,7 +131,9 @@ public class Account extends ActiveRecord {
 						}
 			        }
 				}catch(IOException e){
+					offline();
 					connecting=false;
+					Server.accountMap.put(id,null);
 					System.out.println("getMessage Error");
 				}
 			}
@@ -163,10 +167,11 @@ public class Account extends ActiveRecord {
 	}
 	
 	public void clone(Account tmp){ // copy data
-		this.nickname = tmp.nickname;
-		this.status   = tmp.status;
 		this.id       = tmp.id;
 		this.password = tmp.password;
+		this.nickname = tmp.nickname;
+		this.status   = tmp.status;
+		this.visible  = tmp.visible;
 		//this.roomMap  = tmp.roomMap;
 	}
 	private Boolean trylogin(){// NOTICE: cmdMgr's read function can only run one command in one time
