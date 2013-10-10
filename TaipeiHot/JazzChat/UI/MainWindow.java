@@ -45,6 +45,18 @@ public class MainWindow extends javax.swing.JFrame {
                     }
                 };
                 jList1.addMouseListener(mouseListener);
+                mouseListener2=new MouseAdapter() {
+                    public void mouseClicked(MouseEvent mouseEvent) {
+                      JList theList = (JList) mouseEvent.getSource();
+                      if (mouseEvent.getClickCount() == 2) {
+                        int index = theList.locationToIndex(mouseEvent.getPoint());
+                        if (index >= 0) {
+                            //Util.errorReport("lala");
+                          AcceptMap.get(pendingList.get(index).id);
+                        }
+                      }
+                    }
+                };
 	}
 
 	/**
@@ -239,6 +251,7 @@ public class MainWindow extends javax.swing.JFrame {
         private ArrayList<String> friendName =new ArrayList<String>();
         DefaultListModel friendModel = new DefaultListModel();
         MouseListener mouseListener ;
+        MouseListener mouseListener2;
         boolean afwIsOpen=false;
         JList friendLsit=new JList();
         public void loginSuccess() {
@@ -341,7 +354,7 @@ public class MainWindow extends javax.swing.JFrame {
             pendingList.add(user);
             pendingModel.addElement(user.getNickname());
             //friendName.add(user.getNickname());
-            acceptFriendWindow.friendListChange(pendingModel,mouseListener);
+            acceptFriendWindow.friendListChange(pendingModel,mouseListener2);
             //acceptFriendWindow.friendList=new JList(pendingModel);
             //acceptFriendWindow.friendList.addMouseListener(mouseListener);
         }
