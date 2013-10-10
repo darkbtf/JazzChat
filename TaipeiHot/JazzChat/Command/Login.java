@@ -17,8 +17,6 @@ public class Login implements Command {
 		} else if (cmd.equals("success")) {
 			cmd = Client.getMessage();
 			Client.mainWindow.loginSuccess();
-			System.out.println(cmd);
-			// TODO(darkbtf): implement this
 		}
 	}
 }
