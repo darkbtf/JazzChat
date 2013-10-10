@@ -50,9 +50,9 @@ public class FriendCommand extends ServerCommand {
 		FriendTable.update(friend);
 		if(Server.accountMap.get(acID)!=null){
 			Server.accountMap.get(acID).sendMessage(new String[]{"friend","response",account.email,"accept"});
-			Server.accountMap.get(acID).sendMessage(new String[]{"friend","show",account.id+"", account.email,account.status,account.isonline()?"true":"false"});
+			Server.accountMap.get(acID).showFriend(account);
 		}
-		account.sendMessage(new String[]{"friend","show",acID+"", ac.email, ac.status,ac.isonline()?"true":"false"});	
+		account.showFriend(ac);	
 		return true;
 	}
 	
