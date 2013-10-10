@@ -24,25 +24,18 @@ public class AccountLogin extends ServerCommand {
 				account.clone(tmp);
 				Server.accountMap.put(account.id, account);
 				System.out.println("login success, become User "+account.id);
-				account.sendMessage(("login").getBytes());
-				account.sendMessage(("success").getBytes());
-				account.sendMessage((""+account.id).getBytes());
-				//TODO Send success message
+				account.sendMessage(new String[]{"login","success",""+account.id,account.nickname,account.status});
 				return true;
 			}
 			else{
-				System.out.println("login fail, wrong password");
-				account.sendMessage("login".getBytes());
-				account.sendMessage("fail".getBytes());
-				account.sendMessage("password".getBytes());
+				Util.errorReport("login fail, wrong password of account "+account.email);
+				account.sendMessage(new String[]{"login","fail","password"});
 				return false;
 			}
 	    }
 		else{
-			System.out.println("login fail, wrong username");
-			account.sendMessage("login".getBytes());
-			account.sendMessage("fail".getBytes());
-			account.sendMessage("username".getBytes());
+			Util.errorReport("login fail, wrong username:"+account.email);
+			account.sendMessage(new String[]{"login","fail","username"});
 			return false;
 		}
 	}

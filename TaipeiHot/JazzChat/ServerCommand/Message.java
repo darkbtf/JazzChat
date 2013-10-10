@@ -28,10 +28,7 @@ public class Message extends ServerCommand {
 		String msg = account.getMessage();
 		for(RoomAccount a : RoomAccountTable.where("room_id="+room_id)){
 			Account ac = Server.accountMap.get(a.account_id);
-			ac.sendMessage("message".getBytes());
-			ac.sendMessage((""+r.id).getBytes());
-			ac.sendMessage((""+account.id).getBytes());
-			ac.sendMessage(msg.getBytes());
+			ac.sendMessage(new String[]{"message",""+r.id,""+account.id,msg});
 		}
 		return true;
 	}

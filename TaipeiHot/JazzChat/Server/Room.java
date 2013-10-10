@@ -1,6 +1,7 @@
 package TaipeiHot.JazzChat.Server;
 
 import TaipeiHot.JazzChat.Server.JdbcMysql.ActiveRecord;
+import TaipeiHot.JazzChat.Server.JdbcMysql.RoomTable;
 
 public class Room extends ActiveRecord{
 	//public ArrayList<Integer> accountBelong = new ArrayList<Integer>();
@@ -10,5 +11,8 @@ public class Room extends ActiveRecord{
 	public Room(int id, String name){
 		this.id = id;
 		this.name = name;
+	}
+	public void save(){
+		RoomTable.update(this);
 	}
 }
