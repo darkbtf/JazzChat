@@ -13,8 +13,9 @@ public class MessageCommand implements Command {
 		String content = Client.getMessage();
 		RoomWindow room = Client.mainWindow.getRoomById(roomId);
 		User user = Client.getUserById(userId);
-		// System.out.println(Integer.toString(userId));
-		room.showMessage(user.getNickname(), content);
+		System.out.println(Integer.toString(userId));
+		if (userId != Client.user.id)
+			room.showMessage(user.getNickname(), content);
 	}
 
 }
