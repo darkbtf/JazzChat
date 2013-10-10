@@ -20,6 +20,7 @@ public class UiTester {
 		mainWindow.newRoom(123, "me", userName);
 		mainWindow.newRoom(234, "me", userName);
 		mainWindow.loginShow();
+                mainWindow.loginSuccess();
 		// xx.closeDialog();
 		while (true) {
 
