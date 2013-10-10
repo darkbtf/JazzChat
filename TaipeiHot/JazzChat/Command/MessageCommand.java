@@ -13,6 +13,7 @@ public class MessageCommand implements Command {
 		String content = Client.getMessage();
 		RoomWindow room = Client.mainWindow.getRoomById(roomId);
 		User user = Client.getUserById(userId);
+		System.out.println(Integer.toString(userId));
 		room.showMessage(user.getNickname(), content);
 	}
 

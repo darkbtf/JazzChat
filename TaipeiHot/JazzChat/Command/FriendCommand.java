@@ -12,7 +12,9 @@ public class FriendCommand implements Command {
 			int userId = Integer.parseInt(Client.getMessage());
 			String userName = Client.getMessage();
 			String greeting = Client.getMessage();
-			Client.friendsToAdd.add(new User(userName, greeting));
+			User tmpUser = new User(userName, greeting);
+			Client.friendsToAdd.add(tmpUser);
+			Client.mainWindow.pendingListShow(tmpUser);
 			Client.mainWindow.acceptFriendShow(userId, userName, greeting);
 		} else if (cmd.equals("response")) {
 			String userName = Client.getMessage();
@@ -31,6 +33,7 @@ public class FriendCommand implements Command {
 			String status = Client.getMessage();
 			User tmpUser = new User(userName, status);
 			tmpUser.id = userId;
+			System.out.println(Integer.toString(userId) + " " + userName);
 			Client.userSet.put(userId, tmpUser);
 			Client.mainWindow.friendShow(tmpUser);
 		} else if (cmd.equals("online")) {
