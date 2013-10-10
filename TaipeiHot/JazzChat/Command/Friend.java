@@ -22,12 +22,15 @@ public class Friend implements Command {
 			} else if (response.equals("reject")) {
 				Client.mainWindow.addFriendFail("reject");
 			} else if (response.equals("fail")) {
-				Client.mainWindow.addFriendFail("fail");
+				String reason = Client.getMessage();
+				Client.mainWindow.addFriendFail(reason);
 			}
 		} else if (cmd.equals("show")) {
 			int userId = Integer.parseInt(Client.getMessage());
 			String userName = Client.getMessage();
-			User tmpUser = new User(userName, "");
+			String status = Client.getMessage();
+			User tmpUser = new User(userName, status);
+			tmpUser.id = userId;
 			Client.userSet.put(userId, tmpUser);
 			Client.mainWindow.friendShow(tmpUser);
 		} else if (cmd.equals("online")) {

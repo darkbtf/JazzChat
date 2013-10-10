@@ -1,5 +1,6 @@
 package TaipeiHot.JazzChat.Command;
 
+import TaipeiHot.JazzChat.User;
 import TaipeiHot.JazzChat.Client.Client;
 
 public class Login implements Command {
@@ -15,7 +16,11 @@ public class Login implements Command {
 			else
 				throw new CommandParsingErrorException("Login Failed");
 		} else if (cmd.equals("success")) {
-			cmd = Client.getMessage();
+			int id = Integer.parseInt(Client.getMessage());
+			String myName = Client.getMessage();
+			String status = Client.getMessage();
+			Client.user = new User(myName, status);
+			Client.user.id = id;
 			Client.mainWindow.loginSuccess();
 		}
 	}
