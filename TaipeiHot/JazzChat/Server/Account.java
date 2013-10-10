@@ -60,6 +60,10 @@ public class Account extends ActiveRecord {
 	public void login(){
 		for(Account c:friends())
 			sendMessage(new String[]{"friend","show",c.id+"",c.nickname,c.status,c.isonline()?"true":"false"});
+		for(Friend f:FriendTable.where("(account_id1=? || account_id2=?) && status=?",new String[]{id+"",id+"",status})){
+			Account c = AccountTable.find(f.another(id));
+			sendMessage(new String[]{"friend","add",c.id+"",c.nickname,f.message});
+		}
 		online();
 	}
 	public void save(){
@@ -69,7 +73,6 @@ public class Account extends ActiveRecord {
 	public void online(){
 		if(this.visible==0)
 			return;
-		Util.errorReport("online");
 		for(Account c: friends()){
 			Util.errorReport(c.nickname);
 			Account tar = Server.accountMap.get(c.id);
@@ -105,6 +108,14 @@ public class Account extends ActiveRecord {
 			if(tar !=null)
 				tar.sendMessage(new String[]{"friend","name",this.id+"",nickname});
 		}
+	}
+	
+	private Account[] friends(String status){
+		Friend friends[]=FriendTable.where("(account_id1=? || account_id2=?) && status=?",new String[]{id+"",id+"",status});
+		Account ret[] = new Account[friends.length];
+		for( int i=0;i<friends.length;i++)
+			ret[i] = AccountTable.find(friends[i].another(id));
+		return ret;
 	}
 	
 	private Account[] friends(){
