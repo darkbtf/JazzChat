@@ -16,5 +16,7 @@ public class Friend extends ActiveRecord {
 		this.status = status;
 		this.message = message;
 	}
-	
+	public int another(int _id){
+		return account_id1+account_id2-_id;
+	}
 }
