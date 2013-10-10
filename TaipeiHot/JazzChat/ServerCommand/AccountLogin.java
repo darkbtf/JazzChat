@@ -25,6 +25,7 @@ public class AccountLogin extends ServerCommand {
 				Server.accountMap.put(account.id, account);
 				System.out.println("login success, become User "+account.id);
 				account.sendMessage(new String[]{"login","success",""+account.id,account.nickname,account.status});
+				account.login();
 				return true;
 			}
 			else{

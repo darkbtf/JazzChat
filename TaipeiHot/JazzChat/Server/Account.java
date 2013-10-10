@@ -11,6 +11,7 @@ import java.util.Queue;
 import TaipeiHot.JazzChat.Util;
 import TaipeiHot.JazzChat.Server.JdbcMysql.AccountTable;
 import TaipeiHot.JazzChat.Server.JdbcMysql.ActiveRecord;
+import TaipeiHot.JazzChat.Server.JdbcMysql.FriendTable;
 import TaipeiHot.JazzChat.ServerCommand.ServerCommandManager;
 
 public class Account extends ActiveRecord {
@@ -51,7 +52,16 @@ public class Account extends ActiveRecord {
 		this.status = status;
 		this.visible = visible;
 	}
-	
+	public boolean isonline(){
+		if(visible==0)return false;
+		if(Server.accountMap.get(id)==null)return false;
+		return true;
+	}
+	public void login(){
+		for(Account c:friends())
+			sendMessage(new String[]{"friend","show",c.id+"",c.nickname,c.status,c.isonline()?"true":"false"});
+		online();
+	}
 	public void save(){
 		AccountTable.update(this);
 	}
@@ -96,7 +106,11 @@ public class Account extends ActiveRecord {
 	}
 	
 	private Account[] friends(){
-		return AccountTable.where("account_id1=? || account_id2=?",new String[]{id+"",id+""});
+		Friend friends[]=FriendTable.where("(account_id1=? || account_id2=?) && status=?",new String[]{id+"",id+"","accept"});
+		Account ret[] = new Account[friends.length];
+		for( int i=0;i<friends.length;i++)
+			ret[i] = AccountTable.find(friends[i].another(id));
+		return ret;
 	}
 	private void openInputThread(){
 		getMessageToBuffer=new Thread(new Runnable(){
