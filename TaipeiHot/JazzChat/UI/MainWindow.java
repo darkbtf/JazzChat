@@ -4,6 +4,7 @@
  */
 package TaipeiHot.JazzChat.UI;
 
+import TaipeiHot.JazzChat.User;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -480,6 +481,16 @@ public class MainWindow extends javax.swing.JFrame {
 		}
 
 	}
+        
+        public void friendListShow(Map<Integer,User> user){
+            
+        }
+        public void setOnlineById(Integer userId){
+            
+        }
+        public void setOfflineById(Integer userId){
+            
+        }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel FreindPanel;
