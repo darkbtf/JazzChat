@@ -137,13 +137,10 @@ public class Client {
 				new String[] { "message", Integer.toString(roomId), content });
 	}
 
-	public static void setOnline() {
-		ClientUtils.sendStringsToServer(out, new String[] { "user", "online" });
-	}
-
-	public static void setOffline() {
-		ClientUtils
-				.sendStringsToServer(out, new String[] { "user", "offline" });
+	public static void setVisible(boolean visible) {
+		String trueOrFalse = visible ? "true" : "false";
+		ClientUtils.sendStringsToServer(out, new String[] { "user", "visible",
+				trueOrFalse });
 	}
 
 	public static User getUserById(int userId) {

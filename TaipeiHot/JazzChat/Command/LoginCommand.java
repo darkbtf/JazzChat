@@ -3,7 +3,7 @@ package TaipeiHot.JazzChat.Command;
 import TaipeiHot.JazzChat.User;
 import TaipeiHot.JazzChat.Client.Client;
 
-public class Login implements Command {
+public class LoginCommand implements Command {
 	@Override
 	public void exec() throws CommandParsingErrorException {
 		String cmd = Client.getMessage();
