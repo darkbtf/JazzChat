@@ -8,6 +8,9 @@ import java.util.Map;
 
 import TaipeiHot.JazzChat.Parameter;
 import TaipeiHot.JazzChat.Server.JdbcMysql.AccountTable;
+import TaipeiHot.JazzChat.Server.JdbcMysql.FriendTable;
+import TaipeiHot.JazzChat.Server.JdbcMysql.RoomAccountTable;
+import TaipeiHot.JazzChat.Server.JdbcMysql.RoomTable;
 import TaipeiHot.JazzChat.Server.JdbcMysql.SqlManager;
 
 public class Server {
@@ -23,9 +26,15 @@ public class Server {
     	(new SocketThread()).start();
     	server.equals(new Integer(123)); // to remove unused warning = =
     }
-    static private void readDataFromSql(){
+    static private void readDataFromSql(){//TODO save max id to sql? or some much good method
     	for(Account a:AccountTable.All())
     		Account.totalID = Math.max(Account.totalID,a.id);
+    	for(Friend a:FriendTable.All())
+    		Friend.totalID = Math.max(Friend.totalID,a.id);
+    	for(Room a:RoomTable.All())
+    		Room.totalID = Math.max(Room.totalID,a.id);
+    	for(RoomAccount a:RoomAccountTable.All())
+    		RoomAccount.totalID = Math.max(RoomAccount.totalID,a.id);
     }
 	static class SocketThread extends Thread{
 	    protected ServerSocket server;

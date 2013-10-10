@@ -17,6 +17,8 @@ public class ServerCommandManager {
 		cmdMap.put("login", new AccountLogin(account));
 		cmdMap.put("room", new RoomCommand(account));
 		cmdMap.put("message", new Message(account));
+		cmdMap.put("friend", new FriendCommand(account));
+		cmdMap.put("user", new UserCommand(account));
 	}
 
 	public Boolean parseCmd(String cmd) {

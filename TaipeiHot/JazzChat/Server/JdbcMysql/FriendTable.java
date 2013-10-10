@@ -7,52 +7,45 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import TaipeiHot.JazzChat.Util;
-import TaipeiHot.JazzChat.Server.Account;
+import TaipeiHot.JazzChat.Server.Friend;
 
-public class AccountTable extends Table{
-	/*private String createdbSQL = "CREATE TABLE User (" + 
-    "    id     INTEGER " + 
-    "  , name    VARCHAR(20) " + 
-    "  , passwd  VARCHAR(20))";
-	private String insertdbSQL = "insert into User(id,name,passwd) " + 
-      "select ifNULL(max(id),0)+1,?,? FROM User"; */
-	//private String selectSQL = "select * from User ";
+public class FriendTable extends Table{
 	static private String tableName = "";
-	static private String dropdbSQL, createdbSQL, insertdbSQL, selectSQL, updateSQL;
+	static private String dropdbSQL, createdbSQL, insertdbSQL, selectSQL, updateSQL, deleteSQL;
 	static private ArrayList<ColumnElement> columns = new ArrayList<ColumnElement>();
 	static private Statement stat = null; 
 	static private ResultSet rs = null; 
 	static private PreparedStatement pst = null;
-	public AccountTable() {
+	public FriendTable() {
 		super();
-		tableName="account";
-		columns.add(new ColumnElement("email","VARCHAR(40)"));
-		columns.add(new ColumnElement("password","VARCHAR(20)"));
-		columns.add(new ColumnElement("nickname","VARCHAR(40)"));
-		columns.add(new ColumnElement("status","TINYTEXT"));
-		columns.add(new ColumnElement("visible","TINYINT"));
+		tableName="friend";
+		columns.add(new ColumnElement("account_id1","INTEGER"));
+		columns.add(new ColumnElement("account_id2","INTEGER"));
+		columns.add(new ColumnElement("status","VARCHAR(30)"));
+		columns.add(new ColumnElement("message","TINYTEXT"));
 		dropdbSQL = "DROP TABLE IF EXISTS "+tableName; 
 		dropTable(dropdbSQL);
 		try {
 			createTable(createdbSQL, tableName, columns, stat);
 		} catch (SQLException e) {
+			Util.errorReport("creat fail");
 		}
-		insertdbSQL = makeInsertdbCmd( tableName, columns);
+		insertdbSQL = makeInsertdbCmd(tableName, columns);
+		Util.errorReport(insertdbSQL);
 		selectSQL = "select * from "+tableName+" ";
 		updateSQL = makeUpdatedbCmd(tableName, columns);
+		deleteSQL = "delete from "+tableName+" where ";
 	}
 	//新增資料 
-	static public void insert(Account a) { 
+	static public void insert(Friend a) { 
 		try {
-			Util.errorReport(insertdbSQL);
 			pst = con.prepareStatement(insertdbSQL);
-			if(a.id==0)a.id=++Account.totalID;
+			if(a.id==0)a.id=++Friend.totalID;
 			pst.setInt(1, a.id);
-			pst.setString(2, a.email); 
-			pst.setString(3, a.password); 
-			pst.setString(4, a.nickname); 
-			pst.setString(5, a.status); 
-			pst.setShort(6, a.visible);
+			pst.setInt(2, a.account_id1);
+			pst.setInt(3, a.account_id2);
+			pst.setString(4, a.status);
+			pst.setString(5, a.message);
 			pst.executeUpdate(); 
 		} 
 		catch(SQLException e) { 
@@ -62,16 +55,15 @@ public class AccountTable extends Table{
 			Close(); 
 		} 
 	} 
-	static public void update(Account a) { 
+	
+	static public void update(Friend a) { 
 		try {
 			pst = con.prepareStatement(updateSQL);
-			pst.setString(1, a.email);
-			pst.setString(2, a.password);
-			pst.setString(3, a.nickname);
-			pst.setString(4, a.status);
-			pst.setShort(5, a.visible);
-			
-			pst.setInt(6, a.id);
+			pst.setInt(1, a.account_id1);
+			pst.setInt(2, a.account_id2);
+			pst.setString(3, a.status);
+			pst.setString(4, a.message);
+			pst.setInt(5, a.id);
 			pst.executeUpdate(); 
 		} 
 		catch(SQLException e) { 
@@ -81,6 +73,31 @@ public class AccountTable extends Table{
 			Close(); 
 		} 
 	} 
+	static public void delete(Friend f){  
+		try {
+			pst = con.prepareStatement(deleteSQL+"id="+f.id);////////
+			pst.executeUpdate(); 
+		} 
+		catch(SQLException e) { 
+			Util.errorReport("deleteDB Exception :" + e.toString());
+		} 
+		finally { 
+			Close(); 
+		} 
+	}
+	
+	static public void delete(String format){
+		try {
+			pst = con.prepareStatement(deleteSQL+format);
+			pst.executeUpdate(); 
+		} 
+		catch(SQLException e) { 
+			Util.errorReport("deleteDB Exception :" + e.toString());
+		} 
+		finally { 
+			Close(); 
+		} 
+	}
 	static private void Close() { 
 		try{ 
 			if(rs!=null) { 
@@ -100,17 +117,14 @@ public class AccountTable extends Table{
 			Util.errorReport("Close Exception :" + e.toString()); 
 		} 
 	} 
-	static public Account[] All(){
-		ArrayList<Account> ret = new ArrayList<Account>();
+	static public ArrayList<Friend> All(){
+		ArrayList<Friend> ret = new ArrayList<Friend>();
 		try { 
 			stat = con.createStatement(); 
-			rs = stat.executeQuery(selectSQL);
+			rs = stat.executeQuery(selectSQL); 
 			while(rs.next()) 
 				ret.add(instance(rs));
-			Account a[]=new Account[ret.size()];
-			for(int i=0;i<ret.size();i++)
-				a[i]=ret.get(i);
-			return a;
+			return ret;
 		} 
 		catch(SQLException e){ 
 			Util.errorReport("AllDB Exception :" + e.toString()); 
@@ -118,21 +132,21 @@ public class AccountTable extends Table{
 		finally { 
 			Close(); 
 		}
-		return new Account[0]; 
+		return ret; 
 	}
-	static public Account[] where(String format, String[]parameters){
-		ArrayList<Account> ret = new ArrayList<Account>();
+	static public Friend[] where(String format, String[]parameters){
+		ArrayList<Friend> ret = new ArrayList<Friend>();
 		try { 
 			String cmd = new String(selectSQL);
 			cmd += "WHERE BINARY "+format;
 			pst = con.prepareStatement(cmd);
 			for(int i=0;i<parameters.length;i++)
-				pst.setString(i+1, parameters[i]);
+				pst.setString(i+1, parameters[i]); 
 			rs = pst.executeQuery(); 
 			while(rs.next()) { 
 				ret.add(instance(rs));
 			} 
-			Account a[]=new Account[ret.size()];
+			Friend a[]=new Friend[ret.size()];
 			for(int i=0;i<ret.size();i++)
 				a[i]=ret.get(i);
 			return a;
@@ -143,20 +157,19 @@ public class AccountTable extends Table{
 		finally { 
 			Close(); 
 		}
-		return new Account[0]; 
+		return new Friend[0]; 
 	}
-	static public Account[] where(String format){
-		ArrayList<Account> ret = new ArrayList<Account>();
+	static public Friend[] where(String format){
+		ArrayList<Friend> ret = new ArrayList<Friend>();
 		try { 
 			String cmd = new String(selectSQL);
 			cmd += "WHERE BINARY "+format;
-			Util.errorReport(cmd);
 			pst = con.prepareStatement(cmd);
 			rs = pst.executeQuery(); 
 			while(rs.next()) { 
 				ret.add(instance(rs));
 			} 
-			Account a[]=new Account[ret.size()];
+			Friend a[]=new Friend[ret.size()];
 			for(int i=0;i<ret.size();i++)
 				a[i]=ret.get(i);
 			return a;
@@ -167,9 +180,9 @@ public class AccountTable extends Table{
 		finally { 
 			Close(); 
 		}
-		return new Account[0]; 
+		return new Friend[0]; 
 	}
-	static public Account find(int id){
+	static public Friend find(int id){
 		try { 
 			stat = con.createStatement(); 
 			rs = stat.executeQuery(selectSQL+"where id="+id);
@@ -182,33 +195,14 @@ public class AccountTable extends Table{
 		} 
 		return null;
 	}
-	static public void SelectTable(){ 
-		try { 
-			stat = con.createStatement(); 
-			rs = stat.executeQuery(selectSQL); 
-			System.out.println("ID\t\tName\t\tPASSWORD"); 
-			while(rs.next()) { 
-				System.out.println(rs.getInt("id")+"\t\t"+ 
-						rs.getString("email")+"\t\t"+rs.getString("password")); 
-			} 
-		} 
-		catch(SQLException e){ 
-			Util.errorReport("Select Exception :" + e.toString()); 
-		} 
-		finally { 
-			Close(); 
-		} 
-	}
-	static public Account instance(ResultSet rs){
+	static public Friend instance(ResultSet rs){
 		try {
-			return new Account(rs.getInt("id"),
-					rs.getString("email"),
-					rs.getString("password"),
-					rs.getString("nickname"),
+			return new Friend(rs.getInt("id"),
+					rs.getInt("account_id1"),
+					rs.getInt("account_id2"),
 					rs.getString("status"),
-					rs.getShort("visible"));
+					rs.getString("message"));
 		} catch (SQLException e) {
-			Util.errorReport("instance error");
 		}
 		return null;
 	}

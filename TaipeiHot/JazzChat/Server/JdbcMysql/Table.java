@@ -10,7 +10,7 @@ import TaipeiHot.JazzChat.Util;
 /*
  * To add/remove a column, you need change:
  * constructor()
- * insert(), instance()
+ * insert(), instance(), update()
  * that class extends ActiveRecord
  */
 public class Table { 
@@ -66,6 +66,18 @@ public class Table {
 		insertdbSQL += ")";
 		Util.errorReport(insertdbSQL);
 		return insertdbSQL;
+	}
+	
+	protected String makeUpdatedbCmd(String tableName, ArrayList<ColumnElement> columns){
+		String ret = "update "+tableName+" set ";
+		for(int i=0;i<columns.size();i++){
+			ret += columns.get(i).name+"=? ";
+			if(i!=columns.size()-1)
+				ret+=",";
+		}
+		ret+= "where id=?";
+		Util.errorReport(ret);
+		return ret;
 	}
 	class ColumnElement{
 		String name;

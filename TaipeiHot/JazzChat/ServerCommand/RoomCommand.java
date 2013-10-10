@@ -25,7 +25,7 @@ public class RoomCommand extends ServerCommand {
 				return renameRoom();
 			return true;
 		}catch (NumberFormatException e){
-			return Util.errorReport("Wrong Format parameter in CreateRoom");
+			return Util.errorReport("error in RoomCommand");
 		}
 	}
 	private Boolean createRoom(){
@@ -80,7 +80,7 @@ public class RoomCommand extends ServerCommand {
 		String name = account.getMessage();
 		Room r = RoomTable.find(room_id);
 		r.name = name;
-		//TODO Table.save
+		r.save();
 		return true;
 	}
 }
