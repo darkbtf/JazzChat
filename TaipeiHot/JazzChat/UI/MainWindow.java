@@ -481,7 +481,9 @@ public class MainWindow extends javax.swing.JFrame {
 		}
 
 	}
-        
+        public void friendShow(User user){
+            
+        }
         public void friendListShow(Map<Integer,User> user){
             
         }
