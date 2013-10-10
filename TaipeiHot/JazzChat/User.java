@@ -2,6 +2,7 @@ package TaipeiHot.JazzChat;
 
 public class User {
 	public int id;
+	protected boolean online;
 	protected String email, nickname, status;
 	protected String password;
 
@@ -20,6 +21,10 @@ public class User {
 
 	public String getNickname() {
 		return nickname;
+	}
+
+	public void setOnline(boolean online) {
+		this.online = online;
 	}
 
 	public String getMessage() {

@@ -2,7 +2,7 @@ package TaipeiHot.JazzChat.Command;
 
 import TaipeiHot.JazzChat.Client.Client;
 
-public class Register implements Command {
+public class RegisterCommand implements Command {
 	@Override
 	public void exec() {
 		String cmd = Client.getMessage();

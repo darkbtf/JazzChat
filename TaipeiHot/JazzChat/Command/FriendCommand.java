@@ -3,7 +3,7 @@ package TaipeiHot.JazzChat.Command;
 import TaipeiHot.JazzChat.User;
 import TaipeiHot.JazzChat.Client.Client;
 
-public class Friend implements Command {
+public class FriendCommand implements Command {
 
 	@Override
 	public void exec() throws CommandParsingErrorException {
