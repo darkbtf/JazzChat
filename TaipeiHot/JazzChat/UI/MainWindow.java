@@ -4,7 +4,12 @@
  */
 package TaipeiHot.JazzChat.UI;
 
+import TaipeiHot.JazzChat.Client.Client;
 import TaipeiHot.JazzChat.User;
+import TaipeiHot.JazzChat.Util;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.sql.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,9 +29,22 @@ public class MainWindow extends javax.swing.JFrame {
 
 
 	public MainWindow() {
-                friendModel.addElement("tesing");
-		initComponents();
                 
+                //friendModel.addElement("tesing");
+		initComponents();
+                mouseListener=new MouseAdapter() {
+                    public void mouseClicked(MouseEvent mouseEvent) {
+                      JList theList = (JList) mouseEvent.getSource();
+                      if (mouseEvent.getClickCount() == 2) {
+                        int index = theList.locationToIndex(mouseEvent.getPoint());
+                        if (index >= 0) {
+                            //Util.errorReport("lala");
+                          Client.openPrivateRoom(userList.get(index).id);
+                        }
+                      }
+                    }
+                };
+                jList1.addMouseListener(mouseListener);
 	}
 
 	/**
@@ -184,6 +202,7 @@ public class MainWindow extends javax.swing.JFrame {
         public ArrayList<User> userList =new  ArrayList<User>();
         private ArrayList<String> friendName =new ArrayList<String>();
         DefaultListModel friendModel = new DefaultListModel();
+        MouseListener mouseListener ;
         JList friendLsit=new JList();
         public void loginSuccess() {
 		loginDialog.setVisible(false);
@@ -274,9 +293,9 @@ public class MainWindow extends javax.swing.JFrame {
         public void friendShow(User user){
             userList.add(user);
             friendModel.addElement(user.getNickname());
-            friendName.add(user.getNickname());
+            //friendName.add(user.getNickname());
             jList1=new JList(friendModel);
-            
+            jList1.addMouseListener(mouseListener);
         }
         public void friendListShow(Map<Integer,User> user){
             
