@@ -60,7 +60,7 @@ public class Account extends ActiveRecord {
 	public void login(){
 		for(Account c:friends())
 			sendMessage(new String[]{"friend","show",c.id+"",c.nickname,c.status,c.isonline()?"true":"false"});
-		for(Friend f:FriendTable.where("(account_id1=? || account_id2=?) && status=?",new String[]{id+"",id+"",status})){
+		for(Friend f:FriendTable.where("account_id2=? && status=?",new String[]{id+"","waiting"})){
 			Account c = AccountTable.find(f.another(id));
 			sendMessage(new String[]{"friend","add",c.id+"",c.nickname,f.message});
 		}

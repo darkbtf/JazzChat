@@ -44,22 +44,24 @@ public class FriendCommand extends ServerCommand {
 	}
 	private Boolean acceptFriend(){
 		int acID = Integer.valueOf(account.getMessage());
-		Account ac = Server.accountMap.get(acID);
-		ac.sendMessage(new String[]{"friend","response",account.email,"accept"});
+		Account ac = AccountTable.find(acID);
 		Friend friend=FriendTable.where("account_id1="+acID+" && account_id2="+account.id)[0];
 		friend.status = "accept";
 		FriendTable.update(friend);
-		ac.sendMessage(new String[]{"friend","show",account.id+"", account.email,account.status});
-		account.sendMessage(new String[]{"friend","show",acID+"", ac.email, ac.status});
+		if(Server.accountMap.get(acID)!=null){
+			Server.accountMap.get(acID).sendMessage(new String[]{"friend","response",account.email,"accept"});
+			Server.accountMap.get(acID).sendMessage(new String[]{"friend","show",account.id+"", account.email,account.status,account.isonline()?"true":"false"});
+		}
+		account.sendMessage(new String[]{"friend","show",acID+"", ac.email, ac.status,ac.isonline()?"true":"false"});	
 		return true;
 	}
 	
 	private Boolean rejectFriend(){
 		int acID = Integer.valueOf(account.getMessage());
 		Account ac = Server.accountMap.get(acID);
-		ac.sendMessage(new String[]{"friend","response",account.email,"reject"});
+		if(ac!=null)
+			ac.sendMessage(new String[]{"friend","response",account.email,"reject"});
 		FriendTable.delete("account_id1="+acID+" && account_id2="+account.id);
 		return true;
 	}
-	
 }
