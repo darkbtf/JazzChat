@@ -11,6 +11,7 @@ import java.util.Queue;
 import TaipeiHot.JazzChat.Util;
 import TaipeiHot.JazzChat.Server.JdbcMysql.AccountTable;
 import TaipeiHot.JazzChat.Server.JdbcMysql.ActiveRecord;
+import TaipeiHot.JazzChat.Server.JdbcMysql.FriendTable;
 import TaipeiHot.JazzChat.ServerCommand.ServerCommandManager;
 
 public class Account extends ActiveRecord {
@@ -51,7 +52,20 @@ public class Account extends ActiveRecord {
 		this.status = status;
 		this.visible = visible;
 	}
-	
+	public boolean isonline(){
+		if(visible==0)return false;
+		if(Server.accountMap.get(id)==null)return false;
+		return true;
+	}
+	public void login(){
+		for(Account c:friends())
+			sendMessage(new String[]{"friend","show",c.id+"",c.nickname,c.status,c.isonline()?"true":"false"});
+		for(Friend f:FriendTable.where("(account_id1=? || account_id2=?) && status=?",new String[]{id+"",id+"",status})){
+			Account c = AccountTable.find(f.another(id));
+			sendMessage(new String[]{"friend","add",c.id+"",c.nickname,f.message});
+		}
+		online();
+	}
 	public void save(){
 		AccountTable.update(this);
 	}
@@ -60,7 +74,8 @@ public class Account extends ActiveRecord {
 		if(this.visible==0)
 			return;
 		for(Account c: friends()){
-			Account tar = Server.accountMap.get(c);
+			Util.errorReport(c.nickname);
+			Account tar = Server.accountMap.get(c.id);
 			if(tar !=null)
 				tar.sendMessage(new String[]{"friend","online",this.id+""});
 		}
@@ -70,7 +85,7 @@ public class Account extends ActiveRecord {
 		if(this.visible==0)
 			return;
 		for(Account c: friends()){
-			Account tar = Server.accountMap.get(c);
+			Account tar = Server.accountMap.get(c.id);
 			if(tar !=null)
 				tar.sendMessage(new String[]{"friend","offline",this.id+""});
 		}
@@ -79,7 +94,7 @@ public class Account extends ActiveRecord {
 		this.status = status;
 		this.save();
 		for(Account c: friends()){
-			Account tar = Server.accountMap.get(c);
+			Account tar = Server.accountMap.get(c.id);
 			if(tar !=null)
 				tar.sendMessage(new String[]{"friend","status",this.id+"",status});
 		}
@@ -89,14 +104,26 @@ public class Account extends ActiveRecord {
 		this.nickname = nickname;
 		this.save();
 		for(Account c: friends()){
-			Account tar = Server.accountMap.get(c);
+			Account tar = Server.accountMap.get(c.id);
 			if(tar !=null)
 				tar.sendMessage(new String[]{"friend","name",this.id+"",nickname});
 		}
 	}
 	
+	private Account[] friends(String status){
+		Friend friends[]=FriendTable.where("(account_id1=? || account_id2=?) && status=?",new String[]{id+"",id+"",status});
+		Account ret[] = new Account[friends.length];
+		for( int i=0;i<friends.length;i++)
+			ret[i] = AccountTable.find(friends[i].another(id));
+		return ret;
+	}
+	
 	private Account[] friends(){
-		return AccountTable.where("account_id1=? || account_id2=?",new String[]{id+"",id+""});
+		Friend friends[]=FriendTable.where("(account_id1=? || account_id2=?) && status=?",new String[]{id+"",id+"","accept"});
+		Account ret[] = new Account[friends.length];
+		for( int i=0;i<friends.length;i++)
+			ret[i] = AccountTable.find(friends[i].another(id));
+		return ret;
 	}
 	private void openInputThread(){
 		getMessageToBuffer=new Thread(new Runnable(){
@@ -115,7 +142,9 @@ public class Account extends ActiveRecord {
 						}
 			        }
 				}catch(IOException e){
+					offline();
 					connecting=false;
+					Server.accountMap.put(id,null);
 					System.out.println("getMessage Error");
 				}
 			}
@@ -149,10 +178,11 @@ public class Account extends ActiveRecord {
 	}
 	
 	public void clone(Account tmp){ // copy data
-		this.nickname = tmp.nickname;
-		this.status   = tmp.status;
 		this.id       = tmp.id;
 		this.password = tmp.password;
+		this.nickname = tmp.nickname;
+		this.status   = tmp.status;
+		this.visible  = tmp.visible;
 		//this.roomMap  = tmp.roomMap;
 	}
 	private Boolean trylogin(){// NOTICE: cmdMgr's read function can only run one command in one time
