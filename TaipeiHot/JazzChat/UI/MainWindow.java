@@ -62,6 +62,7 @@ public class MainWindow extends javax.swing.JFrame {
         jToggleButton1 = new javax.swing.JToggleButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList();
+        afwButton = new javax.swing.JToggleButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -104,6 +105,18 @@ public class MainWindow extends javax.swing.JFrame {
         jList1.setModel(friendModel);
         jScrollPane1.setViewportView(jList1);
 
+        afwButton.setText("Wating Friend");
+        afwButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                afwButtonMouseClicked(evt);
+            }
+        });
+        afwButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                afwButtonActionPerformed(evt);
+            }
+        });
+
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
 
@@ -121,11 +134,17 @@ public class MainWindow extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(90, 90, 90))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(afwButton)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(45, 45, 45)
+                .addGap(33, 33, 33)
+                .addComponent(afwButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(64, 64, 64)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -134,6 +153,23 @@ public class MainWindow extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void afwButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_afwButtonActionPerformed
+        // TODO add your handling code here:
+        //acceptFriendWindow.setVisible(true);
+    }//GEN-LAST:event_afwButtonActionPerformed
+
+    private void afwButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_afwButtonMouseClicked
+        // TODO add your handling code here:
+        if(afwIsOpen){
+            acceptFriendWindow.setVisible(false);
+            afwIsOpen=false;
+        }
+        else{
+            acceptFriendWindow.setVisible(true);
+            afwIsOpen=true;
+        }
+    }//GEN-LAST:event_afwButtonMouseClicked
 
 	private void jPanel2MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jPanel2MouseClicked
 		System.out.println("hahah");
@@ -203,11 +239,12 @@ public class MainWindow extends javax.swing.JFrame {
         private ArrayList<String> friendName =new ArrayList<String>();
         DefaultListModel friendModel = new DefaultListModel();
         MouseListener mouseListener ;
+        boolean afwIsOpen=false;
         JList friendLsit=new JList();
         public void loginSuccess() {
 		loginDialog.setVisible(false);
 		setVisible(true);
-                acceptFriendWindow.setVisible(true);
+                //acceptFriendWindow.setVisible(true);
 	}
 	public void loginFail(String messege) {
 		loginDialog.setErrorMessege(messege);
@@ -297,6 +334,17 @@ public class MainWindow extends javax.swing.JFrame {
             jList1=new JList(friendModel);
             jList1.addMouseListener(mouseListener);
         }
+        
+        private ArrayList<User> pendingList=new ArrayList<User>();
+        private DefaultListModel pendingModel=new DefaultListModel();
+        public void pendingListShow(User user){
+            pendingList.add(user);
+            pendingModel.addElement(user.getNickname());
+            //friendName.add(user.getNickname());
+            acceptFriendWindow.friendListChange(pendingModel,mouseListener);
+            //acceptFriendWindow.friendList=new JList(pendingModel);
+            //acceptFriendWindow.friendList.addMouseListener(mouseListener);
+        }
         public void friendListShow(Map<Integer,User> user){
             
         }
@@ -309,6 +357,7 @@ public class MainWindow extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addFirendButton;
+    private javax.swing.JToggleButton afwButton;
     private javax.swing.JList jList1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
