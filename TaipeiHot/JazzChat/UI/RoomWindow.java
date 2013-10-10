@@ -4,6 +4,8 @@
  */
 package TaipeiHot.JazzChat.UI;
 
+import TaipeiHot.JazzChat.Client.Client;
+import TaipeiHot.JazzChat.User;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
@@ -187,18 +189,22 @@ public class RoomWindow extends javax.swing.JFrame {
 	public void roomUserNameListChange(ArrayList<String> _userNameList) {
 		userNameList = _userNameList;
 	}
-
+        public void addUser(User user){
+            userNameList.add(user.getNickname());
+        }
 	public void showMessage(String name, String text) {
 		showText.append(name + ":" + text + "\n");
 	}
 
 	private void send() {
-		if (!typeText.getText().equals("")) {
-			showMessage("Username", typeText.getText());
+		
+                if (!typeText.getText().equals("")) {
+			Client.sendMessage(roomId,typeText.getText());
+                        showMessage(Client.user.getNickname(), typeText.getText());
 			typeText.setText("");
 		}
 	}
-
+        
 	// Variables declaration - do not modify//GEN-BEGIN:variables
 	private javax.swing.JLayeredPane jLayeredPane1;
 	private javax.swing.JScrollPane jScrollPane1;
