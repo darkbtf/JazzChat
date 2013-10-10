@@ -4,7 +4,9 @@
  */
 package TaipeiHot.JazzChat.UI;
 
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -29,16 +31,11 @@ public class AcceptFriendWindow extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        AcceptFriendList = new javax.swing.JList();
+        friendList = new javax.swing.JList();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        AcceptFriendList.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(AcceptFriendList);
+        jScrollPane1.setViewportView(friendList);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -54,7 +51,7 @@ public class AcceptFriendWindow extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(74, 74, 74)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(88, Short.MAX_VALUE))
+                .addContainerGap(96, Short.MAX_VALUE))
         );
 
         pack();
@@ -98,12 +95,15 @@ public class AcceptFriendWindow extends javax.swing.JFrame {
     
     /*fuctions and parameter by Paul*/
     private ArrayList<String> acceptFriendList;
-    
+    public void friendListChange(DefaultListModel model,MouseListener mouseListener){
+        friendList.setModel(model);
+        friendList.addMouseListener(mouseListener);
+    }
     
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JList AcceptFriendList;
+    private javax.swing.JList friendList;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
