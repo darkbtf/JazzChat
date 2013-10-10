@@ -167,6 +167,7 @@ public class Client {
 				}
 			}
 		}
+		Util.errorReport("receive: " + messages.peek());
 		return messages.poll();
 
 	}
