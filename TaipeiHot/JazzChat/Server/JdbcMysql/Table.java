@@ -10,7 +10,7 @@ import TaipeiHot.JazzChat.Util;
 /*
  * To add/remove a column, you need change:
  * constructor()
- * insert(), instance()
+ * insert(), instance(), update()
  * that class extends ActiveRecord
  */
 public class Table { 

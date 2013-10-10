@@ -13,7 +13,7 @@ import TaipeiHot.JazzChat.Server.RoomAccount;
 
 public class RoomTable extends Table{
 	static private String tableName = "";
-	static private String dropdbSQL, createdbSQL, insertdbSQL, selectSQL;
+	static private String dropdbSQL, createdbSQL, insertdbSQL, selectSQL, updateSQL;
 	static private ArrayList<ColumnElement> columns = new ArrayList<ColumnElement>();
 	static private Statement stat = null; 
 	static private ResultSet rs = null; 
@@ -32,6 +32,7 @@ public class RoomTable extends Table{
 		insertdbSQL = makeInsertdbCmd(tableName, columns);
 		Util.errorReport(insertdbSQL);
 		selectSQL = "select * from "+tableName+" ";
+		updateSQL = makeUpdatedbCmd(tableName, columns);
 	}
 	//新增資料 
 	static public void insert(Room a) { 
@@ -45,6 +46,20 @@ public class RoomTable extends Table{
 		} 
 		catch(SQLException e) { 
 			Util.errorReport("InsertDB Exception :" + e.toString());
+		} 
+		finally { 
+			Close(); 
+		} 
+	} 
+	static public void update(Room a) { 
+		try {
+			pst = con.prepareStatement(updateSQL);
+			pst.setString(1, a.name);
+			pst.setInt(2, a.id);
+			pst.executeUpdate(); 
+		} 
+		catch(SQLException e) { 
+			Util.errorReport("updateDB Exception :" + e.toString());
 		} 
 		finally { 
 			Close(); 

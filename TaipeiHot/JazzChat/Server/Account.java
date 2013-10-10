@@ -4,13 +4,12 @@ import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import TaipeiHot.JazzChat.User;
 import TaipeiHot.JazzChat.Util;
+import TaipeiHot.JazzChat.Server.JdbcMysql.AccountTable;
 import TaipeiHot.JazzChat.Server.JdbcMysql.ActiveRecord;
 import TaipeiHot.JazzChat.ServerCommand.ServerCommandManager;
 
@@ -19,8 +18,8 @@ public class Account extends ActiveRecord {
 	static public int totalID = 0;
 	public String email, nickname,status;
 	public String password;
-	protected ArrayList<User> friends = new ArrayList<User>();
-	//public Map<Integer, Room> roomMap = new HashMap<Integer, Room>();
+	public short visible;
+
 	//Communicate
 	public Socket socket;
 	private Deque<Byte> bufferInput = new LinkedList<Byte>();
@@ -44,20 +43,61 @@ public class Account extends ActiveRecord {
 		openInputThread();
 	}
 	
-	public Account(int id,String email, String password,String nickname,String status){
+	public Account(int id,String email, String password,String nickname,String status,short visible){
 		this.id = id;
 		this.email = email;
 		this.password = password;
 		this.nickname = nickname;
 		this.status = status;
-		//this.roomMap = new HashMap<Integer, Room>(); // TODO database
-		this.friends = new ArrayList<User>(); //TODO database
+		this.visible = visible;
 	}
 	
-	public void SetNickname(String N){
-		nickname = N;
+	public void save(){
+		AccountTable.update(this);
 	}
 	
+	public void online(){
+		if(this.visible==0)
+			return;
+		for(Account c: friends()){
+			Account tar = Server.accountMap.get(c);
+			if(tar !=null)
+				tar.sendMessage(new String[]{"friend","online",this.id+""});
+		}
+	}
+	
+	public void offline(){
+		if(this.visible==0)
+			return;
+		for(Account c: friends()){
+			Account tar = Server.accountMap.get(c);
+			if(tar !=null)
+				tar.sendMessage(new String[]{"friend","offline",this.id+""});
+		}
+	}
+	public void changeStatus(String status){
+		this.status = status;
+		this.save();
+		for(Account c: friends()){
+			Account tar = Server.accountMap.get(c);
+			if(tar !=null)
+				tar.sendMessage(new String[]{"friend","status",this.id+"",status});
+		}
+	}
+	
+	public void changeName(String nickname){
+		this.nickname = nickname;
+		this.save();
+		for(Account c: friends()){
+			Account tar = Server.accountMap.get(c);
+			if(tar !=null)
+				tar.sendMessage(new String[]{"friend","name",this.id+"",nickname});
+		}
+	}
+	
+	private Account[] friends(){
+		return AccountTable.where("account_id1=? || account_id2=?",new String[]{id+"",id+""});
+	}
 	private void openInputThread(){
 		getMessageToBuffer=new Thread(new Runnable(){
 			@Override
@@ -110,7 +150,6 @@ public class Account extends ActiveRecord {
 	
 	public void clone(Account tmp){ // copy data
 		this.nickname = tmp.nickname;
-		this.friends  = tmp.friends;
 		this.status   = tmp.status;
 		this.id       = tmp.id;
 		this.password = tmp.password;

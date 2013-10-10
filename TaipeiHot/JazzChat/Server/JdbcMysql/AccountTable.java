@@ -30,6 +30,7 @@ public class AccountTable extends Table{
 		columns.add(new ColumnElement("password","VARCHAR(20)"));
 		columns.add(new ColumnElement("nickname","VARCHAR(40)"));
 		columns.add(new ColumnElement("status","TINYTEXT"));
+		columns.add(new ColumnElement("visible","TINYINT"));
 		dropdbSQL = "DROP TABLE IF EXISTS "+tableName; 
 		dropTable(dropdbSQL);
 		try {
@@ -51,10 +52,29 @@ public class AccountTable extends Table{
 			pst.setString(3, a.password); 
 			pst.setString(4, a.nickname); 
 			pst.setString(5, a.status); 
+			pst.setShort(6, a.visible);
 			pst.executeUpdate(); 
 		} 
 		catch(SQLException e) { 
 			Util.errorReport("InsertDB Exception :" + e.toString());
+		} 
+		finally { 
+			Close(); 
+		} 
+	} 
+	static public void update(Account a) { 
+		try {
+			pst = con.prepareStatement(updateSQL);
+			pst.setString(1, a.email);
+			pst.setString(2, a.password);
+			pst.setString(3, a.nickname);
+			pst.setString(4, a.status);
+			pst.setShort(5, a.visible);
+			pst.setInt(6, a.id);
+			pst.executeUpdate(); 
+		} 
+		catch(SQLException e) { 
+			Util.errorReport("updateDB Exception :" + e.toString());
 		} 
 		finally { 
 			Close(); 
@@ -181,7 +201,8 @@ public class AccountTable extends Table{
 					rs.getString("email"),
 					rs.getString("password"),
 					rs.getString("nickname"),
-					rs.getString("status"));
+					rs.getString("status"),
+					rs.getShort("visible"));
 		} catch (SQLException e) {
 		}
 		return null;
