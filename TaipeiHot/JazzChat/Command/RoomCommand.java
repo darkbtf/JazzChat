@@ -4,7 +4,7 @@ import TaipeiHot.JazzChat.User;
 import TaipeiHot.JazzChat.Client.Client;
 import TaipeiHot.JazzChat.UI.RoomWindow;
 
-public class Room implements Command {
+public class RoomCommand implements Command {
 
 	@Override
 	public void exec() throws CommandParsingErrorException {

@@ -7,11 +7,11 @@ public class CommandManager {
 	static private Map<String, Command> cmdMap = new HashMap<String, Command>();
 
 	public CommandManager() {
-		cmdMap.put("login", new Login());
-		cmdMap.put("register", new Register());
-		cmdMap.put("message", new Message());
-		cmdMap.put("friend", new Friend());
-		cmdMap.put("room", new Room());
+		cmdMap.put("login", new LoginCommand());
+		cmdMap.put("register", new RegisterCommand());
+		cmdMap.put("message", new MessageCommand());
+		cmdMap.put("friend", new FriendCommand());
+		cmdMap.put("room", new RoomCommand());
 	}
 
 	public void parseCmd(String cmd) throws CommandParsingErrorException {
