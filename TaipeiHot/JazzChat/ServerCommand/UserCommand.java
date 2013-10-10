@@ -48,13 +48,11 @@ public class UserCommand extends ServerCommand {
 	}
 	
 	private Boolean setStatus(){
-		String status = account.getMessage();
 		account.changeStatus(account.getMessage());
 		return true;
 	}
 	
 	private Boolean setNickname(){
-		String name = account.getMessage();
 		account.changeName(account.getMessage());
 		return true;
 	}

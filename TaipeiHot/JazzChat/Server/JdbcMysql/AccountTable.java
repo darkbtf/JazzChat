@@ -70,6 +70,7 @@ public class AccountTable extends Table{
 			pst.setString(3, a.nickname);
 			pst.setString(4, a.status);
 			pst.setShort(5, a.visible);
+			
 			pst.setInt(6, a.id);
 			pst.executeUpdate(); 
 		} 
@@ -99,14 +100,17 @@ public class AccountTable extends Table{
 			Util.errorReport("Close Exception :" + e.toString()); 
 		} 
 	} 
-	static public ArrayList<Account> All(){
+	static public Account[] All(){
 		ArrayList<Account> ret = new ArrayList<Account>();
 		try { 
 			stat = con.createStatement(); 
-			rs = stat.executeQuery(selectSQL); 
+			rs = stat.executeQuery(selectSQL);
 			while(rs.next()) 
 				ret.add(instance(rs));
-			return ret;
+			Account a[]=new Account[ret.size()];
+			for(int i=0;i<ret.size();i++)
+				a[i]=ret.get(i);
+			return a;
 		} 
 		catch(SQLException e){ 
 			Util.errorReport("AllDB Exception :" + e.toString()); 
@@ -114,7 +118,7 @@ public class AccountTable extends Table{
 		finally { 
 			Close(); 
 		}
-		return ret; 
+		return new Account[0]; 
 	}
 	static public Account[] where(String format, String[]parameters){
 		ArrayList<Account> ret = new ArrayList<Account>();
@@ -204,6 +208,7 @@ public class AccountTable extends Table{
 					rs.getString("status"),
 					rs.getShort("visible"));
 		} catch (SQLException e) {
+			Util.errorReport("instance error");
 		}
 		return null;
 	}
