@@ -38,6 +38,7 @@ public class AcceptFriendDialog extends javax.swing.JDialog {
         acceptButton = new javax.swing.JButton();
         rejectButton = new javax.swing.JButton();
         friend = new javax.swing.JLabel();
+        laterButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -49,19 +50,36 @@ public class AcceptFriendDialog extends javax.swing.JDialog {
         });
 
         rejectButton.setText("reject");
+        rejectButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rejectButtonMouseClicked(evt);
+            }
+        });
+
+        laterButton.setText("laterButton");
+        laterButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                laterButtonMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(135, 135, 135)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(friend, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(acceptButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(rejectButton)))
+                        .addGap(135, 135, 135)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(friend, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(acceptButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(rejectButton))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(153, 153, 153)
+                        .addComponent(laterButton)))
                 .addContainerGap(141, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -73,7 +91,9 @@ public class AcceptFriendDialog extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(acceptButton)
                     .addComponent(rejectButton))
-                .addGap(120, 120, 120))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(laterButton)
+                .addGap(91, 91, 91))
         );
 
         pack();
@@ -82,7 +102,19 @@ public class AcceptFriendDialog extends javax.swing.JDialog {
     private void acceptButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_acceptButtonMouseClicked
         // TODO add your handling code here:
         Client.acceptFriend(id);
+        ((MainWindow)this.getOwner()).AcceptMap.get(id).setVisible(false);
     }//GEN-LAST:event_acceptButtonMouseClicked
+
+    private void rejectButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rejectButtonMouseClicked
+        // TODO add your handling code here:
+        Client.rejectFriend(id);
+        ((MainWindow)this.getOwner()).AcceptMap.get(id).setVisible(false);
+    }//GEN-LAST:event_rejectButtonMouseClicked
+
+    private void laterButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_laterButtonMouseClicked
+        // TODO add your handling code here:
+        ((MainWindow)this.getOwner()).AcceptMap.get(id).setVisible(false);
+    }//GEN-LAST:event_laterButtonMouseClicked
 
     /**
      * @param args the command line arguments
@@ -136,6 +168,7 @@ public class AcceptFriendDialog extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton acceptButton;
     private javax.swing.JLabel friend;
+    private javax.swing.JButton laterButton;
     private javax.swing.JButton rejectButton;
     // End of variables declaration//GEN-END:variables
 }
