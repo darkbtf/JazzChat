@@ -15,6 +15,7 @@ public class CommandManager {
 	}
 
 	public void parseCmd(String cmd) throws CommandParsingErrorException {
+		System.out.println("cmd = " + cmd);
 		cmdMap.get(cmd).exec();
 	}
 }

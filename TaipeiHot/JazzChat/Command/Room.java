@@ -1,6 +1,8 @@
 package TaipeiHot.JazzChat.Command;
 
+import TaipeiHot.JazzChat.User;
 import TaipeiHot.JazzChat.Client.Client;
+import TaipeiHot.JazzChat.UI.RoomWindow;
 
 public class Room implements Command {
 
@@ -16,9 +18,15 @@ public class Room implements Command {
 				Client.mainWindow.newRoom(roomId);
 			}
 		} else if (cmd.equals("name")) {
-			// TODO!
+			int roomId = Integer.parseInt(Client.getMessage());
+			String userName = Client.getMessage();
+			RoomWindow room = Client.mainWindow.getRoomById(roomId);
+			room.addUser(new User(userName, ""));
 		} else if (cmd.equals("adduser")) {
-			// TODO!
+			int roomId = Integer.parseInt(Client.getMessage());
+			String userName = Client.getMessage();
+			RoomWindow room = Client.mainWindow.getRoomById(roomId);
+			room.addUser(new User(userName, ""));
 		}
 	}
 }

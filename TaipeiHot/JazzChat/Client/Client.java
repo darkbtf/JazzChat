@@ -35,6 +35,7 @@ public class Client {
 	public static Map<Integer, RoomWindow> roomSet = new HashMap<Integer, RoomWindow>();
 	public static Map<Integer, User> userSet = new HashMap<Integer, User>();
 	public static List<User> friendsToAdd = new ArrayList<User>();
+	public static User user;
 
 	public Client() {
 	}
@@ -147,6 +148,16 @@ public class Client {
 
 	public static User getUserById(int userId) {
 		return userSet.get(userId);
+	}
+
+	public static void openPrivateRoom(int userId) {
+		ClientUtils.sendStringsToServer(out, new String[] { "room", "new",
+				"private", Integer.toString(userId) });
+	}
+
+	public static void openPublicRoom(String roomName) {
+		ClientUtils.sendStringsToServer(out, new String[] { "room", "new",
+				"public", roomName });
 	}
 
 	public static String getMessage() {
