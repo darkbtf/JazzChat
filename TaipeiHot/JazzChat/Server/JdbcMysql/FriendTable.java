@@ -11,7 +11,7 @@ import TaipeiHot.JazzChat.Server.Friend;
 
 public class FriendTable extends Table{
 	static private String tableName = "";
-	static private String dropdbSQL, createdbSQL, insertdbSQL, selectSQL;
+	static private String dropdbSQL, createdbSQL, insertdbSQL, selectSQL, updateSQL, deleteSQL;
 	static private ArrayList<ColumnElement> columns = new ArrayList<ColumnElement>();
 	static private Statement stat = null; 
 	static private ResultSet rs = null; 
@@ -33,11 +33,12 @@ public class FriendTable extends Table{
 		insertdbSQL = makeInsertdbCmd(tableName, columns);
 		Util.errorReport(insertdbSQL);
 		selectSQL = "select * from "+tableName+" ";
+		updateSQL = makeUpdatedbCmd(tableName, columns);
+		deleteSQL = "delete from "+tableName+" where ";
 	}
 	//新增資料 
 	static public void insert(Friend a) { 
 		try {
-			Util.errorReport(insertdbSQL);
 			pst = con.prepareStatement(insertdbSQL);
 			if(a.id==0)a.id=++Friend.totalID;
 			pst.setInt(1, a.id);
@@ -54,6 +55,49 @@ public class FriendTable extends Table{
 			Close(); 
 		} 
 	} 
+	
+	static public void update(Friend a) { 
+		try {
+			pst = con.prepareStatement(updateSQL);
+			pst.setInt(1, a.account_id1);
+			pst.setInt(2, a.account_id2);
+			pst.setString(3, a.status);
+			pst.setString(4, a.message);
+			pst.setInt(5, a.id);
+			pst.executeUpdate(); 
+		} 
+		catch(SQLException e) { 
+			Util.errorReport("updateDB Exception :" + e.toString());
+		} 
+		finally { 
+			Close(); 
+		} 
+	} 
+	static public void delete(Friend f){  
+		try {
+			pst = con.prepareStatement(deleteSQL+"id="+f.id);////////
+			pst.executeUpdate(); 
+		} 
+		catch(SQLException e) { 
+			Util.errorReport("deleteDB Exception :" + e.toString());
+		} 
+		finally { 
+			Close(); 
+		} 
+	}
+	
+	static public void delete(String format){
+		try {
+			pst = con.prepareStatement(deleteSQL+format);
+			pst.executeUpdate(); 
+		} 
+		catch(SQLException e) { 
+			Util.errorReport("deleteDB Exception :" + e.toString());
+		} 
+		finally { 
+			Close(); 
+		} 
+	}
 	static private void Close() { 
 		try{ 
 			if(rs!=null) { 

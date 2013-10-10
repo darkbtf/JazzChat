@@ -42,7 +42,9 @@ public class FriendCommand extends ServerCommand {
 		int acID = Integer.valueOf(account.getMessage());
 		Account ac = Server.accountMap.get(acID);
 		ac.sendMessage(new String[]{"friend","response",account.email,"accept"});
-		//FriendTable.where("account_id1="+acID+" && account_id2="+account.id)[0]; //TODO save
+		Friend friend=FriendTable.where("account_id1="+acID+" && account_id2="+account.id)[0];
+		friend.status = "accept";
+		FriendTable.update(friend);
 		ac.sendMessage(new String[]{"friend","show",account.id+"", account.email,account.status});
 		account.sendMessage(new String[]{"friend","show",acID+"", ac.email, ac.status});
 		return true;
@@ -52,7 +54,7 @@ public class FriendCommand extends ServerCommand {
 		int acID = Integer.valueOf(account.getMessage());
 		Account ac = Server.accountMap.get(acID);
 		ac.sendMessage(new String[]{"friend","response",account.email,"reject"});
-		//FriendTable.where("account_id1="+acID+" && account_id2="+account.id)[0]; //TODO delete
+		FriendTable.delete("account_id1="+acID+" && account_id2="+account.id);
 		return true;
 	}
 	

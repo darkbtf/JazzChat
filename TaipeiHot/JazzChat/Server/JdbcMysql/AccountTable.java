@@ -18,7 +18,7 @@ public class AccountTable extends Table{
       "select ifNULL(max(id),0)+1,?,? FROM User"; */
 	//private String selectSQL = "select * from User ";
 	static private String tableName = "";
-	static private String dropdbSQL, createdbSQL, insertdbSQL, selectSQL;
+	static private String dropdbSQL, createdbSQL, insertdbSQL, selectSQL, updateSQL;
 	static private ArrayList<ColumnElement> columns = new ArrayList<ColumnElement>();
 	static private Statement stat = null; 
 	static private ResultSet rs = null; 
@@ -38,6 +38,7 @@ public class AccountTable extends Table{
 		}
 		insertdbSQL = makeInsertdbCmd( tableName, columns);
 		selectSQL = "select * from "+tableName+" ";
+		updateSQL = makeUpdatedbCmd(tableName, columns);
 	}
 	//新增資料 
 	static public void insert(Account a) { 
