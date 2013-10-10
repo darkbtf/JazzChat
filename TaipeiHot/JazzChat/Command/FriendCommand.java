@@ -14,7 +14,7 @@ public class FriendCommand implements Command {
 			String greeting = Client.getMessage();
 			User tmpUser = new User(userName, greeting);
 			Client.friendsToAdd.add(tmpUser);
-			// Client.mainWindow.pendingListShow(tmpUser);
+			Client.mainWindow.pendingListShow(tmpUser);
 			Client.mainWindow.acceptFriendShow(userId, userName, greeting);
 		} else if (cmd.equals("response")) {
 			String userName = Client.getMessage();
