@@ -11,7 +11,7 @@ import TaipeiHot.JazzChat.Server.RoomAccount;
 
 public class RoomAccountTable extends Table{
 	static private String tableName = "";
-	static private String dropdbSQL, createdbSQL, insertdbSQL, selectSQL;
+	static private String dropdbSQL, createdbSQL, insertdbSQL, selectSQL;//, updateSQL, deleteSQL;
 	static private ArrayList<ColumnElement> columns = new ArrayList<ColumnElement>();
 	static private Statement stat = null; 
 	static private ResultSet rs = null; 
@@ -21,16 +21,16 @@ public class RoomAccountTable extends Table{
 		tableName="room_account";
 		columns.add(new ColumnElement("room_id","INTEGER"));
 		columns.add(new ColumnElement("account_id","INTEGER"));
+		//initSQL(tableName,dropdbSQL, createdbSQL, insertdbSQL, selectSQL, updateSQL, deleteSQL,columns,stat);
 		dropdbSQL = "DROP TABLE IF EXISTS "+tableName; 
 		dropTable(dropdbSQL);
-		try {
-			createTable(createdbSQL, tableName, columns, stat);
-		} catch (SQLException e) {
-		}
+		createTable(createdbSQL, tableName, columns, stat);
 		insertdbSQL = makeInsertdbCmd(tableName, columns);
 		selectSQL = "select * from "+tableName+" ";
+		//updateSQL = makeUpdatedbCmd(tableName, columns);
+		//deleteSQL = "delete from "+tableName+" where ";
 	}
-	//新增資料 
+	
 	static public void insert(RoomAccount a) { 
 		try {
 			pst = con.prepareStatement(insertdbSQL);
@@ -144,29 +144,13 @@ public class RoomAccountTable extends Table{
 		} 
 		return null;
 	}
-	static public void SelectTable(){ 
-		try { 
-			stat = con.createStatement(); 
-			rs = stat.executeQuery(selectSQL); 
-			System.out.println("ID\t\tName\t\tPASSWORD"); 
-			while(rs.next()) { 
-				System.out.println(rs.getInt("id")+"\t\t"+ 
-						rs.getString("email")+"\t\t"+rs.getString("password")); 
-			} 
-		} 
-		catch(SQLException e){ 
-			Util.errorReport("SelectDB Exception :" + e.toString()); 
-		} 
-		finally { 
-			Close(); 
-		} 
-	}
 	static public RoomAccount instance(ResultSet rs){
 		try {
 			return new RoomAccount(rs.getInt("id"),
 					rs.getInt("room_id"),
 					rs.getInt("account_id"));
 		} catch (SQLException e) {
+			Util.errorReport("instance SQLexception: "+e.toString());
 		}
 		return null;
 	}

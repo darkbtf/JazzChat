@@ -7,21 +7,22 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import TaipeiHot.JazzChat.Util;
-import TaipeiHot.JazzChat.Server.Account;
-import TaipeiHot.JazzChat.Server.Room;
-import TaipeiHot.JazzChat.Server.RoomAccount;
+import TaipeiHot.JazzChat.Server.History;
 
-public class RoomTable extends Table{
+public class HistoryTable extends Table{
 	static private String tableName = "";
-	static private String dropdbSQL, createdbSQL, insertdbSQL, selectSQL, updateSQL;//, deleteSQL;
+	static private String dropdbSQL, createdbSQL, insertdbSQL, selectSQL, updateSQL, deleteSQL;
 	static private ArrayList<ColumnElement> columns = new ArrayList<ColumnElement>();
 	static private Statement stat = null; 
 	static private ResultSet rs = null; 
 	static private PreparedStatement pst = null;
-	public RoomTable() {
+	public HistoryTable() {
 		super();
-		tableName="room";
-		columns.add(new ColumnElement("name","TINYTEXT"));
+		tableName="history";
+		columns.add(new ColumnElement("room_id","INTEGER"));
+		columns.add(new ColumnElement("account_id","INTEGER"));
+		columns.add(new ColumnElement("message","TEXT"));
+		//columns.add(new ColumnElement("sendTime","TIMESTAMP"));
 		//initSQL(tableName,dropdbSQL, createdbSQL, insertdbSQL, selectSQL, updateSQL, deleteSQL,columns,stat);
 		dropdbSQL = "DROP TABLE IF EXISTS "+tableName; 
 		dropTable(dropdbSQL);
@@ -29,17 +30,19 @@ public class RoomTable extends Table{
 		insertdbSQL = makeInsertdbCmd(tableName, columns);
 		selectSQL = "select * from "+tableName+" ";
 		updateSQL = makeUpdatedbCmd(tableName, columns);
-		//deleteSQL = "delete from "+tableName+" where ";
+		deleteSQL = "delete from "+tableName+" where ";
 	}
-	static private void makePrepareStat(PreparedStatement pst,Room a)throws SQLException{
-		if(a.id==0)a.id=++Room.totalID;
+	static private void makePrepareStat(PreparedStatement pst,History a)throws SQLException{
+		if(a.id==0)a.id=++History.totalID;
 		pst.setInt(1, a.id);
-		pst.setString(2, a.name);
+		pst.setInt(2, a.room_id);
+		pst.setInt(3, a.account_id);
+		pst.setString(4, a.message);
+		//pst.setTimestamp(5, a.sendTime);
 	}
 	
-	static public void insert(Room a) { 
+	static public void insert(History a) { 
 		try {
-			Util.errorReport(insertdbSQL);
 			pst = con.prepareStatement(insertdbSQL);
 			makePrepareStat(pst,a);
 			pst.executeUpdate(); 
@@ -51,7 +54,8 @@ public class RoomTable extends Table{
 			Close(); 
 		} 
 	} 
-	static public void update(Room a) { 
+	
+	static public void update(History a) { 
 		try {
 			pst = con.prepareStatement(updateSQL);
 			makePrepareStat(pst,a);
@@ -65,6 +69,31 @@ public class RoomTable extends Table{
 			Close(); 
 		} 
 	} 
+	static public void delete(History f){  
+		try {
+			pst = con.prepareStatement(deleteSQL+"id="+f.id);////////
+			pst.executeUpdate(); 
+		} 
+		catch(SQLException e) { 
+			Util.errorReport("deleteDB Exception :" + e.toString());
+		} 
+		finally { 
+			Close(); 
+		} 
+	}
+	
+	static public void delete(String format){
+		try {
+			pst = con.prepareStatement(deleteSQL+format);
+			pst.executeUpdate(); 
+		} 
+		catch(SQLException e) { 
+			Util.errorReport("deleteDB Exception :" + e.toString());
+		} 
+		finally { 
+			Close(); 
+		} 
+	}
 	static private void Close() { 
 		try{ 
 			if(rs!=null) { 
@@ -84,8 +113,8 @@ public class RoomTable extends Table{
 			Util.errorReport("Close Exception :" + e.toString()); 
 		} 
 	} 
-	static public ArrayList<Room> All(){
-		ArrayList<Room> ret = new ArrayList<Room>();
+	static public ArrayList<History> All(){
+		ArrayList<History> ret = new ArrayList<History>();
 		try { 
 			stat = con.createStatement(); 
 			rs = stat.executeQuery(selectSQL); 
@@ -101,8 +130,8 @@ public class RoomTable extends Table{
 		}
 		return ret; 
 	}
-	static public Room[] where(String format, String[]parameters){
-		ArrayList<Room> ret = new ArrayList<Room>();
+	static public History[] where(String format, String[]parameters){
+		ArrayList<History> ret = new ArrayList<History>();
 		try { 
 			String cmd = new String(selectSQL);
 			cmd += "WHERE BINARY "+format;
@@ -113,7 +142,7 @@ public class RoomTable extends Table{
 			while(rs.next()) { 
 				ret.add(instance(rs));
 			} 
-			Room a[]=new Room[ret.size()];
+			History a[]=new History[ret.size()];
 			for(int i=0;i<ret.size();i++)
 				a[i]=ret.get(i);
 			return a;
@@ -124,10 +153,10 @@ public class RoomTable extends Table{
 		finally { 
 			Close(); 
 		}
-		return new Room[0]; 
+		return new History[0]; 
 	}
-	static public Room[] where(String format){
-		ArrayList<Room> ret = new ArrayList<Room>();
+	static public History[] where(String format){
+		ArrayList<History> ret = new ArrayList<History>();
 		try { 
 			String cmd = new String(selectSQL);
 			cmd += "WHERE BINARY "+format;
@@ -136,7 +165,7 @@ public class RoomTable extends Table{
 			while(rs.next()) { 
 				ret.add(instance(rs));
 			} 
-			Room a[]=new Room[ret.size()];
+			History a[]=new History[ret.size()];
 			for(int i=0;i<ret.size();i++)
 				a[i]=ret.get(i);
 			return a;
@@ -147,9 +176,9 @@ public class RoomTable extends Table{
 		finally { 
 			Close(); 
 		}
-		return new Room[0]; 
+		return new History[0]; 
 	}
-	static public Room find(int id){
+	static public History find(int id){
 		try { 
 			stat = con.createStatement(); 
 			rs = stat.executeQuery(selectSQL+"where id="+id);
@@ -162,17 +191,13 @@ public class RoomTable extends Table{
 		} 
 		return null;
 	}
-	static public Account[] accounts(int id){
-		RoomAccount[] ras=RoomAccountTable.where("room_id="+id);
-		Account[] ret = new Account[ras.length];
-		for(int i=0;i<ras.length;i++)
-			ret[i]=AccountTable.find(ras[i].account_id);
-		return ret;
-	}
-	static public Room instance(ResultSet rs){
+	static public History instance(ResultSet rs){
 		try {
-			return new Room(rs.getInt("id"),
-					rs.getString("name"));
+			return new History(rs.getInt("id"),
+					rs.getInt("room_id"),
+					rs.getInt("account_id"),
+					rs.getString("message"),
+					rs.getTimestamp("sendTime"));
 		} catch (SQLException e) {
 			Util.errorReport("instance SQLexception: "+e.toString());
 		}

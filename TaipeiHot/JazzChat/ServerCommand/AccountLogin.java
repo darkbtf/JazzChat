@@ -15,15 +15,12 @@ public class AccountLogin extends ServerCommand {
 	public Boolean exec() {
 		account.email = account.getMessage();
 		account.password = account.getMessage();
-		Util.errorReport(account.email);
-		Util.errorReport(account.password);
 		Account[] qry = AccountTable.where("email = ?",new String[]{account.email});
 		if(qry.length!=0){
 			Account tmp = qry[0];
 			if(account.password.equals(tmp.password)){
 				account.clone(tmp);
 				Server.accountMap.put(account.id, account);
-				System.out.println("login success, become User "+account.id);
 				account.sendMessage(new String[]{"login","success",""+account.id,account.nickname,account.status});
 				account.login();
 				return true;
