@@ -20,7 +20,6 @@ public class FileCommand implements Command {
 			String filePath = Client.getMessage();
 			RoomWindow room = Client.mainWindow.getRoomById(roomId);
 			room.confirmDownload(roomId, fileName, filePath);
-
 		}
 	}
 }
