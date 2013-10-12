@@ -13,6 +13,7 @@ public class FriendNameAndStatus extends javax.swing.JPanel {
     /**
      * Creates new form FreindNameAndStatus
      */
+    public String name;
     public FriendNameAndStatus() {
         initComponents();
         //jTextField1.setText(name);
@@ -21,6 +22,7 @@ public class FriendNameAndStatus extends javax.swing.JPanel {
     public FriendNameAndStatus(String name) {
         initComponents();
         jTextField1.setText(name);
+        this.name=name;
     }
 
     /**

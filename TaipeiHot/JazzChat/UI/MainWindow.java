@@ -48,7 +48,8 @@ public class MainWindow extends javax.swing.JFrame {
             g.drawImage(image, x, y, this);
         }
 
-	public MainWindow() throws IOException {
+	public MainWindow() {
+            try{
                 URL url = new URL("http://3.bp.blogspot.com/-CpxmJu3Km3k/UMPhfSoHaQI/AAAAAAAAF0Y/H5iQtXUZJuQ/s1600/Fire+lion.jpg");
                 image = ImageIO.read(url);
                 //friendModel.addElement("tesing");
@@ -89,6 +90,7 @@ public class MainWindow extends javax.swing.JFrame {
                       }
                     }
                 };
+            }catch(Exception e){}
                 //this.repaint();
 	}
 
@@ -183,8 +185,8 @@ public class MainWindow extends javax.swing.JFrame {
                 .addGap(7, 7, 7)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 553, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 221, Short.MAX_VALUE)
                 .addComponent(afwButton)
                 .addGap(24, 24, 24))
         );
@@ -290,7 +292,7 @@ public class MainWindow extends javax.swing.JFrame {
 			public void run() {
                             try {
                                 new MainWindow().setVisible(true);
-                            } catch (IOException ex) {
+                            } catch (Exception ex) {
                                 Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
                             }
 			}
@@ -311,7 +313,7 @@ public class MainWindow extends javax.swing.JFrame {
         MouseListener mouseListener ;
         MouseListener mouseListener2;
         boolean afwIsOpen=false;
-        JList friendLsit=new JList();
+        //JList friendLsit=new JList();
         public void loginSuccess() {
 		loginDialog.setVisible(false);
 		setVisible(true);
@@ -369,7 +371,7 @@ public class MainWindow extends javax.swing.JFrame {
             addFriendDialog.setErrorMessage(message);
         }
 
-	public RoomWindow getRoomById(int roomId) throws MalformedURLException, IOException {
+	public RoomWindow getRoomById(int roomId) {
 		if (roomWindowMap.get(roomId) == (null)) {
 			return newRoom(roomId);
 		} else
@@ -377,18 +379,18 @@ public class MainWindow extends javax.swing.JFrame {
 	}
 
 	public RoomWindow newRoom(int roomId, String _roomName,
-			ArrayList<String> _userNameList) throws MalformedURLException, IOException {
+			ArrayList<String> _userNameList) {
 		RoomWindow room = new RoomWindow(roomId, _roomName, _userNameList);
 		roomWindowMap.put(roomId, room);
 		room.setVisible(true);
 		return room;
 	}
 
-	public RoomWindow newRoom(int roomId) throws MalformedURLException, IOException {
-		RoomWindow room = new RoomWindow(roomId);
-		roomWindowMap.put(roomId, room);
-		room.setVisible(true);
-		return room;
+	public RoomWindow newRoom(int roomId)  {
+            RoomWindow room = new RoomWindow(roomId);
+            roomWindowMap.put(roomId, room);
+            room.setVisible(true);
+            return room;
 	}
 
 	public void closeDialog() {
