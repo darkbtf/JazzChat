@@ -160,7 +160,7 @@ public class Client {
 	}
 
 	public static void uploadFile(int roomId, String path) {
-		ClientUtils.sendStringsToServer(out, new String[] { "file", "uplaod",
+		ClientUtils.sendStringsToServer(out, new String[] { "file", "upload",
 				Integer.toString(roomId), path });
 	}
 
@@ -179,7 +179,7 @@ public class Client {
 		filedialog.setVisible(true);
 		String myPath = filedialog.getDirectory() + File.separator
 				+ filedialog.getFile();
-		FtpUtils.downloadFTPFile(fileName, filePath, myPath);
+		FtpUtils.downloadFTPFile(filePath, myPath);
 		RoomWindow room = Client.mainWindow.getRoomById(roomId);
 		room.showFile(myPath, fileName);
 	}
