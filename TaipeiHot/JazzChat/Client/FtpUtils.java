@@ -13,28 +13,30 @@ import java.security.NoSuchAlgorithmException;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
-import org.apache.commons.net.ftp.FTPSClient;
 
 import TaipeiHot.JazzChat.Util;
 
 public class FtpUtils {
-	public static FTPClient createFtpConnection(String ip, String port,
-			String id, String pwd, boolean isSSL) throws NumberFormatException,
+
+	final static String IP = "140.112.18.198";
+	final static int PORT = 21;
+	final static String ID = "nmlab198";
+	final static String PASSWORD = "password";
+
+	public static FTPClient createFtpConnection() throws NumberFormatException,
 			SocketException, IOException, NoSuchAlgorithmException {
 		FTPClient ftpClient;
-		if (isSSL) {
-			ftpClient = new FTPSClient();
-		} else {
-			ftpClient = new FTPClient();
-		}
+		ftpClient = new FTPClient();
+
 		// 登入ftp
-		ftpClient.connect(ip, Integer.parseInt(port));
+		ftpClient.connect(IP, PORT);
 		if (!FTPReply.isPositiveCompletion(ftpClient.getReplyCode())) {
 			throw new RuntimeException("FTP連線失敗");
 		} else {
-			boolean ftpConnect = ftpClient.login(id, pwd);
+			boolean ftpConnect = ftpClient.login(ID, PASSWORD);
 			if (!ftpConnect) {
-				throw new RuntimeException("FTP登入失敗[" + id + "," + pwd + "]");
+				throw new RuntimeException("FTP登入失敗[" + ID + "," + PASSWORD
+						+ "]");
 			} else {
 				// 設定ftp
 				ftpClient.enterLocalPassiveMode();
@@ -65,41 +67,30 @@ public class FtpUtils {
 	 *            下載位置
 	 * @return 是否下載成功
 	 */
-	public static boolean downloadFTPFile(String ip, String port, String id,
-			String pwd, boolean isSSL, String dir, String fileName,
-			String downloadPath) {
+	public static boolean downloadFTPFile(String fileName, String downloadPath,
+			String myDownloadPath) {
 		boolean downloadFile = false;
 		FTPClient ftpClient = null;
 		InputStream is = null;
 		try {
-			ftpClient = createFtpConnection(ip, port, id, pwd, isSSL);
-			boolean changeDir;
-			if (/* StringUtils.isBlank(dir) */dir.equals("")) {// 當不需要切換路徑
-				changeDir = true;
-			} else {
-				changeDir = ftpClient.changeWorkingDirectory(dir);
-			}
-			if (changeDir) {
-				// 下載檔案
-				if (ftpClient.listFiles(fileName).length > 0) {// 當檔案存在
-					is = ftpClient.retrieveFileStream(fileName);
-					if (is == null) {// 當檔案不存在
-						Util.errorReport("FTP下載檔案[" + fileName + "]不存在");
-					} else {// 當有檔案則轉成Stream
-						OutputStream out = new FileOutputStream(new File(
-								"C:\\Users\\User\\Downloads\\" + fileName));
-						int read = 0;
-						byte[] bytes = new byte[1024];
+			ftpClient = createFtpConnection();
+			if (ftpClient.listFiles(downloadPath).length > 0) {
+				is = ftpClient.retrieveFileStream(downloadPath);
+				if (is == null) {
+					Util.errorReport("FTP下載檔案[" + fileName + "]不存在");
+				} else {
+					OutputStream out = new FileOutputStream(new File(
+							myDownloadPath + fileName));
+					int read = 0;
+					byte[] bytes = new byte[1024];
 
-						while ((read = is.read(bytes)) != -1) {
-							out.write(bytes, 0, read);
-						}
-						out.close();
-						downloadFile = true;
+					while ((read = is.read(bytes)) != -1) {
+						out.write(bytes, 0, read);
 					}
+					out.close();
+					downloadFile = true;
 				}
-			} else {
-				Util.errorReport("FTP目錄[" + dir + "]不存在");
+
 			}
 		} catch (ConnectException e) {
 			Util.errorReport("FTP連線失敗: " + e);
@@ -135,19 +126,14 @@ public class FtpUtils {
 		}
 	}
 
-	public static void uploadFTPFile(String ip, String port, String id,
-			String pwd, boolean isSSL, String fileName) {
+	public static void uploadFTPFile(String filePath, String fileName,
+			int fileId) {
 		FTPClient ftpClient = null;
 		OutputStream os = null;
 		try {
-			ftpClient = createFtpConnection(ip, port, id, pwd, isSSL);
-			InputStream is = new FileInputStream(
-					new File(
-							"C:\\Users\\Public\\Pictures\\Sample Pictures\\jellyfish.jpg"));
-			if (!ftpClient.storeFile(fileName, is))
-				System.out.println("fuck");
-			else
-				System.out.println("yeah");
+			ftpClient = createFtpConnection();
+			InputStream is = new FileInputStream(new File(filePath));
+			ftpClient.storeFile(fileName, is);
 		} catch (ConnectException e) {
 			Util.errorReport("FTP連線失敗: " + e);
 		} catch (Exception e) {
@@ -162,13 +148,7 @@ public class FtpUtils {
 					// DO NOTHING
 				}
 			}
+			Client.finishUpload(fileId);
 		}
-	}
-
-	public static void main(String args[]) {
-		downloadFTPFile("140.112.18.198", "21", "nmlab198", "taipeihot", false,
-				"", "jizz", "");
-		uploadFTPFile("140.112.18.198", "21", "nmlab198", "taipeihot", false,
-				"jizzer2.jpg");
 	}
 }
