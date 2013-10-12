@@ -199,6 +199,7 @@ public class FriendTable extends Table{
 					rs.getString("status"),
 					rs.getString("message"));
 		} catch (SQLException e) {
+			Util.errorReport("instance SQLexception: "+e.toString());
 		}
 		return null;
 	}

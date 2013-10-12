@@ -150,6 +150,7 @@ public class RoomAccountTable extends Table{
 					rs.getInt("room_id"),
 					rs.getInt("account_id"));
 		} catch (SQLException e) {
+			Util.errorReport("instance SQLexception: "+e.toString());
 		}
 		return null;
 	}

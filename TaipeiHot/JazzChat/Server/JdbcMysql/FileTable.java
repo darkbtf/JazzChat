@@ -206,6 +206,7 @@ public class FileTable extends Table{
 					rs.getInt("account_id"),
 					rs.getShort("uploaded"));
 		} catch (SQLException e) {
+			Util.errorReport("instance SQLexception: "+e.toString());
 		}
 		return null;
 	}

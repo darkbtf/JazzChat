@@ -19,7 +19,7 @@ public class FileCommand extends ServerCommand {
 			return uploadFile();
 		else if(cmd.equals("finish"))
 			return finishUpload();
-		else return Util.errorReport("Unknown command in Friend");
+		else return Util.errorReport("Unknown command in File");
 	}
 	
 	private Boolean uploadFile(){

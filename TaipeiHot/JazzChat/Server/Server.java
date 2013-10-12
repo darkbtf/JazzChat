@@ -24,9 +24,8 @@ public class Server {
     	readDataFromSql();
     }
     public static void main(String args[]) {
-    	Server server = new Server();
+    	new Server();
     	(new SocketThread()).start();
-    	server.equals(new Integer(123)); // to remove unused warning = =
     }
     static private void readDataFromSql(){//TODO save max id to sql? or some much good method
     	for(Account a:AccountTable.All())

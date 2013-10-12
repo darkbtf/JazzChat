@@ -188,7 +188,7 @@ public class AccountTable extends Table{
 					rs.getString("status"),
 					rs.getShort("visible"));
 		} catch (SQLException e) {
-			Util.errorReport("instance error");
+			Util.errorReport("instance SQLexception: "+e.toString());
 		}
 		return null;
 	}

@@ -174,6 +174,7 @@ public class RoomTable extends Table{
 			return new Room(rs.getInt("id"),
 					rs.getString("name"));
 		} catch (SQLException e) {
+			Util.errorReport("instance SQLexception: "+e.toString());
 		}
 		return null;
 	}

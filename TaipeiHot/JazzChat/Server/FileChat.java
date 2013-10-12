@@ -41,6 +41,6 @@ public class FileChat extends ActiveRecord {
 		File f = new File(filepath);
 		fileName = f.getName();
 		String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
-		encryptedFileName = fileName + "_"+timeStamp+"_"+(new Random()).nextInt(); 
+		encryptedFileName = "_"+timeStamp+"_"+(new Random()).nextInt(); 
 	}
 }
