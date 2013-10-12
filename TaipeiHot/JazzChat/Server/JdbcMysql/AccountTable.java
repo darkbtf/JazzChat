@@ -18,7 +18,7 @@ public class AccountTable extends Table{
       "select ifNULL(max(id),0)+1,?,? FROM User"; */
 	//private String selectSQL = "select * from User ";
 	static private String tableName = "";
-	static private String dropdbSQL, createdbSQL, insertdbSQL, selectSQL, updateSQL;
+	static private String dropdbSQL, createdbSQL, insertdbSQL, selectSQL, updateSQL;//, deleteSQL;
 	static private ArrayList<ColumnElement> columns = new ArrayList<ColumnElement>();
 	static private Statement stat = null; 
 	static private ResultSet rs = null; 
@@ -31,28 +31,29 @@ public class AccountTable extends Table{
 		columns.add(new ColumnElement("nickname","VARCHAR(40)"));
 		columns.add(new ColumnElement("status","TINYTEXT"));
 		columns.add(new ColumnElement("visible","TINYINT"));
+		//initSQL(tableName,dropdbSQL, createdbSQL, insertdbSQL, selectSQL, updateSQL, deleteSQL,columns,stat);
 		dropdbSQL = "DROP TABLE IF EXISTS "+tableName; 
 		dropTable(dropdbSQL);
-		try {
-			createTable(createdbSQL, tableName, columns, stat);
-		} catch (SQLException e) {
-		}
-		insertdbSQL = makeInsertdbCmd( tableName, columns);
+		createTable(createdbSQL, tableName, columns, stat);
+		insertdbSQL = makeInsertdbCmd(tableName, columns);
 		selectSQL = "select * from "+tableName+" ";
 		updateSQL = makeUpdatedbCmd(tableName, columns);
+		//deleteSQL = "delete from "+tableName+" where ";
 	}
-	//新增資料 
+	static private void makePrepareStat(PreparedStatement pst,Account a)throws SQLException{
+		if(a.id==0)a.id=++Account.totalID;
+		pst.setInt(1, a.id);
+		pst.setString(2, a.email); 
+		pst.setString(3, a.password); 
+		pst.setString(4, a.nickname); 
+		pst.setString(5, a.status); 
+		pst.setShort(6, a.visible);
+	}
+	
 	static public void insert(Account a) { 
 		try {
-			Util.errorReport(insertdbSQL);
 			pst = con.prepareStatement(insertdbSQL);
-			if(a.id==0)a.id=++Account.totalID;
-			pst.setInt(1, a.id);
-			pst.setString(2, a.email); 
-			pst.setString(3, a.password); 
-			pst.setString(4, a.nickname); 
-			pst.setString(5, a.status); 
-			pst.setShort(6, a.visible);
+			makePrepareStat(pst,a);
 			pst.executeUpdate(); 
 		} 
 		catch(SQLException e) { 
@@ -65,13 +66,8 @@ public class AccountTable extends Table{
 	static public void update(Account a) { 
 		try {
 			pst = con.prepareStatement(updateSQL);
-			pst.setString(1, a.email);
-			pst.setString(2, a.password);
-			pst.setString(3, a.nickname);
-			pst.setString(4, a.status);
-			pst.setShort(5, a.visible);
-			
-			pst.setInt(6, a.id);
+			makePrepareStat(pst,a);
+			pst.setInt(columns.size()+2, a.id);
 			pst.executeUpdate(); 
 		} 
 		catch(SQLException e) { 
@@ -182,23 +178,7 @@ public class AccountTable extends Table{
 		} 
 		return null;
 	}
-	static public void SelectTable(){ 
-		try { 
-			stat = con.createStatement(); 
-			rs = stat.executeQuery(selectSQL); 
-			System.out.println("ID\t\tName\t\tPASSWORD"); 
-			while(rs.next()) { 
-				System.out.println(rs.getInt("id")+"\t\t"+ 
-						rs.getString("email")+"\t\t"+rs.getString("password")); 
-			} 
-		} 
-		catch(SQLException e){ 
-			Util.errorReport("Select Exception :" + e.toString()); 
-		} 
-		finally { 
-			Close(); 
-		} 
-	}
+
 	static public Account instance(ResultSet rs){
 		try {
 			return new Account(rs.getInt("id"),
@@ -208,7 +188,7 @@ public class AccountTable extends Table{
 					rs.getString("status"),
 					rs.getShort("visible"));
 		} catch (SQLException e) {
-			Util.errorReport("instance error");
+			Util.errorReport("instance SQLexception: "+e.toString());
 		}
 		return null;
 	}

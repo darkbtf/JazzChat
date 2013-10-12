@@ -19,6 +19,7 @@ public class ServerCommandManager {
 		cmdMap.put("message", new Message(account));
 		cmdMap.put("friend", new FriendCommand(account));
 		cmdMap.put("user", new UserCommand(account));
+		cmdMap.put("file", new FileCommand(account));
 	}
 
 	public Boolean parseCmd(String cmd) {

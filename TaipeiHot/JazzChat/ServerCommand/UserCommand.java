@@ -2,11 +2,6 @@ package TaipeiHot.JazzChat.ServerCommand;
 
 import TaipeiHot.JazzChat.Util;
 import TaipeiHot.JazzChat.Server.Account;
-import TaipeiHot.JazzChat.Server.Room;
-import TaipeiHot.JazzChat.Server.RoomAccount;
-import TaipeiHot.JazzChat.Server.Server;
-import TaipeiHot.JazzChat.Server.JdbcMysql.RoomAccountTable;
-import TaipeiHot.JazzChat.Server.JdbcMysql.RoomTable;
 
 public class UserCommand extends ServerCommand {
 

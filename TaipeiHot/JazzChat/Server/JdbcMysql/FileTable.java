@@ -7,21 +7,24 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import TaipeiHot.JazzChat.Util;
-import TaipeiHot.JazzChat.Server.Account;
-import TaipeiHot.JazzChat.Server.Room;
-import TaipeiHot.JazzChat.Server.RoomAccount;
+import TaipeiHot.JazzChat.Server.FileChat;
 
-public class RoomTable extends Table{
+public class FileTable extends Table{
 	static private String tableName = "";
-	static private String dropdbSQL, createdbSQL, insertdbSQL, selectSQL, updateSQL;//, deleteSQL;
+	static private String dropdbSQL, createdbSQL, insertdbSQL, selectSQL, updateSQL, deleteSQL;
 	static private ArrayList<ColumnElement> columns = new ArrayList<ColumnElement>();
 	static private Statement stat = null; 
 	static private ResultSet rs = null; 
 	static private PreparedStatement pst = null;
-	public RoomTable() {
+	public FileTable() {
 		super();
-		tableName="room";
-		columns.add(new ColumnElement("name","TINYTEXT"));
+		tableName="file";
+		columns.add(new ColumnElement("filepath","TINYTEXT"));
+		columns.add(new ColumnElement("fileName","TINYTEXT"));
+		columns.add(new ColumnElement("encryptedFileName","TINYTEXT"));
+		columns.add(new ColumnElement("room_id","INTEGER"));
+		columns.add(new ColumnElement("account_id","INTEGER"));
+		columns.add(new ColumnElement("uploaded","TINYINT"));
 		//initSQL(tableName,dropdbSQL, createdbSQL, insertdbSQL, selectSQL, updateSQL, deleteSQL,columns,stat);
 		dropdbSQL = "DROP TABLE IF EXISTS "+tableName; 
 		dropTable(dropdbSQL);
@@ -29,17 +32,22 @@ public class RoomTable extends Table{
 		insertdbSQL = makeInsertdbCmd(tableName, columns);
 		selectSQL = "select * from "+tableName+" ";
 		updateSQL = makeUpdatedbCmd(tableName, columns);
-		//deleteSQL = "delete from "+tableName+" where ";
-	}
-	static private void makePrepareStat(PreparedStatement pst,Room a)throws SQLException{
-		if(a.id==0)a.id=++Room.totalID;
-		pst.setInt(1, a.id);
-		pst.setString(2, a.name);
+		deleteSQL = "delete from "+tableName+" where ";
 	}
 	
-	static public void insert(Room a) { 
+	static private void makePrepareStat(PreparedStatement pst,FileChat a)throws SQLException{
+		if(a.id==0)a.id=++FileChat.totalID;
+		pst.setInt(1, a.id);
+		pst.setString(2, a.filepath);
+		pst.setString(3, a.fileName);
+		pst.setString(4, a.encryptedFileName);
+		pst.setInt(5, a.room_id);
+		pst.setInt(6, a.account_id);
+		pst.setShort(7, a.uploaded);
+	}
+	
+	static public void insert(FileChat a) { 
 		try {
-			Util.errorReport(insertdbSQL);
 			pst = con.prepareStatement(insertdbSQL);
 			makePrepareStat(pst,a);
 			pst.executeUpdate(); 
@@ -51,7 +59,8 @@ public class RoomTable extends Table{
 			Close(); 
 		} 
 	} 
-	static public void update(Room a) { 
+	
+	static public void update(FileChat a) { 
 		try {
 			pst = con.prepareStatement(updateSQL);
 			makePrepareStat(pst,a);
@@ -65,6 +74,31 @@ public class RoomTable extends Table{
 			Close(); 
 		} 
 	} 
+	static public void delete(FileChat f){  
+		try {
+			pst = con.prepareStatement(deleteSQL+"id="+f.id);////////
+			pst.executeUpdate(); 
+		} 
+		catch(SQLException e) { 
+			Util.errorReport("deleteDB Exception :" + e.toString());
+		} 
+		finally { 
+			Close(); 
+		} 
+	}
+	
+	static public void delete(String format){
+		try {
+			pst = con.prepareStatement(deleteSQL+format);
+			pst.executeUpdate(); 
+		} 
+		catch(SQLException e) { 
+			Util.errorReport("deleteDB Exception :" + e.toString());
+		} 
+		finally { 
+			Close(); 
+		} 
+	}
 	static private void Close() { 
 		try{ 
 			if(rs!=null) { 
@@ -84,8 +118,8 @@ public class RoomTable extends Table{
 			Util.errorReport("Close Exception :" + e.toString()); 
 		} 
 	} 
-	static public ArrayList<Room> All(){
-		ArrayList<Room> ret = new ArrayList<Room>();
+	static public ArrayList<FileChat> All(){
+		ArrayList<FileChat> ret = new ArrayList<FileChat>();
 		try { 
 			stat = con.createStatement(); 
 			rs = stat.executeQuery(selectSQL); 
@@ -101,8 +135,8 @@ public class RoomTable extends Table{
 		}
 		return ret; 
 	}
-	static public Room[] where(String format, String[]parameters){
-		ArrayList<Room> ret = new ArrayList<Room>();
+	static public FileChat[] where(String format, String[]parameters){
+		ArrayList<FileChat> ret = new ArrayList<FileChat>();
 		try { 
 			String cmd = new String(selectSQL);
 			cmd += "WHERE BINARY "+format;
@@ -113,7 +147,7 @@ public class RoomTable extends Table{
 			while(rs.next()) { 
 				ret.add(instance(rs));
 			} 
-			Room a[]=new Room[ret.size()];
+			FileChat a[]=new FileChat[ret.size()];
 			for(int i=0;i<ret.size();i++)
 				a[i]=ret.get(i);
 			return a;
@@ -124,10 +158,10 @@ public class RoomTable extends Table{
 		finally { 
 			Close(); 
 		}
-		return new Room[0]; 
+		return new FileChat[0]; 
 	}
-	static public Room[] where(String format){
-		ArrayList<Room> ret = new ArrayList<Room>();
+	static public FileChat[] where(String format){
+		ArrayList<FileChat> ret = new ArrayList<FileChat>();
 		try { 
 			String cmd = new String(selectSQL);
 			cmd += "WHERE BINARY "+format;
@@ -136,7 +170,7 @@ public class RoomTable extends Table{
 			while(rs.next()) { 
 				ret.add(instance(rs));
 			} 
-			Room a[]=new Room[ret.size()];
+			FileChat a[]=new FileChat[ret.size()];
 			for(int i=0;i<ret.size();i++)
 				a[i]=ret.get(i);
 			return a;
@@ -147,9 +181,9 @@ public class RoomTable extends Table{
 		finally { 
 			Close(); 
 		}
-		return new Room[0]; 
+		return new FileChat[0]; 
 	}
-	static public Room find(int id){
+	static public FileChat find(int id){
 		try { 
 			stat = con.createStatement(); 
 			rs = stat.executeQuery(selectSQL+"where id="+id);
@@ -162,17 +196,15 @@ public class RoomTable extends Table{
 		} 
 		return null;
 	}
-	static public Account[] accounts(int id){
-		RoomAccount[] ras=RoomAccountTable.where("room_id="+id);
-		Account[] ret = new Account[ras.length];
-		for(int i=0;i<ras.length;i++)
-			ret[i]=AccountTable.find(ras[i].account_id);
-		return ret;
-	}
-	static public Room instance(ResultSet rs){
+	static public FileChat instance(ResultSet rs){
 		try {
-			return new Room(rs.getInt("id"),
-					rs.getString("name"));
+			return new FileChat(rs.getInt("id"),
+					rs.getString("filepath"),
+					rs.getString("fileName"),
+					rs.getString("encryptedFileName"),
+					rs.getInt("room_id"),
+					rs.getInt("account_id"),
+					rs.getShort("uploaded"));
 		} catch (SQLException e) {
 			Util.errorReport("instance SQLexception: "+e.toString());
 		}
