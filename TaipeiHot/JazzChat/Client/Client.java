@@ -1,7 +1,9 @@
 package TaipeiHot.JazzChat.Client;
 
+import java.awt.FileDialog;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -165,6 +167,21 @@ public class Client {
 	public static void finishUpload(int fileId) {
 		ClientUtils.sendStringsToServer(out, new String[] { "file", "finish",
 				Integer.toString(fileId) });
+	}
+
+	public static void startDownload(int roomId, String fileName,
+			String filePath) {
+		FileDialog filedialog = new FileDialog(Client.mainWindow, "new",
+				FileDialog.SAVE);
+		filedialog.setDirectory(System.getProperty("user.home")
+				+ File.separator + "Downloads");
+		filedialog.setFile(fileName);
+		filedialog.setVisible(true);
+		String myPath = filedialog.getDirectory() + File.separator
+				+ filedialog.getFile();
+		FtpUtils.downloadFTPFile(fileName, filePath, myPath);
+		RoomWindow room = Client.mainWindow.getRoomById(roomId);
+		room.showFile(myPath, fileName);
 	}
 
 	public static String getMessage() {

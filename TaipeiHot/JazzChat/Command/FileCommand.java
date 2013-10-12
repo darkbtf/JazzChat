@@ -1,8 +1,5 @@
 package TaipeiHot.JazzChat.Command;
 
-import java.awt.FileDialog;
-import java.io.File;
-
 import TaipeiHot.JazzChat.Client.Client;
 import TaipeiHot.JazzChat.Client.FtpUtils;
 import TaipeiHot.JazzChat.UI.RoomWindow;
@@ -22,16 +19,7 @@ public class FileCommand implements Command {
 			String fileName = Client.getMessage();
 			String filePath = Client.getMessage();
 			RoomWindow room = Client.mainWindow.getRoomById(roomId);
-			FileDialog filedialog = new FileDialog(Client.mainWindow, "new",
-					FileDialog.SAVE);
-			filedialog.setDirectory(System.getProperty("user.home")
-					+ File.separator + "Downloads");
-			filedialog.setFile(fileName);
-			filedialog.setVisible(true);
-			String myPath = filedialog.getDirectory() + File.separator
-					+ filedialog.getFile();
-			FtpUtils.downloadFTPFile(fileName, filePath, myPath);
-			room.showFile(myPath, fileName);
+			room.confirmDownload(roomId, fileName, filePath);
 		}
 	}
 }
