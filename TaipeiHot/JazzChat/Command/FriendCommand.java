@@ -13,6 +13,7 @@ public class FriendCommand implements Command {
 			String userName = Client.getMessage();
 			String greeting = Client.getMessage();
 			User tmpUser = new User(userName, greeting);
+			System.out.println(userName + "++" + greeting);
 			Client.friendsToAdd.add(tmpUser);
 			Client.mainWindow.pendingListShow(tmpUser);
 			Client.mainWindow.acceptFriendShow(userId, userName, greeting);
@@ -25,6 +26,7 @@ public class FriendCommand implements Command {
 				Client.mainWindow.addFriendFail("reject");
 			} else if (response.equals("fail")) {
 				String reason = Client.getMessage();
+				System.out.println("gan ni lao mu");
 				Client.mainWindow.addFriendFail(reason);
 			}
 		} else if (cmd.equals("show")) {
