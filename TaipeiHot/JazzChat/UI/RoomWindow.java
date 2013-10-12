@@ -6,8 +6,15 @@ package TaipeiHot.JazzChat.UI;
 
 import TaipeiHot.JazzChat.Client.Client;
 import TaipeiHot.JazzChat.User;
+import TaipeiHot.JazzChat.Util;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.Box;
+import javax.swing.DefaultListModel;
 
 /**
  * 
@@ -18,16 +25,44 @@ public class RoomWindow extends javax.swing.JFrame {
 	/**
 	 * Creates new form RoomWindow
 	 */
-
+        public Box box=Box.createVerticalBox();
+        public RoomWindow() {
+		initComponents();
+                roomId = 0;
+                try{
+                    chatList.setCellRenderer(new ChatCellRender());
+                }catch(MalformedURLException e){
+                    Util.errorReport(e.getMessage());
+                }
+                catch(IOException e){
+                    Util.errorReport(e.getMessage());
+                }
+	}
 	public RoomWindow(int _roomId, String _roomName,
 			ArrayList<String> _userNameList) {
 		initComponents();
 		roomId = _roomId;
+                try{
+                    chatList.setCellRenderer(new ChatCellRender());
+                }catch(MalformedURLException e){
+                    Util.errorReport(e.getMessage());
+                }
+                catch(IOException e){
+                    Util.errorReport(e.getMessage());
+                }
 	}
 
-	public RoomWindow(int _roomId) {
+	public RoomWindow(int _roomId)  {
 		initComponents();
 		roomId = _roomId;
+                try{
+                    chatList.setCellRenderer(new ChatCellRender());
+                }catch(MalformedURLException e){
+                    Util.errorReport(e.getMessage());
+                }
+                catch(IOException e){
+                    Util.errorReport(e.getMessage());
+                }
 	}
 
 	/**
@@ -37,84 +72,93 @@ public class RoomWindow extends javax.swing.JFrame {
 	 */
 	@SuppressWarnings("unchecked")
 	// <editor-fold defaultstate="collapsed"
-	// desc="Generated Code">//GEN-BEGIN:initComponents
-	private void initComponents() {
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
 
-		jLayeredPane1 = new javax.swing.JLayeredPane();
-		jScrollPane2 = new javax.swing.JScrollPane();
-		showText = new javax.swing.JTextArea();
-		jScrollPane1 = new javax.swing.JScrollPane();
-		typeText = new javax.swing.JTextArea();
-		sendTextButton = new javax.swing.JButton();
+        jLayeredPane1 = new javax.swing.JLayeredPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        typeText = new javax.swing.JTextArea();
+        sendTextButton = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        chatList = new javax.swing.JList();
+        jToolBar1 = new javax.swing.JToolBar();
+        jButton1 = new javax.swing.JButton();
 
-		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-		setBackground(new java.awt.Color(102, 153, 255));
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(102, 153, 255));
 
-		jLayeredPane1.setBackground(new java.awt.Color(102, 204, 255));
+        jLayeredPane1.setBackground(new java.awt.Color(102, 204, 255));
 
-		showText.setEditable(false);
-		showText.setBackground(new java.awt.Color(153, 204, 255));
-		showText.setColumns(20);
-		showText.setRows(5);
-		showText.setBorder(new javax.swing.border.SoftBevelBorder(
-				javax.swing.border.BevelBorder.RAISED, null, null, null,
-				new java.awt.Color(51, 51, 51)));
-		showText.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-		jScrollPane2.setViewportView(showText);
+        typeText.setBackground(new java.awt.Color(153, 204, 255));
+        typeText.setColumns(20);
+        typeText.setRows(2);
+        typeText.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, null, new java.awt.Color(0, 0, 0), new java.awt.Color(0, 51, 255)));
+        typeText.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                typeTextKeyTyped(evt);
+            }
+        });
+        jScrollPane1.setViewportView(typeText);
 
-		jScrollPane2.setBounds(20, 10, 390, 230);
-		jLayeredPane1.add(jScrollPane2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jScrollPane1.setBounds(10, 290, 334, 48);
+        jLayeredPane1.add(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-		typeText.setBackground(new java.awt.Color(153, 204, 255));
-		typeText.setColumns(20);
-		typeText.setRows(2);
-		typeText.setBorder(new javax.swing.border.SoftBevelBorder(
-				javax.swing.border.BevelBorder.RAISED, null, null,
-				new java.awt.Color(0, 0, 0), new java.awt.Color(0, 51, 255)));
-		typeText.addKeyListener(new java.awt.event.KeyAdapter() {
-			@Override
-			public void keyTyped(java.awt.event.KeyEvent evt) {
-				typeTextKeyTyped(evt);
-			}
-		});
-		jScrollPane1.setViewportView(typeText);
+        sendTextButton.setText("jButton1");
+        sendTextButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                sendTextButtonMouseReleased(evt);
+            }
+        });
+        sendTextButton.setBounds(360, 290, 170, 50);
+        jLayeredPane1.add(sendTextButton, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-		jScrollPane1.setBounds(10, 250, 334, 48);
-		jLayeredPane1.add(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        chatList.setModel(chatModel
+        );
+        jScrollPane2.setViewportView(chatList);
 
-		sendTextButton.setText("jButton1");
-		sendTextButton.addMouseListener(new java.awt.event.MouseAdapter() {
-			@Override
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				sendTextButtonMouseReleased(evt);
-			}
-		});
-		sendTextButton.setBounds(350, 250, 170, 50);
-		jLayeredPane1.add(sendTextButton,
-				javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jScrollPane2.setBounds(10, 0, 500, 240);
+        jLayeredPane1.add(jScrollPane2, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(
-				getContentPane());
-		getContentPane().setLayout(layout);
-		layout.setHorizontalGroup(layout.createParallelGroup(
-				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-				layout.createSequentialGroup()
-						.addContainerGap()
-						.addComponent(jLayeredPane1,
-								javax.swing.GroupLayout.PREFERRED_SIZE, 508,
-								javax.swing.GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(52, Short.MAX_VALUE)));
-		layout.setVerticalGroup(layout.createParallelGroup(
-				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-				layout.createSequentialGroup()
-						.addGap(18, 18, 18)
-						.addComponent(jLayeredPane1,
-								javax.swing.GroupLayout.PREFERRED_SIZE, 309,
-								javax.swing.GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(45, Short.MAX_VALUE)));
+        jToolBar1.setRollover(true);
 
-		pack();
-	}// </editor-fold>//GEN-END:initComponents
+        jButton1.setText("jButton1");
+        jButton1.setFocusable(false);
+        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
+        jToolBar1.add(jButton1);
+
+        jToolBar1.setBounds(10, 250, 330, 30);
+        jLayeredPane1.add(jToolBar1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLayeredPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 550, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(jLayeredPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        // TODO add your handling code here:
+        chatModel.addElement("1");
+    }//GEN-LAST:event_jButton1MouseClicked
 
 	private void sendTextButtonMouseReleased(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_sendTextButtonMouseReleased
 		// TODO add your handling code here:
@@ -172,16 +216,18 @@ public class RoomWindow extends javax.swing.JFrame {
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-				new RoomWindow(1).setVisible(true);
+                            new RoomWindow(1).setVisible(true);
 			}
 		});
 	}
 
 	/* funcrions and parameters by paul */
 	private final int roomId;
-	private ArrayList<String> userNameList;
+	private ArrayList<String> userNameList=new ArrayList<String>();
 	private String roomName;
-
+        DefaultListModel chatModel = new DefaultListModel();
+        
+        
 	public void roomNameChange(String _roomName) {
 		roomName = _roomName;
 	}
@@ -193,24 +239,32 @@ public class RoomWindow extends javax.swing.JFrame {
             userNameList.add(user.getNickname());
         }
 	public void showMessage(String name, String text) {
-		showText.append(name + ":" + text + "\n");
-	}
+                //Util.errorReport("QQQQQ");
+                //JLabel jl=new JLabel(name + ":" + text + "\n");
+                chatModel.addElement(name + ":" + text + "\n");
+		//box.add(jl);
+                //jl.setVisible(true);
+                
+        }
 
 	private void send() {
 		
                 if (!typeText.getText().equals("")) {
 			Client.sendMessage(roomId,typeText.getText());
                         showMessage(Client.user.getNickname(), typeText.getText());
-			typeText.setText("");
+			//showMessage("haha",typeText.getText());
+                        typeText.setText("");
 		}
 	}
         
-	// Variables declaration - do not modify//GEN-BEGIN:variables
-	private javax.swing.JLayeredPane jLayeredPane1;
-	private javax.swing.JScrollPane jScrollPane1;
-	private javax.swing.JScrollPane jScrollPane2;
-	private javax.swing.JButton sendTextButton;
-	private javax.swing.JTextArea showText;
-	private javax.swing.JTextArea typeText;
-	// End of variables declaration//GEN-END:variables
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JList chatList;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLayeredPane jLayeredPane1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JButton sendTextButton;
+    private javax.swing.JTextArea typeText;
+    // End of variables declaration//GEN-END:variables
 }
