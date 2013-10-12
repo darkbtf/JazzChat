@@ -19,8 +19,6 @@ public class FileCommand extends ServerCommand {
 			return uploadFile();
 		else if(cmd.equals("finish"))
 			return finishUpload();
-		else if(cmd.equals("confirm"))
-			return confirm();
 		else return Util.errorReport("Unknown command in Friend");
 	}
 	
@@ -41,23 +39,7 @@ public class FileCommand extends ServerCommand {
 		for(Account a:RoomTable.accounts(f.room_id))
 			if(a.id==account.id)continue;
 			else if(Server.accountMap.get(a.id)!=null)
-				Server.accountMap.get(a.id).sendMessage(new String[]{"file","confirm",f.room_id+"",f.fileName,f.id+""});
+				Server.accountMap.get(a.id).sendMessage(new String[]{"file","download",f.room_id+"",f.fileName,FileTable.find(file_id).encryptedFileName});
 		return true;
-	}
-	
-	private Boolean confirm(){
-		try{
-			String cmd = account.getMessage();
-			int file_id = Integer.valueOf(account.getMessage());
-			if(cmd.equals("accept")){
-				account.sendMessage(new String[]{"file","download",FileTable.find(file_id).encryptedFileName});
-				return true;
-			}
-			else if(cmd.equals("reject")) // what should i do OAO?
-			{return true;}
-			else return Util.errorReport("Unknown command:"+cmd);
-		}catch (Exception e){
-			return Util.errorReport("In file confirm: "+e.getMessage());
-		}
 	}
 }

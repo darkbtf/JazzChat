@@ -5,6 +5,7 @@ import TaipeiHot.JazzChat.Server.Account;
 import TaipeiHot.JazzChat.Server.Room;
 import TaipeiHot.JazzChat.Server.RoomAccount;
 import TaipeiHot.JazzChat.Server.Server;
+import TaipeiHot.JazzChat.Server.JdbcMysql.AccountTable;
 import TaipeiHot.JazzChat.Server.JdbcMysql.RoomAccountTable;
 import TaipeiHot.JazzChat.Server.JdbcMysql.RoomTable;
 
@@ -49,6 +50,7 @@ public class RoomCommand extends ServerCommand {
 				RoomAccountTable.insert(new RoomAccount(0,r.id,user_id));
 			}
 			account.sendMessage(new String[]{"room","new","private",r.id+""});
+			account.sendMessage(new String[]{"room","adduser",r.id+"",AccountTable.find(user_id).nickname});
 			return true;
 		}
 		else if(roomkind.equals("public")){
