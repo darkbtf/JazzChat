@@ -5,6 +5,7 @@
 package TaipeiHot.JazzChat.UI;
 
 import TaipeiHot.JazzChat.User;
+import TaipeiHot.JazzChat.Util;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -24,24 +25,43 @@ public class RoomWindow extends javax.swing.JFrame {
 	 * Creates new form RoomWindow
 	 */
         public Box box=Box.createVerticalBox();
-        public RoomWindow() throws MalformedURLException, IOException {
+        public RoomWindow() {
 		initComponents();
-		roomId = 0;
-                chatList.setCellRenderer(new ObjectCellRender());
-                
+                roomId = 0;
+                try{
+                    chatList.setCellRenderer(new ObjectCellRender());
+                }catch(MalformedURLException e){
+                    Util.errorReport(e.getMessage());
+                }
+                catch(IOException e){
+                    Util.errorReport(e.getMessage());
+                }
 	}
 	public RoomWindow(int _roomId, String _roomName,
-			ArrayList<String> _userNameList) throws MalformedURLException, IOException {
+			ArrayList<String> _userNameList) {
 		initComponents();
 		roomId = _roomId;
-                chatList.setCellRenderer(new ObjectCellRender());
-                
+                try{
+                    chatList.setCellRenderer(new ObjectCellRender());
+                }catch(MalformedURLException e){
+                    Util.errorReport(e.getMessage());
+                }
+                catch(IOException e){
+                    Util.errorReport(e.getMessage());
+                }
 	}
 
-	public RoomWindow(int _roomId) throws MalformedURLException, IOException {
+	public RoomWindow(int _roomId)  {
 		initComponents();
 		roomId = _roomId;
-                chatList.setCellRenderer(new ObjectCellRender());
+                try{
+                    chatList.setCellRenderer(new ObjectCellRender());
+                }catch(MalformedURLException e){
+                    Util.errorReport(e.getMessage());
+                }
+                catch(IOException e){
+                    Util.errorReport(e.getMessage());
+                }
 	}
 
 	/**
@@ -195,13 +215,7 @@ public class RoomWindow extends javax.swing.JFrame {
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-                            try {
-                                new RoomWindow(1).setVisible(true);
-                            } catch (MalformedURLException ex) {
-                                Logger.getLogger(RoomWindow.class.getName()).log(Level.SEVERE, null, ex);
-                            } catch (IOException ex) {
-                                Logger.getLogger(RoomWindow.class.getName()).log(Level.SEVERE, null, ex);
-                            }
+                            new RoomWindow(1).setVisible(true);
 			}
 		});
 	}

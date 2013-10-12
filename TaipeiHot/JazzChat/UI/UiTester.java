@@ -17,15 +17,17 @@ public class UiTester {
 	public static void main(String args[]) throws IOException {
 		MainWindow mainWindow = new MainWindow();
 		ArrayList<String> userName = new ArrayList<String>();
-		mainWindow.newRoom(123, "me", userName);
-		mainWindow.newRoom(234, "me", userName);
-		mainWindow.loginShow();
-                mainWindow.loginSuccess();
+		//mainWindow.newRoom(123, "me", userName);
+		//mainWindow.newRoom(234, "me", userName);
+		//mainWindow.loginShow();
+                //mainWindow.loginSuccess();
+                //for(int i=0;i<20;i++)mainWindow.friendModel.addElement(i);
+                mainWindow.setVisible(true);
                 mainWindow.friendModel.addElement(new FriendNameAndStatus("1"));
                 mainWindow.friendModel.addElement(new FriendNameAndStatus("22"));
                 mainWindow.friendModel.addElement(new FriendNameAndStatus("3"));
                 mainWindow.friendModel.addElement(new FriendNameAndStatus("4"));
-                mainWindow.friendList.setModel(mainWindow.friendModel);
+                //mainWindow.friendList.setModel(mainWindow.friendModel);
                 //mainWindow.friendModel.addElement(new FriendNameAndStatus("lala"));
                 //mainWindow.friendModel.addElement(new FriendNameAndStatus("lala"));
 		// xx.closeDialog();
