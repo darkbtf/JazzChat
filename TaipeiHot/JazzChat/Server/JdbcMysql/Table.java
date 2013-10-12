@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import TaipeiHot.JazzChat.Util;
 /*
  * To add/remove a column, you need change:
+ * drop or alter table in mysql
  * constructor()
  * insert(), instance(), update()
  * that class extends ActiveRecord
