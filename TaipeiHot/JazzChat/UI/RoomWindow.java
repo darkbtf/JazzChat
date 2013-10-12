@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Box;
 import javax.swing.DefaultListModel;
+import javax.swing.JFileChooser;
 
 /**
  * 
@@ -83,6 +84,7 @@ public class RoomWindow extends javax.swing.JFrame {
         chatList = new javax.swing.JList();
         jToolBar1 = new javax.swing.JToolBar();
         jButton1 = new javax.swing.JButton();
+        uploadFileButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(102, 153, 255));
@@ -135,6 +137,15 @@ public class RoomWindow extends javax.swing.JFrame {
         jToolBar1.setBounds(10, 250, 330, 30);
         jLayeredPane1.add(jToolBar1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
+        uploadFileButton.setText("Upload...");
+        uploadFileButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                uploadFileButtonMouseClicked(evt);
+            }
+        });
+        uploadFileButton.setBounds(423, 250, 90, 23);
+        jLayeredPane1.add(uploadFileButton, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -159,6 +170,17 @@ public class RoomWindow extends javax.swing.JFrame {
         // TODO add your handling code here:
         chatModel.addElement("1");
     }//GEN-LAST:event_jButton1MouseClicked
+
+    private void uploadFileButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_uploadFileButtonMouseClicked
+        // TODO add your handling code here:
+        JFileChooser chooser = new JFileChooser();
+        int returnVal = chooser.showOpenDialog(this);
+        if(returnVal == JFileChooser.APPROVE_OPTION) {
+            String fileName=chooser.getSelectedFile().getPath();
+            Client.uploadFile(roomId, fileName);
+        }
+        
+    }//GEN-LAST:event_uploadFileButtonMouseClicked
 
 	private void sendTextButtonMouseReleased(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_sendTextButtonMouseReleased
 		// TODO add your handling code here:
@@ -246,7 +268,12 @@ public class RoomWindow extends javax.swing.JFrame {
                 //jl.setVisible(true);
                 
         }
-
+        public void showFile(String myPath,String fileName){
+            showMessage("me",myPath+" "+fileName);
+        }
+        public void confirmDownload(int roomId,String fileName,String filePath){
+           Client.startDownload(roomId, fileName, filePath);
+        }
 	private void send() {
 		
                 if (!typeText.getText().equals("")) {
@@ -266,5 +293,6 @@ public class RoomWindow extends javax.swing.JFrame {
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JButton sendTextButton;
     private javax.swing.JTextArea typeText;
+    private javax.swing.JButton uploadFileButton;
     // End of variables declaration//GEN-END:variables
 }

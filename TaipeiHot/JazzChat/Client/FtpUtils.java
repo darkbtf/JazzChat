@@ -21,7 +21,7 @@ public class FtpUtils {
 	final static String IP = "140.112.18.198";
 	final static int PORT = 21;
 	final static String ID = "nmlab198";
-	final static String PASSWORD = "password";
+	final static String PASSWORD = "taipeihot";
 
 	public static FTPClient createFtpConnection() throws NumberFormatException,
 			SocketException, IOException, NoSuchAlgorithmException {
@@ -67,7 +67,7 @@ public class FtpUtils {
 	 *            下載位置
 	 * @return 是否下載成功
 	 */
-	public static boolean downloadFTPFile(String fileName, String downloadPath,
+	public static boolean downloadFTPFile(String downloadPath,
 			String myDownloadPath) {
 		boolean downloadFile = false;
 		FTPClient ftpClient = null;
@@ -77,10 +77,10 @@ public class FtpUtils {
 			if (ftpClient.listFiles(downloadPath).length > 0) {
 				is = ftpClient.retrieveFileStream(downloadPath);
 				if (is == null) {
-					Util.errorReport("FTP下載檔案[" + fileName + "]不存在");
+					Util.errorReport("FTP下載檔案[" + downloadPath + "]不存在");
 				} else {
 					OutputStream out = new FileOutputStream(new File(
-							myDownloadPath + fileName));
+							myDownloadPath ));
 					int read = 0;
 					byte[] bytes = new byte[1024];
 
@@ -131,13 +131,16 @@ public class FtpUtils {
 		FTPClient ftpClient = null;
 		OutputStream os = null;
 		try {
+                        //Util.errorReport("~~"+filePath);
 			ftpClient = createFtpConnection();
 			InputStream is = new FileInputStream(new File(filePath));
+                        //InputStream is = new FileInputStream(new File("C:\\Users\\Paul\\Desktop\\CoolNovoPortable\\如何移除.txt"));
+                        Util.errorReport(filePath);
 			ftpClient.storeFile(fileName, is);
 		} catch (ConnectException e) {
 			Util.errorReport("FTP連線失敗: " + e);
 		} catch (Exception e) {
-			Util.errorReport("下載FTP資料失敗:" + e);
+			Util.errorReport("upload FTP資料失敗:" + e.toString());
 			throw new RuntimeException(e);
 		} finally {
 			closeFtpConnection(ftpClient);// 中斷FTP連線

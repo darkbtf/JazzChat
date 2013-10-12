@@ -5,6 +5,7 @@
 package TaipeiHot.JazzChat.UI;
 
 import TaipeiHot.JazzChat.Client.Client;
+import java.awt.event.KeyEvent;
 
 /**
  *
@@ -53,6 +54,12 @@ public class LoginDialog extends javax.swing.JDialog {
         registerButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 registerButtonMouseClicked(evt);
+            }
+        });
+
+        passwordTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                passwordTextFieldKeyTyped(evt);
             }
         });
 
@@ -110,6 +117,15 @@ public class LoginDialog extends javax.swing.JDialog {
         //this.setVisible(false);
         ((MainWindow)(getOwner())).registerShow();
     }//GEN-LAST:event_registerButtonMouseClicked
+
+    private void passwordTextFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordTextFieldKeyTyped
+        // TODO add your handling code here:
+        if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
+            String ID=accountTextField.getText();
+            String pass=passwordTextField.getText();
+            Client.userLogin(ID,pass);
+        }
+    }//GEN-LAST:event_passwordTextFieldKeyTyped
 
     /**
      * @param args the command line arguments
