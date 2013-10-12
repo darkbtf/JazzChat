@@ -157,6 +157,16 @@ public class Client {
 				"public", roomName });
 	}
 
+	public static void uploadFile(int roomId, String path) {
+		ClientUtils.sendStringsToServer(out, new String[] { "file", "uplaod",
+				Integer.toString(roomId), path });
+	}
+
+	public static void finishUpload(int fileId) {
+		ClientUtils.sendStringsToServer(out, new String[] { "file", "finish",
+				Integer.toString(fileId) });
+	}
+
 	public static String getMessage() {
 		while (messages.isEmpty()) {
 			while (!Util.parseByte(bufferInput, messages)) {
