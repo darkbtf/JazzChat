@@ -7,14 +7,25 @@ package TaipeiHot.JazzChat.UI;
 import TaipeiHot.JazzChat.Client.Client;
 import TaipeiHot.JazzChat.User;
 import TaipeiHot.JazzChat.Util;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.sql.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JList;
 
 /**
@@ -26,12 +37,32 @@ public class MainWindow extends javax.swing.JFrame {
 	/**
 	 * Creates new form FreindList
 	 */
+    BufferedImage image;
 
+    @Override
+        public void paintComponents(Graphics g) {
 
-	public MainWindow() {
-                
+            super.paintComponents(g); //To change body of generated methods, choose Tools | Templates.
+            int x = (getWidth() - image.getWidth())/2;
+            int y = (getHeight() - image.getHeight())/2;
+            g.drawImage(image, x, y, this);
+        }
+
+	public MainWindow() throws IOException {
+                URL url = new URL("http://3.bp.blogspot.com/-CpxmJu3Km3k/UMPhfSoHaQI/AAAAAAAAF0Y/H5iQtXUZJuQ/s1600/Fire+lion.jpg");
+                image = ImageIO.read(url);
                 //friendModel.addElement("tesing");
 		initComponents();
+                
+                //URL url = new URL("http://eofdreams.com/data_images/dreams/fire/fire-01.jpg");
+                //Image image = ImageIO.read(url);
+                //ImageIcon imagei = new ImageIcon(image);
+                //Graphics g=this.getGraphics();
+                //this.paint(g);
+                //g.drawImage(image, 0, 0, this);
+                //g.drawImage(image, 0, 0, null);
+                //this.imageUpdate(image, WIDTH, WIDTH, WIDTH, WIDTH, WIDTH);
+                setIconImage(image);
                 mouseListener=new MouseAdapter() {
                     public void mouseClicked(MouseEvent mouseEvent) {
                       JList theList = (JList) mouseEvent.getSource();
@@ -44,7 +75,8 @@ public class MainWindow extends javax.swing.JFrame {
                       }
                     }
                 };
-                jList1.addMouseListener(mouseListener);
+                friendList.addMouseListener(mouseListener);
+                friendList.setCellRenderer(new ObjectCellRender());
                 mouseListener2=new MouseAdapter() {
                     public void mouseClicked(MouseEvent mouseEvent) {
                       JList theList = (JList) mouseEvent.getSource();
@@ -57,6 +89,7 @@ public class MainWindow extends javax.swing.JFrame {
                       }
                     }
                 };
+                //this.repaint();
 	}
 
 	/**
@@ -69,20 +102,35 @@ public class MainWindow extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        friendList = new javax.swing.JList();
+        afwButton = new javax.swing.JToggleButton();
         jPanel1 = new javax.swing.JPanel();
         addFirendButton = new javax.swing.JButton();
         jToggleButton1 = new javax.swing.JToggleButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList();
-        afwButton = new javax.swing.JToggleButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 0, 51));
-        setPreferredSize(new java.awt.Dimension(500, 538));
         setResizable(false);
+
+        friendList.setModel(friendModel);
+        jScrollPane1.setViewportView(friendList);
+
+        afwButton.setText("Wating Friend");
+        afwButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                afwButtonMouseClicked(evt);
+            }
+        });
+        afwButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                afwButtonActionPerformed(evt);
+            }
+        });
 
         addFirendButton.setText("++++");
         addFirendButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -100,9 +148,8 @@ public class MainWindow extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 238, Short.MAX_VALUE)
-                .addComponent(addFirendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
+                .addComponent(addFirendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -114,20 +161,33 @@ public class MainWindow extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jList1.setModel(friendModel);
-        jScrollPane1.setViewportView(jList1);
-
-        afwButton.setText("Wating Friend");
-        afwButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                afwButtonMouseClicked(evt);
-            }
-        });
-        afwButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                afwButtonActionPerformed(evt);
-            }
-        });
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap(341, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(afwButton)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(58, 58, 58))))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(7, 7, 7)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 553, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(afwButton)
+                .addGap(24, 24, 24))
+        );
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -141,26 +201,17 @@ public class MainWindow extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(90, 90, 90))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(afwButton)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addComponent(afwButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(64, 64, 64)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(58, Short.MAX_VALUE))
         );
 
         pack();
@@ -183,15 +234,17 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_afwButtonMouseClicked
 
+    private void addFirendButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addFirendButtonMouseClicked
+        // TODO add your handling code here:
+        addFriendDialog.setVisible(true);
+    }//GEN-LAST:event_addFirendButtonMouseClicked
+
 	private void jPanel2MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jPanel2MouseClicked
 		System.out.println("hahah");
 		// TODO add your handling code here:
 	}// GEN-LAST:event_jPanel2MouseClicked
 
-	private void addFirendButtonMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_addFirendButtonMouseClicked
-		// TODO add your handling code here:
-		addFriendDialog.setVisible(true);
-	}// GEN-LAST:event_addFirendButtonMouseClicked
+
 
 	/**
 	 * @param args
@@ -207,6 +260,7 @@ public class MainWindow extends javax.swing.JFrame {
 		 * http://download.oracle.com/javase
 		 * /tutorial/uiswing/lookandfeel/plaf.html
 		 */
+                            
 		try {
 			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager
 					.getInstalledLookAndFeels()) {
@@ -234,7 +288,11 @@ public class MainWindow extends javax.swing.JFrame {
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-				new MainWindow().setVisible(true);
+                            try {
+                                new MainWindow().setVisible(true);
+                            } catch (IOException ex) {
+                                Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+                            }
 			}
 		});
 	}
@@ -242,7 +300,7 @@ public class MainWindow extends javax.swing.JFrame {
 	/* functions and parameters by paul */
 	public Map<Integer, RoomWindow> roomWindowMap = new HashMap<Integer, RoomWindow>();
         public Map<Integer, AcceptFriendDialog> AcceptMap= new HashMap<Integer,AcceptFriendDialog>();
-	FreindNameAndStatus f = new FreindNameAndStatus();
+	FriendNameAndStatus f = new FriendNameAndStatus();
 	LoginDialog loginDialog = new LoginDialog(this, true);
 	RegisterDialog registerDialog = new RegisterDialog(this, true);
 	AddFriendDialog addFriendDialog = new AddFriendDialog(this, true);
@@ -311,7 +369,7 @@ public class MainWindow extends javax.swing.JFrame {
             addFriendDialog.setErrorMessage(message);
         }
 
-	public RoomWindow getRoomById(int roomId) {
+	public RoomWindow getRoomById(int roomId) throws MalformedURLException, IOException {
 		if (roomWindowMap.get(roomId) == (null)) {
 			return newRoom(roomId);
 		} else
@@ -319,14 +377,14 @@ public class MainWindow extends javax.swing.JFrame {
 	}
 
 	public RoomWindow newRoom(int roomId, String _roomName,
-			ArrayList<String> _userNameList) {
+			ArrayList<String> _userNameList) throws MalformedURLException, IOException {
 		RoomWindow room = new RoomWindow(roomId, _roomName, _userNameList);
 		roomWindowMap.put(roomId, room);
 		room.setVisible(true);
 		return room;
 	}
 
-	public RoomWindow newRoom(int roomId) {
+	public RoomWindow newRoom(int roomId) throws MalformedURLException, IOException {
 		RoomWindow room = new RoomWindow(roomId);
 		roomWindowMap.put(roomId, room);
 		room.setVisible(true);
@@ -344,8 +402,8 @@ public class MainWindow extends javax.swing.JFrame {
             userList.add(user);
             friendModel.addElement(user.getNickname());
             //friendName.add(user.getNickname());
-            jList1=new JList(friendModel);
-            jList1.addMouseListener(mouseListener);
+            //friendList=new JList(friendModel);
+            //friendList.addMouseListener(mouseListener);
         }
         
         private ArrayList<User> pendingList=new ArrayList<User>();
@@ -371,11 +429,12 @@ public class MainWindow extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addFirendButton;
     private javax.swing.JToggleButton afwButton;
-    private javax.swing.JList jList1;
+    public javax.swing.JList friendList;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables
