@@ -168,6 +168,7 @@ public class Account extends ActiveRecord {
 				}
 			}
 		}
+		Util.errorReport("get message: "+messages.peek());
 		return messages.poll();
 	}
 	
