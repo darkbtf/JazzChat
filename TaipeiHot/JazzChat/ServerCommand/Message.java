@@ -29,7 +29,7 @@ public class Message extends ServerCommand {
 		for(RoomAccount a : RoomAccountTable.where("room_id="+room_id)){
 			Account ac = Server.accountMap.get(a.account_id);
 			if(ac!=null) //TODO offline message
-				ac.sendMessage(new String[]{"message",""+r.id,""+account.id,msg});
+				ac.sendMessage(new String[]{"message",""+r.id,""+account.id,""+account.nickname,msg});
 		}
 		return true;
 	}
