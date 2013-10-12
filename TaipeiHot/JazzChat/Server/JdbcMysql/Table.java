@@ -30,8 +30,10 @@ public class Table {
 			Util.errorReport("Exception :"+e.toString());
 		}
 	}
-	
-	protected void createTable(String createdbSQL, String tableName, ArrayList<ColumnElement> columns, Statement stat) throws SQLException{
+	/*public void initSQL(String tableName,String dropdbSQL,String createdbSQL,String insertdbSQL,String selectSQL,String updateSQL,String deleteSQL,ArrayList<ColumnElement> columns,Statement stat){
+		
+	}*/
+	protected void createTable(String createdbSQL, String tableName, ArrayList<ColumnElement> columns, Statement stat) {
 		createdbSQL = "CREATE TABLE IF NOT EXISTS "+tableName+" ( id INTEGER ";
 		for(ColumnElement c:columns)
 			createdbSQL += ", "+c.name+" "+c.type;
@@ -44,7 +46,11 @@ public class Table {
 			System.out.println("CreateDB Exception :" + e.toString()); 
 		} 
 		finally { 
-			stat.close();
+			try{
+				stat.close();
+			}catch(SQLException e){
+				Util.errorReport("create stat close:"+e.toString());
+			}
 		} 
 	} 
 	protected void dropTable(String dropdbSQL) { 
@@ -70,12 +76,9 @@ public class Table {
 	}
 	
 	protected String makeUpdatedbCmd(String tableName, ArrayList<ColumnElement> columns){
-		String ret = "update "+tableName+" set ";
-		for(int i=0;i<columns.size();i++){
-			ret += columns.get(i).name+"=? ";
-			if(i!=columns.size()-1)
-				ret+=",";
-		}
+		String ret = "update "+tableName+" set id=?";
+		for(int i=0;i<columns.size();i++)
+			ret += ","+columns.get(i).name+"=? ";
 		ret+= "where id=?";
 		Util.errorReport(ret);
 		return ret;

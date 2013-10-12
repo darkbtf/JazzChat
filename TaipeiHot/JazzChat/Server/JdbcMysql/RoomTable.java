@@ -13,7 +13,7 @@ import TaipeiHot.JazzChat.Server.RoomAccount;
 
 public class RoomTable extends Table{
 	static private String tableName = "";
-	static private String dropdbSQL, createdbSQL, insertdbSQL, selectSQL, updateSQL;
+	static private String dropdbSQL, createdbSQL, insertdbSQL, selectSQL, updateSQL;//, deleteSQL;
 	static private ArrayList<ColumnElement> columns = new ArrayList<ColumnElement>();
 	static private Statement stat = null; 
 	static private ResultSet rs = null; 
@@ -22,26 +22,26 @@ public class RoomTable extends Table{
 		super();
 		tableName="room";
 		columns.add(new ColumnElement("name","TINYTEXT"));
+		//initSQL(tableName,dropdbSQL, createdbSQL, insertdbSQL, selectSQL, updateSQL, deleteSQL,columns,stat);
 		dropdbSQL = "DROP TABLE IF EXISTS "+tableName; 
 		dropTable(dropdbSQL);
-		try {
-			createTable(createdbSQL, tableName, columns, stat);
-		} catch (SQLException e) {
-			Util.errorReport("creat fail");
-		}
+		createTable(createdbSQL, tableName, columns, stat);
 		insertdbSQL = makeInsertdbCmd(tableName, columns);
-		Util.errorReport(insertdbSQL);
 		selectSQL = "select * from "+tableName+" ";
 		updateSQL = makeUpdatedbCmd(tableName, columns);
+		//deleteSQL = "delete from "+tableName+" where ";
 	}
-	//新增資料 
+	static private void makePrepareStat(PreparedStatement pst,Room a)throws SQLException{
+		if(a.id==0)a.id=++Room.totalID;
+		pst.setInt(1, a.id);
+		pst.setString(2, a.name);
+	}
+	
 	static public void insert(Room a) { 
 		try {
 			Util.errorReport(insertdbSQL);
 			pst = con.prepareStatement(insertdbSQL);
-			if(a.id==0)a.id=++Room.totalID;
-			pst.setInt(1, a.id);
-			pst.setString(2, a.name);
+			makePrepareStat(pst,a);
 			pst.executeUpdate(); 
 		} 
 		catch(SQLException e) { 
@@ -54,8 +54,8 @@ public class RoomTable extends Table{
 	static public void update(Room a) { 
 		try {
 			pst = con.prepareStatement(updateSQL);
-			pst.setString(1, a.name);
-			pst.setInt(2, a.id);
+			makePrepareStat(pst,a);
+			pst.setInt(columns.size()+2, a.id);
 			pst.executeUpdate(); 
 		} 
 		catch(SQLException e) { 
@@ -168,23 +168,6 @@ public class RoomTable extends Table{
 		for(int i=0;i<ras.length;i++)
 			ret[i]=AccountTable.find(ras[i].account_id);
 		return ret;
-	}
-	static public void SelectTable(){ 
-		try { 
-			stat = con.createStatement(); 
-			rs = stat.executeQuery(selectSQL); 
-			System.out.println("ID\t\tName\t\tPASSWORD"); 
-			while(rs.next()) { 
-				System.out.println(rs.getInt("id")+"\t\t"+ 
-						rs.getString("email")+"\t\t"+rs.getString("password")); 
-			} 
-		} 
-		catch(SQLException e){ 
-			Util.errorReport("SelectDB Exception :" + e.toString()); 
-		} 
-		finally { 
-			Close(); 
-		} 
 	}
 	static public Room instance(ResultSet rs){
 		try {

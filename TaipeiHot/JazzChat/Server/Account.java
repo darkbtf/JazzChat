@@ -28,7 +28,7 @@ public class Account extends ActiveRecord {
 	private BufferedInputStream in = null;
 	private OutputStream out = null;
 	Thread getMessageToBuffer, startThread;
-	public Boolean connecting;
+	public Boolean connecting=true;
 	private ServerCommandManager cmdMgr = null;
 	
 	public Account(){}
@@ -160,6 +160,7 @@ public class Account extends ActiveRecord {
 	public String getMessage(){
 		while(messages.isEmpty()){
 			while(!Util.parseByte(bufferInput, messages)){
+				if(!connecting)return "";
 				try {
 					Thread.sleep(50);
 				} catch (InterruptedException e) {

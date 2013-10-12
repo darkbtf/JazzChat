@@ -23,29 +23,28 @@ public class FriendTable extends Table{
 		columns.add(new ColumnElement("account_id2","INTEGER"));
 		columns.add(new ColumnElement("status","VARCHAR(30)"));
 		columns.add(new ColumnElement("message","TINYTEXT"));
+		//initSQL(tableName,dropdbSQL, createdbSQL, insertdbSQL, selectSQL, updateSQL, deleteSQL,columns,stat);
 		dropdbSQL = "DROP TABLE IF EXISTS "+tableName; 
 		dropTable(dropdbSQL);
-		try {
-			createTable(createdbSQL, tableName, columns, stat);
-		} catch (SQLException e) {
-			Util.errorReport("creat fail");
-		}
+		createTable(createdbSQL, tableName, columns, stat);
 		insertdbSQL = makeInsertdbCmd(tableName, columns);
-		Util.errorReport(insertdbSQL);
 		selectSQL = "select * from "+tableName+" ";
 		updateSQL = makeUpdatedbCmd(tableName, columns);
 		deleteSQL = "delete from "+tableName+" where ";
 	}
-	//新增資料 
+	static private void makePrepareStat(PreparedStatement pst,Friend a)throws SQLException{
+		if(a.id==0)a.id=++Friend.totalID;
+		pst.setInt(1, a.id);
+		pst.setInt(2, a.account_id1);
+		pst.setInt(3, a.account_id2);
+		pst.setString(4, a.status);
+		pst.setString(5, a.message);
+	}
+	
 	static public void insert(Friend a) { 
 		try {
 			pst = con.prepareStatement(insertdbSQL);
-			if(a.id==0)a.id=++Friend.totalID;
-			pst.setInt(1, a.id);
-			pst.setInt(2, a.account_id1);
-			pst.setInt(3, a.account_id2);
-			pst.setString(4, a.status);
-			pst.setString(5, a.message);
+			makePrepareStat(pst,a);
 			pst.executeUpdate(); 
 		} 
 		catch(SQLException e) { 
@@ -59,11 +58,8 @@ public class FriendTable extends Table{
 	static public void update(Friend a) { 
 		try {
 			pst = con.prepareStatement(updateSQL);
-			pst.setInt(1, a.account_id1);
-			pst.setInt(2, a.account_id2);
-			pst.setString(3, a.status);
-			pst.setString(4, a.message);
-			pst.setInt(5, a.id);
+			makePrepareStat(pst,a);
+			pst.setInt(columns.size()+2, a.id);
 			pst.executeUpdate(); 
 		} 
 		catch(SQLException e) { 

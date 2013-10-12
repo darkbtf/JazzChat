@@ -25,31 +25,31 @@ public class FileTable extends Table{
 		columns.add(new ColumnElement("room_id","INTEGER"));
 		columns.add(new ColumnElement("account_id","INTEGER"));
 		columns.add(new ColumnElement("uploaded","TINYINT"));
+		//initSQL(tableName,dropdbSQL, createdbSQL, insertdbSQL, selectSQL, updateSQL, deleteSQL,columns,stat);
 		dropdbSQL = "DROP TABLE IF EXISTS "+tableName; 
 		dropTable(dropdbSQL);
-		try {
-			createTable(createdbSQL, tableName, columns, stat);
-		} catch (SQLException e) {
-			Util.errorReport("creat fail");
-		}
+		createTable(createdbSQL, tableName, columns, stat);
 		insertdbSQL = makeInsertdbCmd(tableName, columns);
-		Util.errorReport(insertdbSQL);
 		selectSQL = "select * from "+tableName+" ";
 		updateSQL = makeUpdatedbCmd(tableName, columns);
 		deleteSQL = "delete from "+tableName+" where ";
 	}
-	//新增資料 
+	
+	static private void makePrepareStat(PreparedStatement pst,FileChat a)throws SQLException{
+		if(a.id==0)a.id=++FileChat.totalID;
+		pst.setInt(1, a.id);
+		pst.setString(2, a.filepath);
+		pst.setString(3, a.fileName);
+		pst.setString(4, a.encryptedFileName);
+		pst.setInt(5, a.room_id);
+		pst.setInt(6, a.account_id);
+		pst.setShort(7, a.uploaded);
+	}
+	
 	static public void insert(FileChat a) { 
 		try {
 			pst = con.prepareStatement(insertdbSQL);
-			if(a.id==0)a.id=++FileChat.totalID;
-			pst.setInt(1, a.id);
-			pst.setString(2, a.filepath);
-			pst.setString(3, a.fileName);
-			pst.setString(4, a.encryptedFileName);
-			pst.setInt(5, a.room_id);
-			pst.setInt(6, a.account_id);
-			pst.setShort(7, a.uploaded);
+			makePrepareStat(pst,a);
 			pst.executeUpdate(); 
 		} 
 		catch(SQLException e) { 
@@ -63,13 +63,8 @@ public class FileTable extends Table{
 	static public void update(FileChat a) { 
 		try {
 			pst = con.prepareStatement(updateSQL);
-			pst.setString(1, a.filepath);
-			pst.setString(2, a.fileName);
-			pst.setString(3, a.encryptedFileName);
-			pst.setInt(4, a.room_id);
-			pst.setInt(5, a.account_id);
-			pst.setShort(6, a.uploaded);
-			pst.setInt(7, a.id);
+			makePrepareStat(pst,a);
+			pst.setInt(columns.size()+2, a.id);
 			pst.executeUpdate(); 
 		} 
 		catch(SQLException e) { 

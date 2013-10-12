@@ -23,29 +23,28 @@ public class HistoryTable extends Table{
 		columns.add(new ColumnElement("account_id","INTEGER"));
 		columns.add(new ColumnElement("message","TEXT"));
 		columns.add(new ColumnElement("sendTime","TIMESTAMP"));
+		//initSQL(tableName,dropdbSQL, createdbSQL, insertdbSQL, selectSQL, updateSQL, deleteSQL,columns,stat);
 		dropdbSQL = "DROP TABLE IF EXISTS "+tableName; 
 		dropTable(dropdbSQL);
-		try {
-			createTable(createdbSQL, tableName, columns, stat);
-		} catch (SQLException e) {
-			Util.errorReport("creat fail");
-		}
+		createTable(createdbSQL, tableName, columns, stat);
 		insertdbSQL = makeInsertdbCmd(tableName, columns);
-		Util.errorReport(insertdbSQL);
 		selectSQL = "select * from "+tableName+" ";
 		updateSQL = makeUpdatedbCmd(tableName, columns);
 		deleteSQL = "delete from "+tableName+" where ";
 	}
-	//新增資料 
+	static private void makePrepareStat(PreparedStatement pst,History a)throws SQLException{
+		if(a.id==0)a.id=++History.totalID;
+		pst.setInt(1, a.id);
+		pst.setInt(2, a.room_id);
+		pst.setInt(3, a.account_id);
+		pst.setString(4, a.message);
+		pst.setTimestamp(5, a.sendTime);
+	}
+	
 	static public void insert(History a) { 
 		try {
 			pst = con.prepareStatement(insertdbSQL);
-			if(a.id==0)a.id=++History.totalID;
-			pst.setInt(1, a.id);
-			pst.setInt(2, a.room_id);
-			pst.setInt(3, a.account_id);
-			pst.setString(4, a.message);
-			pst.setTimestamp(5, a.sendTime);
+			makePrepareStat(pst,a);
 			pst.executeUpdate(); 
 		} 
 		catch(SQLException e) { 
@@ -59,11 +58,8 @@ public class HistoryTable extends Table{
 	static public void update(History a) { 
 		try {
 			pst = con.prepareStatement(updateSQL);
-			pst.setInt(1, a.room_id);
-			pst.setInt(2, a.account_id);
-			pst.setString(3, a.message);
-			pst.setTimestamp(4, a.sendTime);
-			pst.setInt(5, a.id);
+			makePrepareStat(pst,a);
+			pst.setInt(columns.size()+2, a.id);
 			pst.executeUpdate(); 
 		} 
 		catch(SQLException e) { 
