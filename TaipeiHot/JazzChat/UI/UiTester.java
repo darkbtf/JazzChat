@@ -21,6 +21,13 @@ public class UiTester {
 		mainWindow.newRoom(234, "me", userName);
 		mainWindow.loginShow();
                 mainWindow.loginSuccess();
+                mainWindow.friendModel.addElement(new FriendNameAndStatus("1"));
+                mainWindow.friendModel.addElement(new FriendNameAndStatus("22"));
+                mainWindow.friendModel.addElement(new FriendNameAndStatus("3"));
+                mainWindow.friendModel.addElement(new FriendNameAndStatus("4"));
+                mainWindow.friendList.setModel(mainWindow.friendModel);
+                //mainWindow.friendModel.addElement(new FriendNameAndStatus("lala"));
+                //mainWindow.friendModel.addElement(new FriendNameAndStatus("lala"));
 		// xx.closeDialog();
 		while (true) {
 
