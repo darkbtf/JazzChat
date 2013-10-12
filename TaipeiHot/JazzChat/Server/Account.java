@@ -76,7 +76,6 @@ public class Account extends ActiveRecord {
 		if(this.visible==0)
 			return;
 		for(Account c: friends()){
-			Util.errorReport(c.nickname);
 			Account tar = Server.accountMap.get(c.id);
 			if(tar !=null)
 				tar.sendMessage(new String[]{"friend","online",this.id+""});

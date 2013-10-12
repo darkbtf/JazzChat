@@ -43,7 +43,7 @@ public class Table {
 			stat.executeUpdate(createdbSQL); 
 		} 
 		catch(SQLException e) { 
-			System.out.println("CreateDB Exception :" + e.toString()); 
+			Util.errorReport("CreateDB Exception :" + e.toString()); 
 		} 
 		finally { 
 			try{
@@ -55,7 +55,7 @@ public class Table {
 	} 
 	protected void dropTable(String dropdbSQL) { 
 		try {
-			System.out.println("Closed "+dropdbSQL);
+			//System.out.println("Closed "+dropdbSQL);
 			//stat = con.createStatement(); 
 			//stat.executeUpdate(dropdbSQL); 
 		} 
@@ -71,7 +71,6 @@ public class Table {
 		for(int i=0;i<columns.size();i++)
 			insertdbSQL += ",?";
 		insertdbSQL += ")";
-		Util.errorReport(insertdbSQL);
 		return insertdbSQL;
 	}
 	
@@ -80,7 +79,6 @@ public class Table {
 		for(int i=0;i<columns.size();i++)
 			ret += ","+columns.get(i).name+"=? ";
 		ret+= "where id=?";
-		Util.errorReport(ret);
 		return ret;
 	}
 	class ColumnElement{
