@@ -4,6 +4,7 @@
  */
 package TaipeiHot.JazzChat.UI;
 
+import TaipeiHot.JazzChat.Client.Client;
 import TaipeiHot.JazzChat.User;
 import TaipeiHot.JazzChat.Util;
 import java.awt.event.KeyEvent;
@@ -29,7 +30,7 @@ public class RoomWindow extends javax.swing.JFrame {
 		initComponents();
                 roomId = 0;
                 try{
-                    chatList.setCellRenderer(new ObjectCellRender());
+                    chatList.setCellRenderer(new ChatCellRender());
                 }catch(MalformedURLException e){
                     Util.errorReport(e.getMessage());
                 }
@@ -42,7 +43,7 @@ public class RoomWindow extends javax.swing.JFrame {
 		initComponents();
 		roomId = _roomId;
                 try{
-                    chatList.setCellRenderer(new ObjectCellRender());
+                    chatList.setCellRenderer(new ChatCellRender());
                 }catch(MalformedURLException e){
                     Util.errorReport(e.getMessage());
                 }
@@ -55,7 +56,7 @@ public class RoomWindow extends javax.swing.JFrame {
 		initComponents();
 		roomId = _roomId;
                 try{
-                    chatList.setCellRenderer(new ObjectCellRender());
+                    chatList.setCellRenderer(new ChatCellRender());
                 }catch(MalformedURLException e){
                     Util.errorReport(e.getMessage());
                 }
@@ -156,7 +157,7 @@ public class RoomWindow extends javax.swing.JFrame {
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         // TODO add your handling code here:
-        chatModel.addElement(new ChatObject(1));
+        chatModel.addElement("1");
     }//GEN-LAST:event_jButton1MouseClicked
 
 	private void sendTextButtonMouseReleased(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_sendTextButtonMouseReleased
@@ -222,7 +223,7 @@ public class RoomWindow extends javax.swing.JFrame {
 
 	/* funcrions and parameters by paul */
 	private final int roomId;
-	private ArrayList<String> userNameList;
+	private ArrayList<String> userNameList=new ArrayList<String>();
 	private String roomName;
         DefaultListModel chatModel = new DefaultListModel();
         
@@ -240,7 +241,7 @@ public class RoomWindow extends javax.swing.JFrame {
 	public void showMessage(String name, String text) {
                 //Util.errorReport("QQQQQ");
                 //JLabel jl=new JLabel(name + ":" + text + "\n");
-                chatModel.addElement(new ChatObject(name + ":" + text + "\n"));
+                chatModel.addElement(name + ":" + text + "\n");
 		//box.add(jl);
                 //jl.setVisible(true);
                 
@@ -249,9 +250,9 @@ public class RoomWindow extends javax.swing.JFrame {
 	private void send() {
 		
                 if (!typeText.getText().equals("")) {
-			/*Client.sendMessage(roomId,typeText.getText());
-                        showMessage(Client.user.getNickname(), typeText.getText());*/
-			showMessage("haha",typeText.getText());
+			Client.sendMessage(roomId,typeText.getText());
+                        showMessage(Client.user.getNickname(), typeText.getText());
+			//showMessage("haha",typeText.getText());
                         typeText.setText("");
 		}
 	}
