@@ -168,7 +168,7 @@ public class Account extends ActiveRecord {
 				}
 			}
 		}
-		Util.errorReport("get message: "+messages.peek());
+		Util.errorReport("get message from "+nickname+": "+messages.peek());
 		return messages.poll();
 	}
 	
@@ -199,7 +199,7 @@ public class Account extends ActiveRecord {
 			out.write(byteStream);
 			out.flush();
 		} catch (IOException e) {
-			return Util.errorReport("IOException in Account "+id+" sendMessage");
+			return Util.errorReport("sendMessage to "+nickname+" fail");
 		}
 		return true;
 	}
