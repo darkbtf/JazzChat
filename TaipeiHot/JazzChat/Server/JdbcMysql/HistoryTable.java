@@ -22,7 +22,7 @@ public class HistoryTable extends Table{
 		columns.add(new ColumnElement("room_id","INTEGER"));
 		columns.add(new ColumnElement("account_id","INTEGER"));
 		columns.add(new ColumnElement("message","TEXT"));
-		columns.add(new ColumnElement("sendTime","DATETIME"));
+		columns.add(new ColumnElement("sendTime","TIMESTAMP"));
 		dropdbSQL = "DROP TABLE IF EXISTS "+tableName; 
 		dropTable(dropdbSQL);
 		try {
@@ -45,7 +45,7 @@ public class HistoryTable extends Table{
 			pst.setInt(2, a.room_id);
 			pst.setInt(3, a.account_id);
 			pst.setString(4, a.message);
-			pst.setDate(5, a.sendTime);
+			pst.setTimestamp(5, a.sendTime);
 			pst.executeUpdate(); 
 		} 
 		catch(SQLException e) { 
@@ -62,7 +62,7 @@ public class HistoryTable extends Table{
 			pst.setInt(1, a.room_id);
 			pst.setInt(2, a.account_id);
 			pst.setString(3, a.message);
-			pst.setDate(4, a.sendTime);
+			pst.setTimestamp(4, a.sendTime);
 			pst.setInt(5, a.id);
 			pst.executeUpdate(); 
 		} 
@@ -201,7 +201,7 @@ public class HistoryTable extends Table{
 					rs.getInt("roomd_id"),
 					rs.getInt("account_id"),
 					rs.getString("message"),
-					rs.getDate("sendTime"));
+					rs.getTimestamp("sendTime"));
 		} catch (SQLException e) {
 		}
 		return null;

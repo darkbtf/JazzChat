@@ -10,6 +10,7 @@ import TaipeiHot.JazzChat.Parameter;
 import TaipeiHot.JazzChat.Server.JdbcMysql.AccountTable;
 import TaipeiHot.JazzChat.Server.JdbcMysql.FileTable;
 import TaipeiHot.JazzChat.Server.JdbcMysql.FriendTable;
+import TaipeiHot.JazzChat.Server.JdbcMysql.HistoryTable;
 import TaipeiHot.JazzChat.Server.JdbcMysql.RoomAccountTable;
 import TaipeiHot.JazzChat.Server.JdbcMysql.RoomTable;
 import TaipeiHot.JazzChat.Server.JdbcMysql.SqlManager;
@@ -38,6 +39,8 @@ public class Server {
     		RoomAccount.totalID = Math.max(RoomAccount.totalID,a.id);
     	for(FileChat a:FileTable.All())
     		FileChat.totalID = Math.max(FileChat.totalID,a.id);
+    	for(History a:HistoryTable.All())
+    		History.totalID = Math.max(History.totalID,a.id);
     }
 	static class SocketThread extends Thread{
 	    protected ServerSocket server;
