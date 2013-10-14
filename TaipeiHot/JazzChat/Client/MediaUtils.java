@@ -45,7 +45,7 @@ public class MediaUtils {
 		return sb.toString();
 	}
 
-	static public void main(String args[]) {
+	static public void main(String args[]) {z
 		JFrame frame = new JFrame("vlcj video chat");
 		// frame.setIconImage(new ImageIcon(getClass().getResource(
 		// "/icons/vlcj-logo.png")).getImage());
