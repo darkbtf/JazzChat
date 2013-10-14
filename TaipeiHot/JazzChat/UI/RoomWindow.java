@@ -7,6 +7,7 @@ package TaipeiHot.JazzChat.UI;
 import TaipeiHot.JazzChat.Client.Client;
 import TaipeiHot.JazzChat.User;
 import TaipeiHot.JazzChat.Util;
+import java.awt.Canvas;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -86,6 +87,7 @@ public class RoomWindow extends javax.swing.JFrame {
         jToolBar1 = new javax.swing.JToolBar();
         jButton1 = new javax.swing.JButton();
         uploadFileButton = new javax.swing.JButton();
+        callButton = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(102, 153, 255));
 
@@ -143,8 +145,17 @@ public class RoomWindow extends javax.swing.JFrame {
                 uploadFileButtonMouseClicked(evt);
             }
         });
-        uploadFileButton.setBounds(423, 250, 90, 23);
+        uploadFileButton.setBounds(440, 250, 90, 23);
         jLayeredPane1.add(uploadFileButton, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        callButton.setText("Call!!!!");
+        callButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                callButtonMouseClicked(evt);
+            }
+        });
+        callButton.setBounds(360, 250, 67, 23);
+        jLayeredPane1.add(callButton, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -181,6 +192,11 @@ public class RoomWindow extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_uploadFileButtonMouseClicked
+
+    private void callButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_callButtonMouseClicked
+        // TODO add your handling code here:
+        videoWindow.setVisible(true);
+    }//GEN-LAST:event_callButtonMouseClicked
 
 	private void sendTextButtonMouseReleased(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_sendTextButtonMouseReleased
 		// TODO add your handling code here:
@@ -285,12 +301,21 @@ public class RoomWindow extends javax.swing.JFrame {
                         
 		}
 	}
-        public  VideoWindow vedioWindow=new VideoWindow();
+        public  VideoWindow videoWindow=new VideoWindow();
+        public void setRemoteVideoFrame(Canvas canvas){
+            videoWindow.yourVideo=canvas;
+        }
+        public void setLocalVideoFrame(Canvas canvas){
+            videoWindow.myVideo=canvas;
+        }
+        
+        
         public void showImg(String name,String url){
             showMessage(name,url);
         }
         
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton callButton;
     private javax.swing.JList chatList;
     private javax.swing.JButton jButton1;
     private javax.swing.JLayeredPane jLayeredPane1;
