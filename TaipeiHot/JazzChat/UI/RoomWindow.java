@@ -5,6 +5,7 @@
 package TaipeiHot.JazzChat.UI;
 
 import TaipeiHot.JazzChat.Client.Client;
+import TaipeiHot.JazzChat.Client.MediaUtils;
 import TaipeiHot.JazzChat.User;
 import TaipeiHot.JazzChat.Util;
 import java.awt.Canvas;
@@ -196,6 +197,7 @@ public class RoomWindow extends javax.swing.JFrame {
     private void callButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_callButtonMouseClicked
         // TODO add your handling code here:
         videoWindow.setVisible(true);
+        MediaUtils.setLocalPlayer(roomId);
     }//GEN-LAST:event_callButtonMouseClicked
 
 	private void sendTextButtonMouseReleased(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_sendTextButtonMouseReleased
