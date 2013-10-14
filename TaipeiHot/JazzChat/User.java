@@ -3,7 +3,10 @@ package TaipeiHot.JazzChat;
 public class User {
 	public int id;
 	protected boolean online;
-	protected String email, nickname, status;
+	protected String email;
+	protected String nickname;
+	protected String status;
+	protected String profilePicUrl;
 	protected String password;
 
 	// protected ArrayList<User> Friends;
@@ -25,6 +28,10 @@ public class User {
 
 	public void setOnline(boolean online) {
 		this.online = online;
+	}
+
+	public void setProfilePicUrl(String url) {
+		this.profilePicUrl = url;
 	}
 
 	public String getMessage() {
