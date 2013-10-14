@@ -1,5 +1,6 @@
 package TaipeiHot.JazzChat.Command;
 
+import TaipeiHot.JazzChat.Util;
 import TaipeiHot.JazzChat.Client.Client;
 import TaipeiHot.JazzChat.UI.RoomWindow;
 
@@ -14,8 +15,14 @@ public class MessageCommand implements Command {
 		RoomWindow room = Client.mainWindow.getRoomById(roomId);
 		// User user = Client.getUserById(userId);
 		// System.out.println(Integer.toString(userId));
-		if (userId != Client.user.id)
-			room.showMessage(userName, content);
+		if (userId != Client.user.id) {
+			if (Client.checkMessageType(content).equals("image"))
+				room.showImg(Client.getImgUrlByString(content));
+			else if (Client.checkMessageType(content).equals("text"))
+				room.showMessage(userName, content);
+			else
+				Util.errorReport("checkMessageType error: " + content);
+		}
 	}
 
 }
