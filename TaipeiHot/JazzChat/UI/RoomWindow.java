@@ -168,7 +168,7 @@ public class RoomWindow extends javax.swing.JFrame {
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         // TODO add your handling code here:
-        chatModel.addElement("1");
+        Client.sendImg(roomId, 1);
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void uploadFileButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_uploadFileButtonMouseClicked
@@ -286,7 +286,9 @@ public class RoomWindow extends javax.swing.JFrame {
 		}
 	}
         public  VideoWindow vedioWindow=new VideoWindow();
-        
+        public void showImg(String name,String url){
+            showMessage(name,url);
+        }
         
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList chatList;

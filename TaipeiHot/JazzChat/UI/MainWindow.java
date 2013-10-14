@@ -369,7 +369,7 @@ public class MainWindow extends javax.swing.JFrame {
 	}
         public void friendShow(User user){
             userList.add(user);
-            friendModel.addElement(user.getNickname()+"\n"+user.getMessage());
+            friendModel.addElement(user.getNickname());
             //friendName.add(user.getNickname());
             //friendList=new JList(friendModel);
             //friendList.addMouseListener(mouseListener);
