@@ -23,7 +23,7 @@ public class User {
 	}
 
 	public String getNickname() {
-		return nickname;
+		return this.nickname;
 	}
 
 	public void setOnline(boolean online) {
@@ -34,7 +34,15 @@ public class User {
 		this.profilePicUrl = url;
 	}
 
-	public String getMessage() {
-		return "";
+	public String getProfilePicUrl() {
+		return this.profilePicUrl;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getStatus() {
+		return this.status;
 	}
 }
