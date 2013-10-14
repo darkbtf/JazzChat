@@ -7,6 +7,7 @@ package TaipeiHot.JazzChat.UI;
 import TaipeiHot.JazzChat.Client.Client;
 import TaipeiHot.JazzChat.User;
 import TaipeiHot.JazzChat.Util;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
@@ -26,7 +27,9 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.UIManager;
 
 /**
  * 
@@ -38,7 +41,7 @@ public class MainWindow extends javax.swing.JFrame {
 	 * Creates new form FreindList
 	 */
     BufferedImage image;
-
+    
     @Override
         public void paintComponents(Graphics g) {
 
@@ -50,20 +53,14 @@ public class MainWindow extends javax.swing.JFrame {
 
 	public MainWindow() {
             try{
-                URL url = new URL("http://3.bp.blogspot.com/-CpxmJu3Km3k/UMPhfSoHaQI/AAAAAAAAF0Y/H5iQtXUZJuQ/s1600/Fire+lion.jpg");
-                image = ImageIO.read(url);
+                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                
+                //Image a=new Image(new URL("http://3.bp.blogspot.com/-CpxmJu3Km3k/UMPhfSoHaQI/AAAAAAAAF0Y/H5iQtXUZJuQ/s1600/Fire+lion.jpg"));
                 //friendModel.addElement("tesing");
 		initComponents();
-                
-                //URL url = new URL("http://eofdreams.com/data_images/dreams/fire/fire-01.jpg");
-                //Image image = ImageIO.read(url);
-                //ImageIcon imagei = new ImageIcon(image);
-                //Graphics g=this.getGraphics();
-                //this.paint(g);
-                //g.drawImage(image, 0, 0, this);
-                //g.drawImage(image, 0, 0, null);
-                //this.imageUpdate(image, WIDTH, WIDTH, WIDTH, WIDTH, WIDTH);
-                setIconImage(image);
+                URL url = new URL("http://3.bp.blogspot.com/-CpxmJu3Km3k/UMPhfSoHaQI/AAAAAAAAF0Y/H5iQtXUZJuQ/s1600/Fire+lion.jpg");
+
+
                 mouseListener=new MouseAdapter() {
                     public void mouseClicked(MouseEvent mouseEvent) {
                       JList theList = (JList) mouseEvent.getSource();
@@ -72,6 +69,7 @@ public class MainWindow extends javax.swing.JFrame {
                         if (index >= 0) {
                             //Util.errorReport("lala");
                           Client.openPrivateRoom(userList.get(index).id);
+                          System.out.printf("%d\n", userList.get(index).id);
                         }
                       }
                     }
@@ -85,7 +83,7 @@ public class MainWindow extends javax.swing.JFrame {
                         int index = theList.locationToIndex(mouseEvent.getPoint());
                         if (index >= 0) {
                             //Util.errorReport("lala");
-                          AcceptMap.get(pendingList.get(index).id);
+                          AcceptMap.get(pendingList.get(index).id).setVisible(true);
                         }
                       }
                     }
@@ -104,23 +102,42 @@ public class MainWindow extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel2 = new javax.swing.JPanel();
+        jLayeredPane1 = new javax.swing.JLayeredPane();
+        addFirendButton = new javax.swing.JButton();
+        jToggleButton1 = new javax.swing.JToggleButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         friendList = new javax.swing.JList();
         afwButton = new javax.swing.JToggleButton();
-        jPanel1 = new javax.swing.JPanel();
-        addFirendButton = new javax.swing.JButton();
-        jToggleButton1 = new javax.swing.JToggleButton();
+        jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 0, 51));
+        setIconImages(null);
+        setPreferredSize(new java.awt.Dimension(400, 500));
         setResizable(false);
 
+        addFirendButton.setText("++++");
+        addFirendButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                addFirendButtonMouseClicked(evt);
+            }
+        });
+        addFirendButton.setBounds(260, 30, 71, 23);
+        jLayeredPane1.add(addFirendButton, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        jToggleButton1.setText("jToggleButton1");
+        jToggleButton1.setBounds(30, 30, 75, 23);
+        jLayeredPane1.add(jToggleButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        friendList.setBackground(new java.awt.Color(255, 204, 51));
         friendList.setModel(friendModel);
         jScrollPane1.setViewportView(friendList);
+
+        jScrollPane1.setBounds(30, 60, 300, 338);
+        jLayeredPane1.add(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         afwButton.setText("Wating Friend");
         afwButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -133,63 +150,14 @@ public class MainWindow extends javax.swing.JFrame {
                 afwButtonActionPerformed(evt);
             }
         });
+        afwButton.setBounds(30, 420, 99, 23);
+        jLayeredPane1.add(afwButton, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-        addFirendButton.setText("++++");
-        addFirendButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                addFirendButtonMouseClicked(evt);
-            }
-        });
-
-        jToggleButton1.setText("jToggleButton1");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
-                .addComponent(addFirendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jToggleButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(addFirendButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(341, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(afwButton)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(58, 58, 58))))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(7, 7, 7)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 221, Short.MAX_VALUE)
-                .addComponent(afwButton)
-                .addGap(24, 24, 24))
-        );
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TaipeiHot/JazzChat/UI/FireLionMain.jpg"))); // NOI18N
+        jLabel1.setText("jLabel1");
+        jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jLabel1.setBounds(0, 0, 380, 470);
+        jLayeredPane1.add(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -203,17 +171,13 @@ public class MainWindow extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 383, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(58, Short.MAX_VALUE))
+                .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 463, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -432,11 +396,11 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JButton addFirendButton;
     private javax.swing.JToggleButton afwButton;
     public javax.swing.JList friendList;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables

@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 import javax.swing.Box;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
+import javax.swing.JScrollBar;
 
 /**
  * 
@@ -86,7 +87,6 @@ public class RoomWindow extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         uploadFileButton = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(102, 153, 255));
 
         jLayeredPane1.setBackground(new java.awt.Color(102, 204, 255));
@@ -266,7 +266,8 @@ public class RoomWindow extends javax.swing.JFrame {
                 chatModel.addElement(name + ":" + text + "\n");
 		//box.add(jl);
                 //jl.setVisible(true);
-                
+                JScrollBar vertical=jScrollPane2.getVerticalScrollBar();
+                vertical.setValue(vertical.getMaximum());
         }
         public void showFile(String myPath,String fileName){
             showMessage("me",myPath+" "+fileName);
@@ -281,6 +282,7 @@ public class RoomWindow extends javax.swing.JFrame {
                         showMessage(Client.user.getNickname(), typeText.getText());
 			//showMessage("haha",typeText.getText());
                         typeText.setText("");
+                        
 		}
 	}
         

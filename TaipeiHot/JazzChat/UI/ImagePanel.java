@@ -34,12 +34,13 @@ public class ImagePanel extends JPanel {
     public static void main(String[] args) throws IOException {
         //String path = "images/reindeer.jpg";
         URL url = new URL("http://3.bp.blogspot.com/-CpxmJu3Km3k/UMPhfSoHaQI/AAAAAAAAF0Y/H5iQtXUZJuQ/s1600/Fire+lion.jpg");
-        BufferedImage image = ImageIO.read(url);
+        BufferedImage image = ImageIO.read(new URL("http://3.bp.blogspot.com/-CpxmJu3Km3k/UMPhfSoHaQI/AAAAAAAAF0Y/H5iQtXUZJuQ/s1600/Fire+lion.jpg"));
         ImagePanel contentPane = new ImagePanel(image);
+        
         // You'll want to be sure this component is opaque
         // since it is required for contentPanes. Some
         // LAFs may use non-opaque components.
-        contentPane.setOpaque(true);
+        /*contentPane.setOpaque(true);
         contentPane.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5,5,5,5);
@@ -50,7 +51,7 @@ public class ImagePanel extends JPanel {
             gbc.gridwidth = ((j+1)%2 == 0) ? GridBagConstraints.REMAINDER
                                            : GridBagConstraints.RELATIVE;
             contentPane.add(new JButton("button " + (j+1)), gbc);
-        }
+        }*/
         JFrame f = new JFrame();
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setContentPane(contentPane);

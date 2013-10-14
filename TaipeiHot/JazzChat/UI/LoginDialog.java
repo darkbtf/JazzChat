@@ -34,13 +34,26 @@ public class LoginDialog extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLayeredPane1 = new javax.swing.JLayeredPane();
+        accountTextField = new javax.swing.JTextField();
+        passwordTextField = new javax.swing.JPasswordField();
         loginButton = new javax.swing.JButton();
         registerButton = new javax.swing.JButton();
-        passwordTextField = new javax.swing.JPasswordField();
-        accountTextField = new javax.swing.JTextField();
         errorMessege = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        accountTextField.setBounds(80, 50, 186, 21);
+        jLayeredPane1.add(accountTextField, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        passwordTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                passwordTextFieldKeyTyped(evt);
+            }
+        });
+        passwordTextField.setBounds(80, 80, 186, 21);
+        jLayeredPane1.add(passwordTextField, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         loginButton.setText("Login");
         loginButton.setToolTipText("");
@@ -49,6 +62,8 @@ public class LoginDialog extends javax.swing.JDialog {
                 loginButtonMouseClicked(evt);
             }
         });
+        loginButton.setBounds(140, 120, 71, 23);
+        jLayeredPane1.add(loginButton, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         registerButton.setText("Register");
         registerButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -56,50 +71,29 @@ public class LoginDialog extends javax.swing.JDialog {
                 registerButtonMouseClicked(evt);
             }
         });
-
-        passwordTextField.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                passwordTextFieldKeyTyped(evt);
-            }
-        });
+        registerButton.setBounds(140, 150, 71, 23);
+        jLayeredPane1.add(registerButton, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         errorMessege.setText("            ");
+        errorMessege.setBounds(160, 180, 40, 20);
+        jLayeredPane1.add(errorMessege, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TaipeiHot/JazzChat/UI/FireLionMain.jpg"))); // NOI18N
+        jLabel1.setText("jLabel1");
+        jLabel1.setBounds(0, 0, 350, 220);
+        jLayeredPane1.add(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(106, 106, 106)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(accountTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
-                            .addComponent(passwordTextField)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(161, 161, 161)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(loginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(registerButton)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(177, 177, 177)
-                        .addComponent(errorMessege)))
-                .addContainerGap(108, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(91, Short.MAX_VALUE)
-                .addComponent(accountTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(passwordTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14)
-                .addComponent(loginButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(registerButton)
-                .addGap(28, 28, 28)
-                .addComponent(errorMessege)
-                .addGap(48, 48, 48))
+            .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -174,6 +168,8 @@ public class LoginDialog extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField accountTextField;
     private javax.swing.JLabel errorMessege;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JButton loginButton;
     private javax.swing.JPasswordField passwordTextField;
     private javax.swing.JButton registerButton;
