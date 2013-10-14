@@ -1,8 +1,10 @@
 package TaipeiHot.JazzChat.Client;
 
-import javax.swing.JFrame;
+import java.awt.Canvas;
 
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
+import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 import TaipeiHot.JazzChat.UI.RoomWindow;
 
@@ -10,6 +12,7 @@ import com.sun.jna.NativeLibrary;
 
 public class MediaUtils {
 
+	private final static MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory();
 	private static final String NATIVE_LIBRARY_SEARCH_PATH = "C:\\Program Files (x86)\\VideoLAN\\VLC";
 	private static String mrl = "dshow://";
 	public final static EmbeddedMediaPlayerComponent localMediaPlayer;
@@ -23,12 +26,6 @@ public class MediaUtils {
 	}
 
 	public static void send() {
-		String[] localOptions = { formatRtpStream("230.0.0.1", 5555),
-				":no-sout-rtp-sap", ":no-sout-standard-sap", ":sout-all",
-				":sout-keep", };
-
-		// localMediaPlayer.getMediaPlayer().playMedia(mrl, localOptions);
-		localMediaPlayer.getMediaPlayer().playMedia(mrl, localOptions);
 	}
 
 	public static void receive() {
@@ -45,27 +42,26 @@ public class MediaUtils {
 		return sb.toString();
 	}
 
-	static public void main(String args[]) {z
-		JFrame frame = new JFrame("vlcj video chat");
-		// frame.setIconImage(new ImageIcon(getClass().getResource(
-		// "/icons/vlcj-logo.png")).getImage());
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(1024, 768);
-		frame.setContentPane(localMediaPlayer);
-		// frame.add(remoteMediaPlayer);
-		frame.setVisible(true);
-		send();
-		// receive();
-	}
-
 	static public void setLocalPlayer(int roomId) {
 		RoomWindow room = Client.mainWindow.getRoomById(roomId);
+		String[] localOptions = { formatRtpStream("230.0.0.1", 5555),
+				":no-sout-rtp-sap", ":no-sout-standard-sap", ":sout-all",
+				":sout-keep", };
+
+		Canvas localCanvas = new Canvas();
+		CanvasVideoSurface localVideoSurface = mediaPlayerFactory
+				.newVideoSurface(localCanvas);
+		localMediaPlayer.getMediaPlayer().setVideoSurface(localVideoSurface);
+
 		room.setLocalVideoFrame(localMediaPlayer);
+		localMediaPlayer.getMediaPlayer().playMedia(mrl, localOptions);
 	}
 
 	static public void setRemotePlayer(int roomId) {
 		RoomWindow room = Client.mainWindow.getRoomById(roomId);
 		room.setRemoteVideoFrame(remoteMediaPlayer);
+
+		// TODO: galagala
 	}
 
 }
