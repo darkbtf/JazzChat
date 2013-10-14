@@ -198,4 +198,22 @@ public class Client {
 		return messages.poll();
 
 	}
+
+	private static String getImgUrlById(int id) {
+		return "http://fuuu.us/" + id + ".png";
+	}
+
+	public static void sendImg(int roomId, int id) {
+		RoomWindow room = Client.mainWindow.getRoomById(roomId);
+		room.showImg(getImgUrlById(id));
+		ClientUtils.sendStringsToServer(out,
+				new String[] { "message", Integer.toString(roomId),
+						"(" + id + "}" });
+	}
+
+	private static parseMessage(String message) {
+		// TODO: jizz
+		return message;
+	}
+
 }
