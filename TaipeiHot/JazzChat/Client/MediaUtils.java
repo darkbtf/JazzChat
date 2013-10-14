@@ -1,11 +1,10 @@
 package TaipeiHot.JazzChat.Client;
 
-import java.awt.Canvas;
-
 import javax.swing.JFrame;
 
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
+import TaipeiHot.JazzChat.UI.RoomWindow;
 
 import com.sun.jna.NativeLibrary;
 
@@ -46,7 +45,7 @@ public class MediaUtils {
 		return sb.toString();
 	}
 
-	static public void main(String args[]) {
+	static public void main(String args[]) {z
 		JFrame frame = new JFrame("vlcj video chat");
 		// frame.setIconImage(new ImageIcon(getClass().getResource(
 		// "/icons/vlcj-logo.png")).getImage());
@@ -59,16 +58,14 @@ public class MediaUtils {
 		// receive();
 	}
 
-	public static Canvas getLocalMediaPlayer() {
-		return localMediaPlayer;
-	}
-	
-	public void setLocalAndPlay() {
-		
+	static public void setLocalPlayer(int roomId) {
+		RoomWindow room = Client.mainWindow.getRoomById(roomId);
+		room.setLocalVideoFrame(localMediaPlayer);
 	}
 
-	public static Canvas getRemoteMediaPlayer() {
-		return null;
-	}`
+	static public void setRemotePlayer(int roomId) {
+		RoomWindow room = Client.mainWindow.getRoomById(roomId);
+		room.setRemoteVideoFrame(remoteMediaPlayer);
+	}
 
 }
