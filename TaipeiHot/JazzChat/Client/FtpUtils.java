@@ -23,6 +23,9 @@ public class FtpUtils {
 	final static String ID = "nmlab198";
 	final static String PASSWORD = "taipeihot";
 
+	public static String publicHtml(){
+		return "ftp://"+ID+":"+PASSWORD+"@"+IP+"/";
+	}
 	public static FTPClient createFtpConnection() throws NumberFormatException,
 			SocketException, IOException, NoSuchAlgorithmException {
 		FTPClient ftpClient;
