@@ -285,6 +285,8 @@ public class RoomWindow extends javax.swing.JFrame {
                         
 		}
 	}
+        public  VedioWindow vedioWindow=new VedioWindow();
+        
         
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList chatList;
