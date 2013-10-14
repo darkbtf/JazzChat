@@ -211,9 +211,22 @@ public class Client {
 						"(" + id + "}" });
 	}
 
-	private static parseMessage(String message) {
-		// TODO: jizz
-		return message;
+	public static String getImgUrlByString(String s) {
+		return getImgUrlById(Integer.valueOf(s.substring(1, s.length() - 2)));
+	}
+
+	public static boolean isNumber(String s) {
+		for (int i = 0; i < s.length(); i++)
+			if (s.charAt(i) < '0' || s.charAt(i) > '9')
+				return false;
+		return true;
+	}
+
+	public static String checkMessageType(String message) {
+		if (message.startsWith("(") && message.endsWith("}")
+				&& Client.isNumber(message.substring(1, message.length() - 2)))
+			return "image";
+		return "text";
 	}
 
 }
