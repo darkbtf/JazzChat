@@ -108,6 +108,7 @@ public class MainWindow extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         friendList = new javax.swing.JList();
         afwButton = new javax.swing.JToggleButton();
+        jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -129,14 +130,14 @@ public class MainWindow extends javax.swing.JFrame {
         jLayeredPane1.add(addFirendButton, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         jToggleButton1.setText("jToggleButton1");
-        jToggleButton1.setBounds(30, 30, 75, 23);
+        jToggleButton1.setBounds(260, 60, 75, 23);
         jLayeredPane1.add(jToggleButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         friendList.setBackground(new java.awt.Color(255, 204, 51));
         friendList.setModel(friendModel);
         jScrollPane1.setViewportView(friendList);
 
-        jScrollPane1.setBounds(30, 60, 300, 338);
+        jScrollPane1.setBounds(40, 130, 300, 350);
         jLayeredPane1.add(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         afwButton.setText("Wating Friend");
@@ -150,13 +151,17 @@ public class MainWindow extends javax.swing.JFrame {
                 afwButtonActionPerformed(evt);
             }
         });
-        afwButton.setBounds(30, 420, 99, 23);
+        afwButton.setBounds(30, 500, 99, 23);
         jLayeredPane1.add(afwButton, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        jButton1.setText("Uplode Head");
+        jButton1.setBounds(30, 10, 90, 110);
+        jLayeredPane1.add(jButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TaipeiHot/JazzChat/UI/FireLionMain.jpg"))); // NOI18N
         jLabel1.setText("jLabel1");
         jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jLabel1.setBounds(0, 0, 380, 470);
+        jLabel1.setBounds(0, 0, 380, 540);
         jLayeredPane1.add(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         jMenu1.setText("File");
@@ -175,9 +180,7 @@ public class MainWindow extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 463, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jLayeredPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 539, Short.MAX_VALUE)
         );
 
         pack();
@@ -396,6 +399,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JButton addFirendButton;
     private javax.swing.JToggleButton afwButton;
     public javax.swing.JList friendList;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JMenu jMenu1;
