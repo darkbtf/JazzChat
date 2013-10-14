@@ -31,6 +31,7 @@ public class AccountTable extends Table{
 		columns.add(new ColumnElement("nickname","VARCHAR(40)"));
 		columns.add(new ColumnElement("status","TINYTEXT"));
 		columns.add(new ColumnElement("visible","TINYINT"));
+		columns.add(new ColumnElement("photo","VARCHAR(15)"));
 		//initSQL(tableName,dropdbSQL, createdbSQL, insertdbSQL, selectSQL, updateSQL, deleteSQL,columns,stat);
 		dropdbSQL = "DROP TABLE IF EXISTS "+tableName; 
 		dropTable(dropdbSQL);
@@ -48,6 +49,7 @@ public class AccountTable extends Table{
 		pst.setString(4, a.nickname); 
 		pst.setString(5, a.status); 
 		pst.setShort(6, a.visible);
+		pst.setString(7, a.photo);
 	}
 	
 	static public void insert(Account a) { 
@@ -186,7 +188,8 @@ public class AccountTable extends Table{
 					rs.getString("password"),
 					rs.getString("nickname"),
 					rs.getString("status"),
-					rs.getShort("visible"));
+					rs.getShort("visible"),
+					rs.getString("photo"));
 		} catch (SQLException e) {
 			Util.errorReport("instance SQLexception: "+e.toString());
 		}
