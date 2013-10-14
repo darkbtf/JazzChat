@@ -205,7 +205,7 @@ public class Client {
 
 	public static void sendImg(int roomId, int id) {
 		RoomWindow room = Client.mainWindow.getRoomById(roomId);
-		room.showImg(getImgUrlById(id));
+		room.showImg(Client.user.getNickname(), getImgUrlById(id));
 		ClientUtils.sendStringsToServer(out,
 				new String[] { "message", Integer.toString(roomId),
 						"(" + id + "}" });
