@@ -19,8 +19,10 @@ public class LoginCommand implements Command {
 			int id = Integer.parseInt(Client.getMessage());
 			String myName = Client.getMessage();
 			String status = Client.getMessage();
+			String picUrl = Client.getMessage();
 			User tmpUser = new User(myName, status);
 			tmpUser.id = id;
+			tmpUser.setProfilePicUrl(picUrl);
 			Client.userSet.put(id, tmpUser);
 			Client.user = tmpUser;
 			Client.mainWindow.loginSuccess();
