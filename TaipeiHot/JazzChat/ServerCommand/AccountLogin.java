@@ -21,7 +21,6 @@ public class AccountLogin extends ServerCommand {
 			if(account.password.equals(tmp.password)){
 				account.clone(tmp);
 				Server.accountMap.put(account.id, account);
-				account.sendMessage(new String[]{"login","success",""+account.id,account.nickname,account.status});
 				account.login();
 				return true;
 			}
