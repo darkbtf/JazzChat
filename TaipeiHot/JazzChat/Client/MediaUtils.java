@@ -53,13 +53,13 @@ public class MediaUtils {
 				.newVideoSurface(localCanvas);
 		localMediaPlayer.getMediaPlayer().setVideoSurface(localVideoSurface);
 
-		room.setLocalVideoFrame(localMediaPlayer);
+		room.setLocalVideoFrame(localCanvas);
 		localMediaPlayer.getMediaPlayer().playMedia(mrl, localOptions);
 	}
 
 	static public void setRemotePlayer(int roomId) {
 		RoomWindow room = Client.mainWindow.getRoomById(roomId);
-		room.setRemoteVideoFrame(remoteMediaPlayer);
+		//room.setRemoteVideoFrame(remoteMediaPlayer);
 
 		// TODO: galagala
 	}
