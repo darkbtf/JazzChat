@@ -53,7 +53,18 @@ public class UserCommand extends ServerCommand {
 	}
 	
 	private Boolean changePhoto(){
-			//QQ
+		String cmd = account.getMessage();
+		if(cmd.equals("finish")){
+			account.photo = account.id+"";
+			account.save();
+			account.sendMessage(new String[]{"user","photo","change",account.photoUrl()});
+			account.changePhoto();
+		}
+		else if(cmd.equals("upload")){
+			String filepath = account.getMessage();
+			account.sendMessage(new String[]{"user","photo","upload", filepath, "profile_pics/"+account.id});
+		}
+		else return Util.errorReport("photo command error");
 		return true;
 	}
 }

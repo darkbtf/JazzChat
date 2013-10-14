@@ -26,6 +26,7 @@ public class AccountRegister extends ServerCommand {
 		account.nickname = account.email;
 		account.status = "I love Joy Wang ^^";
 		account.visible = 1;
+		account.photo = "default";
         Server.accountMap.put(account.id, account);
         AccountTable.insert(account);
         account.sendMessage("success".getBytes());

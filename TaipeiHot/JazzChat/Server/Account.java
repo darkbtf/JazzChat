@@ -13,6 +13,7 @@ import TaipeiHot.JazzChat.Server.JdbcMysql.AccountTable;
 import TaipeiHot.JazzChat.Server.JdbcMysql.ActiveRecord;
 import TaipeiHot.JazzChat.Server.JdbcMysql.FriendTable;
 import TaipeiHot.JazzChat.ServerCommand.ServerCommandManager;
+import TaipeiHot.JazzChat.Client.FtpUtils;
 
 public class Account extends ActiveRecord {
 	//User Data
@@ -20,6 +21,7 @@ public class Account extends ActiveRecord {
 	public String email, nickname,status;
 	public String password;
 	public short visible;
+	public String photo;
 
 	//Communicate
 	public Socket socket;
@@ -44,20 +46,25 @@ public class Account extends ActiveRecord {
 		openInputThread();
 	}
 	
-	public Account(int id,String email, String password,String nickname,String status,short visible){
+	public Account(int id,String email, String password,String nickname,String status,short visible,String photo){
 		this.id = id;
 		this.email = email;
 		this.password = password;
 		this.nickname = nickname;
 		this.status = status;
 		this.visible = visible;
+		this.photo = photo;
 	}
 	public boolean isonline(){
 		if(visible==0)return false;
 		if(Server.accountMap.get(id)==null)return false;
 		return true;
 	}
+	public String photoUrl(){
+		return FtpUtils.publicHtml()+"profile_pics/"+photo;
+	}
 	public void login(){
+		sendMessage(new String[]{"login","success",""+id,nickname,status,photoUrl()});
 		for(Account c:friends())
 			showFriend(c);
 		for(Friend f:FriendTable.where("account_id2=? && status=?",new String[]{id+"","waiting"})){
@@ -108,6 +115,14 @@ public class Account extends ActiveRecord {
 			Account tar = Server.accountMap.get(c.id);
 			if(tar !=null)
 				tar.sendMessage(new String[]{"friend","name",this.id+"",nickname});
+		}
+	}
+	
+	public void changePhoto(){
+		for(Account c: friends()){
+			Account tar = Server.accountMap.get(c.id);
+			if(tar !=null)
+				tar.sendMessage(new String[]{"friend","photo",this.id+"",photoUrl()});
 		}
 	}
 	private Account[] friends(){
@@ -177,6 +192,7 @@ public class Account extends ActiveRecord {
 		this.nickname = tmp.nickname;
 		this.status   = tmp.status;
 		this.visible  = tmp.visible;
+		this.photo    = tmp.photo;
 		//this.roomMap  = tmp.roomMap;
 	}
 	private Boolean trylogin(){// NOTICE: cmdMgr's read function can only run one command in one time
