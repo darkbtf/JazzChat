@@ -224,7 +224,7 @@ public class Client {
 
 	public static String checkMessageType(String message) {
 		if (message.startsWith("(") && message.endsWith("}")
-				&& Client.isNumber(message.substring(1, message.length() - 2)))
+				&& Client.isNumber(message.substring(1, message.length() - 1)))
 			return "image";
 		return "text";
 	}
