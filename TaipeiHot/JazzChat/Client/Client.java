@@ -212,7 +212,7 @@ public class Client {
 	}
 
 	public static String getImgUrlByString(String s) {
-		return getImgUrlById(Integer.valueOf(s.substring(1, s.length() - 2)));
+		return getImgUrlById(Integer.valueOf(s.substring(1, s.length() - 1)));
 	}
 
 	public static boolean isNumber(String s) {
