@@ -200,12 +200,12 @@ public class Client {
 	}
 
 	private static String getImgUrlById(int id) {
-		return "http://fuuu.us/" + id + ".png";
+		return "http://ragemaker.net/images/Neutral/0" + id + ".png";
 	}
 
 	public static void sendImg(int roomId, int id) {
 		RoomWindow room = Client.mainWindow.getRoomById(roomId);
-		room.showImg(Client.user.getNickname(), getImgUrlById(id));
+		room.showImg(Client.user.id, getImgUrlById(id));
 		ClientUtils.sendStringsToServer(out,
 				new String[] { "message", Integer.toString(roomId),
 						"(" + id + "}" });
@@ -244,6 +244,6 @@ public class Client {
 				accept ? "accept" : "reject", Integer.toString(roomId) });
 	}
 	
-	public static void 
+	//public static void 
 
 }

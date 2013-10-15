@@ -10,11 +10,14 @@ import TaipeiHot.JazzChat.User;
 import TaipeiHot.JazzChat.Util;
 import java.awt.Canvas;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.Box;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -88,12 +91,7 @@ public class RoomWindow extends javax.swing.JFrame {
         chatList = new javax.swing.JList();
         jToolBar1 = new javax.swing.JToolBar();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
+        jComboBox1 = new javax.swing.JComboBox();
         uploadFileButton = new javax.swing.JButton();
         callButton = new javax.swing.JButton();
 
@@ -144,41 +142,8 @@ public class RoomWindow extends javax.swing.JFrame {
         });
         jToolBar1.add(jButton1);
 
-        jButton2.setText("jButton2");
-        jButton2.setFocusable(false);
-        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton2);
-
-        jButton3.setText("jButton3");
-        jButton3.setFocusable(false);
-        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton3);
-
-        jButton4.setText("jButton4");
-        jButton4.setFocusable(false);
-        jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton4);
-
-        jButton5.setText("jButton5");
-        jButton5.setFocusable(false);
-        jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton5);
-
-        jButton6.setText("jButton6");
-        jButton6.setFocusable(false);
-        jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton6.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton6);
-
-        jButton7.setText("jButton7");
-        jButton7.setFocusable(false);
-        jButton7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton7.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton7);
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "5", " " }));
+        jToolBar1.add(jComboBox1);
 
         jToolBar1.setBounds(10, 250, 330, 30);
         jLayeredPane1.add(jToolBar1, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -224,7 +189,8 @@ public class RoomWindow extends javax.swing.JFrame {
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         // TODO add your handling code here:
-        Client.sendImg(roomId, 1);
+        Util.errorReport(jComboBox1.getSelectedItem().toString());
+        Client.sendImg(roomId,Integer.parseInt(jComboBox1.getSelectedItem().toString()));
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void uploadFileButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_uploadFileButtonMouseClicked
@@ -354,20 +320,33 @@ public class RoomWindow extends javax.swing.JFrame {
 
         
         
-        public void showImg(String name,String url){
-            showMessage(-1,url);
+        public void showImg(int userId,String url){
+            //url="ftp://nmlab198:taipeihot@140.112.18.198/jizzer2.jpg";
+            //url="http://upload.wikimedia.org/wikipedia/commons/d/db/Icono_xD_para_wikipedia.png";
+            //url="http://ragemaker.net/images/Neutral/01.png";
+            Util.errorReport(url);
+            
+            //ImageIcon tmpIcon;
+            try {
+            URL _url = new URL(url);
+            ImageIcon pIcon=MainWindow.iconMap.get(userId);
+            ImageIcon tmpIcon=new ImageIcon(Util.resize((BufferedImage)ImageIO.read(_url.openStream()), 50, 50));
+            //return icon;    
+                //tmpIcon = Util.url2Icon(url, 50, 50);
+                chatModel.addElement(new ChatObject(pIcon,tmpIcon));
+            } catch (MalformedURLException ex) {
+                Logger.getLogger(RoomWindow.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(RoomWindow.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
         }
         
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton callButton;
     private javax.swing.JList chatList;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
+    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;

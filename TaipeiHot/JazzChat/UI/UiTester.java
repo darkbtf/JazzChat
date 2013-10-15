@@ -37,7 +37,7 @@ public class UiTester {
 					System.in));
 			String line = buffer.readLine();
 			mainWindow.roomWindowMap.get(123)
-					.showMessage("test username", line);
+					.showMessage(-1, line);
 		}
 
 	}

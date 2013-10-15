@@ -17,7 +17,7 @@ public class MessageCommand implements Command {
 		// System.out.println(Integer.toString(userId));
 		if (userId != Client.user.id) {
 			if (Client.checkMessageType(content).equals("image"))
-				room.showImg(userName, Client.getImgUrlByString(content));
+				room.showImg(userId, Client.getImgUrlByString(content));
 			else if (Client.checkMessageType(content).equals("text"))
 				room.showMessage(userId, content);
 			else

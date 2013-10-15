@@ -61,7 +61,7 @@ public class ChatCellRender extends JLabel implements ListCellRenderer{
         this.setPreferredSize(new Dimension(300 , 50));
         //Util.errorReport(((FriendNameAndStatus)value).name);
         //Util.errorReport(value.toString());
-        pnl.add((ChatObject)value);
+        pnl.add((ChatObject)value,BorderLayout.WEST);
         //pnl.add((FriendNameAndStatus)value);
         //add((FriendNameAndStatus)value);
         //FriendNameAndStatus a=new FriendNameAndStatus(value.toString());
