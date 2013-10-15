@@ -4,7 +4,12 @@
  */
 package TaipeiHot.JazzChat.UI;
 
+import TaipeiHot.JazzChat.Util;
 import java.awt.Color;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 
 /**
@@ -34,6 +39,15 @@ public class FriendNameAndStatus extends javax.swing.JPanel {
         }
         else{
             online.setBackground(Color.gray);
+        }
+    }
+    public void changeIcon(String url){
+        try {
+            head.setIcon(Util.url2Icon(url, 50, 50));
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(FriendNameAndStatus.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(FriendNameAndStatus.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     /**
