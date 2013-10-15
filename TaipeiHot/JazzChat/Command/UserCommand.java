@@ -9,13 +9,16 @@ public class UserCommand implements Command {
 	public void exec() throws CommandParsingErrorException {
 		String cmd = Client.getMessage();
 		if (cmd.equals("photo")) {
-			String filePath = Client.getMessage();
-			String fileName = Client.getMessage();
-			FtpUtils.uploadFTPPhoto(filePath, fileName);
-		} else if (cmd.equals("change")) {
-			String newUrl = Client.getMessage();
-			Client.user.setProfilePicUrl(newUrl);
-			Client.mainWindow.changePhoto();
+			cmd = Client.getMessage();
+			if (cmd.equals("upload")) {
+				String filePath = Client.getMessage();
+				String fileName = Client.getMessage();
+				FtpUtils.uploadFTPPhoto(filePath, fileName);
+			} else if (cmd.equals("change")) {
+				String newUrl = Client.getMessage();
+				Client.user.setProfilePicUrl(newUrl);
+				Client.mainWindow.changePhoto();
+			}
 		}
 	}
 
