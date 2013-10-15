@@ -19,7 +19,7 @@ public class MessageCommand implements Command {
 			if (Client.checkMessageType(content).equals("image"))
 				room.showImg(userName, Client.getImgUrlByString(content));
 			else if (Client.checkMessageType(content).equals("text"))
-				room.showMessage(userName, content);
+				room.showMessage(userId, content);
 			else
 				Util.errorReport("checkMessageType error: " + content);
 		}
