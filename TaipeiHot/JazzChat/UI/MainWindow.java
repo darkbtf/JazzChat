@@ -112,117 +112,108 @@ public class MainWindow extends javax.swing.JFrame {
 	@SuppressWarnings("unchecked")
 	// <editor-fold defaultstate="collapsed"
 	// <editor-fold defaultstate="collapsed"
-	// desc="Generated Code">//GEN-BEGIN:initComponents
-	private void initComponents() {
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
 
-		jLayeredPane1 = new javax.swing.JLayeredPane();
-		addFirendButton = new javax.swing.JButton();
-		jScrollPane1 = new javax.swing.JScrollPane();
-		friendList = new javax.swing.JList();
-		afwButton = new javax.swing.JToggleButton();
-		photoBtn = new javax.swing.JButton();
-		onlineBtn = new javax.swing.JButton();
-		jLabel1 = new javax.swing.JLabel();
-		jMenuBar1 = new javax.swing.JMenuBar();
-		jMenu1 = new javax.swing.JMenu();
-		jMenu2 = new javax.swing.JMenu();
+        jLayeredPane1 = new javax.swing.JLayeredPane();
+        addFirendButton = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        friendList = new javax.swing.JList();
+        afwButton = new javax.swing.JToggleButton();
+        photoBtn = new javax.swing.JButton();
+        onlineBtn = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
 
-		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-		setBackground(new java.awt.Color(255, 0, 51));
-		setIconImages(null);
-		setPreferredSize(new java.awt.Dimension(400, 570));
-		setResizable(false);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 0, 51));
+        setIconImages(null);
+        setPreferredSize(new java.awt.Dimension(400, 570));
+        setResizable(false);
 
-		addFirendButton.setText("+");
-		addFirendButton.addMouseListener(new java.awt.event.MouseAdapter() {
-			@Override
-			public void mouseClicked(java.awt.event.MouseEvent evt) {
-				addFirendButtonMouseClicked(evt);
-			}
-		});
-		addFirendButton.setBounds(170, 90, 71, 23);
-		jLayeredPane1.add(addFirendButton,
-				javax.swing.JLayeredPane.DEFAULT_LAYER);
+        addFirendButton.setText("+");
+        addFirendButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                addFirendButtonMouseClicked(evt);
+            }
+        });
+        addFirendButton.setBounds(170, 90, 71, 23);
+        jLayeredPane1.add(addFirendButton, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-		jScrollPane1.setPreferredSize(new java.awt.Dimension(275, 150));
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(275, 150));
 
-		friendList.setBackground(new java.awt.Color(255, 204, 51));
-		friendList.setModel(friendModel);
-		friendList.setPreferredSize(new java.awt.Dimension(275, 150));
-		jScrollPane1.setViewportView(friendList);
+        friendList.setBackground(new java.awt.Color(255, 204, 51));
+        friendList.setModel(friendModel);
+        friendList.setPreferredSize(new java.awt.Dimension(275, 150));
+        jScrollPane1.setViewportView(friendList);
 
-		jScrollPane1.setBounds(80, 130, 250, 350);
-		jLayeredPane1.add(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jScrollPane1.setBounds(50, 130, 280, 350);
+        jLayeredPane1.add(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-		afwButton.setText("Wating Friend");
-		afwButton.addMouseListener(new java.awt.event.MouseAdapter() {
-			@Override
-			public void mouseClicked(java.awt.event.MouseEvent evt) {
-				afwButtonMouseClicked(evt);
-			}
-		});
-		afwButton.addActionListener(new java.awt.event.ActionListener() {
-			@Override
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				afwButtonActionPerformed(evt);
-			}
-		});
-		afwButton.setBounds(30, 500, 99, 23);
-		jLayeredPane1.add(afwButton, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        afwButton.setText("Wating Friend");
+        afwButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                afwButtonMouseClicked(evt);
+            }
+        });
+        afwButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                afwButtonActionPerformed(evt);
+            }
+        });
+        afwButton.setBounds(30, 500, 99, 23);
+        jLayeredPane1.add(afwButton, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-		photoBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource(
-				"/TaipeiHot/JazzChat/UI/default_head_piture.jpg"))); // NOI18N
-		photoBtn.setPreferredSize(new java.awt.Dimension(100, 100));
-		photoBtn.addMouseListener(new java.awt.event.MouseAdapter() {
-			@Override
-			public void mouseClicked(java.awt.event.MouseEvent evt) {
-				photoBtnMouseClicked(evt);
-			}
-		});
-		photoBtn.setBounds(50, 20, 100, 100);
-		jLayeredPane1.add(photoBtn, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        photoBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TaipeiHot/JazzChat/UI/default_head_piture.jpg"))); // NOI18N
+        photoBtn.setPreferredSize(new java.awt.Dimension(100, 100));
+        photoBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                photoBtnMouseClicked(evt);
+            }
+        });
+        photoBtn.setBounds(50, 20, 100, 100);
+        jLayeredPane1.add(photoBtn, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-		onlineBtn.setBackground(new java.awt.Color(255, 0, 0));
-		onlineBtn.setText("ON/OFF");
-		onlineBtn.addMouseListener(new java.awt.event.MouseAdapter() {
-			@Override
-			public void mouseClicked(java.awt.event.MouseEvent evt) {
-				onlineBtnMouseClicked(evt);
-			}
-		});
-		onlineBtn.setBounds(260, 90, 73, 23);
-		jLayeredPane1.add(onlineBtn, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        onlineBtn.setBackground(new java.awt.Color(255, 0, 0));
+        onlineBtn.setText("ON/OFF");
+        onlineBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                onlineBtnMouseClicked(evt);
+            }
+        });
+        onlineBtn.setBounds(260, 90, 73, 23);
+        jLayeredPane1.add(onlineBtn, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-		jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource(
-				"/TaipeiHot/JazzChat/UI/FireLionMain.jpg"))); // NOI18N
-		jLabel1.setText("jLabel1");
-		jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-		jLabel1.setPreferredSize(new java.awt.Dimension(500, 800));
-		jLabel1.setBounds(0, 0, 400, 540);
-		jLayeredPane1.add(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TaipeiHot/JazzChat/UI/FireLionMain.jpg"))); // NOI18N
+        jLabel1.setText("jLabel1");
+        jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jLabel1.setPreferredSize(new java.awt.Dimension(500, 800));
+        jLabel1.setBounds(0, 0, 400, 540);
+        jLayeredPane1.add(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-		jMenu1.setText("File");
-		jMenuBar1.add(jMenu1);
+        jMenu1.setText("File");
+        jMenuBar1.add(jMenu1);
 
-		jMenu2.setText("Edit");
-		jMenuBar1.add(jMenu2);
+        jMenu2.setText("Edit");
+        jMenuBar1.add(jMenu2);
 
-		setJMenuBar(jMenuBar1);
+        setJMenuBar(jMenuBar1);
 
-		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(
-				getContentPane());
-		getContentPane().setLayout(layout);
-		layout.setHorizontalGroup(layout.createParallelGroup(
-				javax.swing.GroupLayout.Alignment.LEADING).addComponent(
-				jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 383,
-				javax.swing.GroupLayout.PREFERRED_SIZE));
-		layout.setVerticalGroup(layout.createParallelGroup(
-				javax.swing.GroupLayout.Alignment.LEADING).addComponent(
-				jLayeredPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 500,
-				Short.MAX_VALUE));
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 383, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLayeredPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
+        );
 
-		pack();
-	}// </editor-fold>//GEN-END:initComponents
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
 
 	private void afwButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_afwButtonActionPerformed
 		// TODO add your handling code here:
@@ -500,17 +491,17 @@ public class MainWindow extends javax.swing.JFrame {
 		repaint();
 	}
 
-	// Variables declaration - do not modify//GEN-BEGIN:variables
-	private javax.swing.JButton addFirendButton;
-	private javax.swing.JToggleButton afwButton;
-	public javax.swing.JList friendList;
-	private javax.swing.JLabel jLabel1;
-	private javax.swing.JLayeredPane jLayeredPane1;
-	private javax.swing.JMenu jMenu1;
-	private javax.swing.JMenu jMenu2;
-	private javax.swing.JMenuBar jMenuBar1;
-	private javax.swing.JScrollPane jScrollPane1;
-	private javax.swing.JButton onlineBtn;
-	private javax.swing.JButton photoBtn;
-	// End of variables declaration//GEN-END:variables
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addFirendButton;
+    private javax.swing.JToggleButton afwButton;
+    public javax.swing.JList friendList;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLayeredPane jLayeredPane1;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton onlineBtn;
+    private javax.swing.JButton photoBtn;
+    // End of variables declaration//GEN-END:variables
 }
