@@ -27,13 +27,6 @@ public class VideoWindow extends javax.swing.JFrame {
     private void initComponents() {
 
         jLayeredPane1 = new javax.swing.JLayeredPane();
-        myVideo = new java.awt.Canvas();
-        yourVideo = new java.awt.Canvas();
-
-        myVideo.setBounds(230, 150, 150, 100);
-        jLayeredPane1.add(myVideo, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        yourVideo.setBounds(0, 0, 320, 210);
-        jLayeredPane1.add(yourVideo, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -85,7 +78,5 @@ public class VideoWindow extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLayeredPane jLayeredPane1;
-    public java.awt.Canvas myVideo;
-    public java.awt.Canvas yourVideo;
     // End of variables declaration//GEN-END:variables
 }
