@@ -10,6 +10,7 @@ import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 import TaipeiHot.JazzChat.UI.RoomWindow;
+import TaipeiHot.JazzChat.Util;
 
 import com.sun.jna.Native;
 import com.sun.jna.NativeLibrary;
@@ -62,6 +63,7 @@ public class MediaUtils {
 		} catch (UnknownHostException e) {
 		}
 		RoomWindow room = Client.mainWindow.getRoomById(roomId);
+
 
 		Canvas remoteCanvas = new Canvas();
 		CanvasVideoSurface remoteVideoSurface = mediaPlayerFactory

@@ -23,10 +23,10 @@ public class UiTester {
                 //mainWindow.loginSuccess();
                 //for(int i=0;i<20;i++)mainWindow.friendModel.addElement(i);
                 mainWindow.setVisible(true);
-                mainWindow.friendModel.addElement(new FriendNameAndStatus("1"));
-                mainWindow.friendModel.addElement(new FriendNameAndStatus("22"));
-                mainWindow.friendModel.addElement(new FriendNameAndStatus("3"));
-                mainWindow.friendModel.addElement(new FriendNameAndStatus("4"));
+                //mainWindow.friendModel.addElement(new FriendNameAndStatus("1"));
+                //mainWindow.friendModel.addElement(new FriendNameAndStatus("22"));
+                //mainWindow.friendModel.addElement(new FriendNameAndStatus("3"));
+                //mainWindow.friendModel.addElement(new FriendNameAndStatus("4"));
                 //mainWindow.friendList.setModel(mainWindow.friendModel);
                 //mainWindow.friendModel.addElement(new FriendNameAndStatus("lala"));
                 //mainWindow.friendModel.addElement(new FriendNameAndStatus("lala"));

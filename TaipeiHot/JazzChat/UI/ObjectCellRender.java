@@ -58,10 +58,10 @@ public class ObjectCellRender extends JLabel implements ListCellRenderer{
         }
     
          
-        this.setPreferredSize(new Dimension(300 , 200));
+        this.setPreferredSize(new Dimension(287 , 50));
         //Util.errorReport(((FriendNameAndStatus)value).name);
         //Util.errorReport(value.toString());
-        pnl.add(new FriendNameAndStatus(value.toString()));
+        pnl.add((FriendNameAndStatus)(value));
         //pnl.add((FriendNameAndStatus)value);
         //add((FriendNameAndStatus)value);
         //FriendNameAndStatus a=new FriendNameAndStatus(value.toString());

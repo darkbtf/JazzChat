@@ -7,27 +7,19 @@ package TaipeiHot.JazzChat.UI;
 import TaipeiHot.JazzChat.Client.Client;
 import TaipeiHot.JazzChat.User;
 import TaipeiHot.JazzChat.Util;
-import java.awt.FlowLayout;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.UIManager;
 
@@ -54,7 +46,7 @@ public class MainWindow extends javax.swing.JFrame {
 	public MainWindow() {
             try{
                 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-                
+                icon=new ImageIcon(getClass().getResource("/TaipeiHot/JazzChat/UI/default_head_piture_small.jpg"));
                 //Image a=new Image(new URL("http://3.bp.blogspot.com/-CpxmJu3Km3k/UMPhfSoHaQI/AAAAAAAAF0Y/H5iQtXUZJuQ/s1600/Fire+lion.jpg"));
                 //friendModel.addElement("tesing");
 		initComponents();
@@ -84,6 +76,7 @@ public class MainWindow extends javax.swing.JFrame {
                         if (index >= 0) {
                             //Util.errorReport("lala");
                           AcceptMap.get(pendingList.get(index).id).setVisible(true);
+                         
                         }
                       }
                     }
@@ -104,11 +97,11 @@ public class MainWindow extends javax.swing.JFrame {
 
         jLayeredPane1 = new javax.swing.JLayeredPane();
         addFirendButton = new javax.swing.JButton();
-        jToggleButton1 = new javax.swing.JToggleButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         friendList = new javax.swing.JList();
         afwButton = new javax.swing.JToggleButton();
-        jButton1 = new javax.swing.JButton();
+        addBtn = new javax.swing.JButton();
+        onlineBtn = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -117,27 +110,26 @@ public class MainWindow extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 0, 51));
         setIconImages(null);
-        setPreferredSize(new java.awt.Dimension(400, 500));
+        setPreferredSize(new java.awt.Dimension(400, 570));
         setResizable(false);
 
-        addFirendButton.setText("++++");
+        addFirendButton.setText("+");
         addFirendButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 addFirendButtonMouseClicked(evt);
             }
         });
-        addFirendButton.setBounds(260, 30, 71, 23);
+        addFirendButton.setBounds(170, 90, 71, 23);
         jLayeredPane1.add(addFirendButton, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-        jToggleButton1.setText("jToggleButton1");
-        jToggleButton1.setBounds(260, 60, 75, 23);
-        jLayeredPane1.add(jToggleButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(275, 150));
 
         friendList.setBackground(new java.awt.Color(255, 204, 51));
         friendList.setModel(friendModel);
+        friendList.setPreferredSize(new java.awt.Dimension(275, 150));
         jScrollPane1.setViewportView(friendList);
 
-        jScrollPane1.setBounds(40, 130, 300, 350);
+        jScrollPane1.setBounds(80, 130, 250, 350);
         jLayeredPane1.add(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         afwButton.setText("Wating Friend");
@@ -154,14 +146,26 @@ public class MainWindow extends javax.swing.JFrame {
         afwButton.setBounds(30, 500, 99, 23);
         jLayeredPane1.add(afwButton, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-        jButton1.setText("Uplode Head");
-        jButton1.setBounds(30, 10, 90, 110);
-        jLayeredPane1.add(jButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        addBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TaipeiHot/JazzChat/UI/default_head_piture.jpg"))); // NOI18N
+        addBtn.setPreferredSize(new java.awt.Dimension(100, 100));
+        addBtn.setBounds(50, 20, 100, 100);
+        jLayeredPane1.add(addBtn, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        onlineBtn.setBackground(new java.awt.Color(255, 0, 0));
+        onlineBtn.setText("ON/OFF");
+        onlineBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                onlineBtnMouseClicked(evt);
+            }
+        });
+        onlineBtn.setBounds(260, 90, 73, 23);
+        jLayeredPane1.add(onlineBtn, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TaipeiHot/JazzChat/UI/FireLionMain.jpg"))); // NOI18N
         jLabel1.setText("jLabel1");
         jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jLabel1.setBounds(0, 0, 380, 540);
+        jLabel1.setPreferredSize(new java.awt.Dimension(500, 800));
+        jLabel1.setBounds(0, 0, 400, 540);
         jLayeredPane1.add(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         jMenu1.setText("File");
@@ -180,7 +184,7 @@ public class MainWindow extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLayeredPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 539, Short.MAX_VALUE)
+            .addComponent(jLayeredPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
         );
 
         pack();
@@ -201,12 +205,25 @@ public class MainWindow extends javax.swing.JFrame {
             acceptFriendWindow.setVisible(true);
             afwIsOpen=true;
         }
+
     }//GEN-LAST:event_afwButtonMouseClicked
 
     private void addFirendButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addFirendButtonMouseClicked
         // TODO add your handling code here:
         addFriendDialog.setVisible(true);
     }//GEN-LAST:event_addFirendButtonMouseClicked
+    private boolean online=false;
+    private void onlineBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onlineBtnMouseClicked
+        // TODO add your handling code here:
+        if(online){
+            Client.setVisible(false);
+            online=false;
+        }
+        else{
+            Client.setVisible(true);
+            online=true;
+        }
+    }//GEN-LAST:event_onlineBtnMouseClicked
 
 	private void jPanel2MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jPanel2MouseClicked
 		System.out.println("hahah");
@@ -279,6 +296,7 @@ public class MainWindow extends javax.swing.JFrame {
         DefaultListModel friendModel = new DefaultListModel();
         MouseListener mouseListener ;
         MouseListener mouseListener2;
+        ImageIcon icon;
         boolean afwIsOpen=false;
         //JList friendLsit=new JList();
         public void loginSuccess() {
@@ -321,6 +339,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         public void acceptFriendShow(int userId,String userName,String greeting){
             AcceptFriendDialog acceptFriendDialog=new AcceptFriendDialog(this,true,userId);
+            acceptFriendDialog.setFriend(userName,greeting);
             AcceptMap.put(userId, acceptFriendDialog);
             acceptFriendDialog.setVisible(true);
         }
@@ -367,9 +386,12 @@ public class MainWindow extends javax.swing.JFrame {
 		}
 
 	}
+        public Map<Integer, FriendNameAndStatus> friendStatusMap = new HashMap<Integer, FriendNameAndStatus>();
         public void friendShow(User user){
             userList.add(user);
-            friendModel.addElement(user.getNickname());
+            FriendNameAndStatus newStatus=new FriendNameAndStatus(user.getNickname(),icon);
+            friendStatusMap.put(user.id,newStatus);
+            friendModel.addElement(newStatus);
             //friendName.add(user.getNickname());
             //friendList=new JList(friendModel);
             //friendList.addMouseListener(mouseListener);
@@ -389,23 +411,27 @@ public class MainWindow extends javax.swing.JFrame {
             
         }
         public void setOnlineById(Integer userId){
-            
+            Util.errorReport(userId.toString()+"online\n");
+            friendStatusMap.get(userId).online(true);
+            this.repaint();
         }
         public void setOfflineById(Integer userId){
-            
+            Util.errorReport(userId.toString()+"offline\n");
+            friendStatusMap.get(userId).online(false);
+            this.repaint();
         }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addBtn;
     private javax.swing.JButton addFirendButton;
     private javax.swing.JToggleButton afwButton;
     public javax.swing.JList friendList;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JToggleButton jToggleButton1;
+    private javax.swing.JButton onlineBtn;
     // End of variables declaration//GEN-END:variables
 }
