@@ -24,11 +24,7 @@ public class VChatCommand implements Command {
 			room.videoWindow.setVisible(true);
 
 			MediaUtils.setLocalPlayer(roomId, ip);
-			// Client.sendVideoDone(roomId);
 			MediaUtils.setRemotePlayer(roomId);
-		} else if (cmd.equals("done")) {
-			int roomId = Integer.parseInt(Client.getMessage());
-			// MediaUtils.setRemotePlayer(roomId);
 		}
 	}
 }
