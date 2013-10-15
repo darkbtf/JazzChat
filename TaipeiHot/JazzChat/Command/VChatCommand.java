@@ -2,6 +2,7 @@ package TaipeiHot.JazzChat.Command;
 
 import TaipeiHot.JazzChat.Client.Client;
 import TaipeiHot.JazzChat.Client.MediaUtils;
+import TaipeiHot.JazzChat.UI.RoomWindow;
 
 public class VChatCommand implements Command {
 
@@ -19,8 +20,15 @@ public class VChatCommand implements Command {
 			int roomId = Integer.parseInt(Client.getMessage());
 			String ip = Client.getMessage();
 			System.out.println(ip);
+			RoomWindow room = Client.mainWindow.getRoomById(roomId);
+			room.videoWindow.setVisible(true);
+
 			MediaUtils.setLocalPlayer(roomId, ip);
+			// Client.sendVideoDone(roomId);
 			MediaUtils.setRemotePlayer(roomId);
+		} else if (cmd.equals("done")) {
+			int roomId = Integer.parseInt(Client.getMessage());
+			// MediaUtils.setRemotePlayer(roomId);
 		}
 	}
 }
