@@ -8,6 +8,7 @@ import TaipeiHot.JazzChat.Client.Client;
 import TaipeiHot.JazzChat.User;
 import TaipeiHot.JazzChat.Util;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -46,8 +47,11 @@ public class MainWindow extends javax.swing.JFrame {
 	public MainWindow() {
             try{
                 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-                icon=new ImageIcon(getClass().getResource("/TaipeiHot/JazzChat/UI/default_head_piture_small.jpg"));
-                //Image a=new Image(new URL("http://3.bp.blogspot.com/-CpxmJu3Km3k/UMPhfSoHaQI/AAAAAAAAF0Y/H5iQtXUZJuQ/s1600/Fire+lion.jpg"));
+                icon=new ImageIcon(getClass().getResource("https://github.com/darkbtf/JazzChat/pull/59"));
+                Image tmpImage=icon.getImage();
+                Image tmp=Util.resize((BufferedImage)tmpImage, 50, 50);
+                icon=new ImageIcon(tmp);
+                        //Image a=new Image(new URL("http://3.bp.blogspot.com/-CpxmJu3Km3k/UMPhfSoHaQI/AAAAAAAAF0Y/H5iQtXUZJuQ/s1600/Fire+lion.jpg"));
                 //friendModel.addElement("tesing");
 		initComponents();
                 URL url = new URL("http://3.bp.blogspot.com/-CpxmJu3Km3k/UMPhfSoHaQI/AAAAAAAAF0Y/H5iQtXUZJuQ/s1600/Fire+lion.jpg");
