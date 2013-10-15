@@ -9,7 +9,6 @@ import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
-import TaipeiHot.JazzChat.Util;
 import TaipeiHot.JazzChat.UI.RoomWindow;
 
 import com.sun.jna.Native;
@@ -54,7 +53,6 @@ public class MediaUtils {
 				javax.swing.JLayeredPane.DEFAULT_LAYER);
 		System.out.println(remoteIp);
 		localMediaPlayer.getMediaPlayer().playMedia(mrl, localOptions);
-		setRemotePlayer(roomId);
 	}
 
 	static public void setRemotePlayer(int roomId) {
@@ -74,8 +72,8 @@ public class MediaUtils {
 		room.videoWindow.jLayeredPane1.add(remoteCanvas,
 				javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-		remoteMediaPlayer.getMediaPlayer()
-				.playMedia("rtp://@" + myIp + ":5555");
+		MediaUtils.remoteMediaPlayer.getMediaPlayer().playMedia(
+				"rtp://@" + myIp + ":5555");
 	}
 
 }
