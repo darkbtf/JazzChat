@@ -4,19 +4,21 @@
  */
 package TaipeiHot.JazzChat.UI;
 
+import TaipeiHot.JazzChat.Client.Client;
+import TaipeiHot.JazzChat.Client.MediaUtils;
+import TaipeiHot.JazzChat.User;
+import TaipeiHot.JazzChat.Util;
+import java.awt.Canvas;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.Box;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JScrollBar;
-
-import TaipeiHot.JazzChat.User;
-import TaipeiHot.JazzChat.Util;
-import TaipeiHot.JazzChat.Client.Client;
 
 /**
  * 
@@ -27,43 +29,44 @@ public class RoomWindow extends javax.swing.JFrame {
 	/**
 	 * Creates new form RoomWindow
 	 */
-	public Box box = Box.createVerticalBox();
-
-	public RoomWindow() {
+        public Box box=Box.createVerticalBox();
+        public RoomWindow() {
 		initComponents();
-		roomId = 0;
-		try {
-			chatList.setCellRenderer(new ChatCellRender());
-		} catch (MalformedURLException e) {
-			Util.errorReport(e.getMessage());
-		} catch (IOException e) {
-			Util.errorReport(e.getMessage());
-		}
+                roomId = 0;
+                try{
+                    chatList.setCellRenderer(new ChatCellRender());
+                }catch(MalformedURLException e){
+                    Util.errorReport(e.getMessage());
+                }
+                catch(IOException e){
+                    Util.errorReport(e.getMessage());
+                }
 	}
-
 	public RoomWindow(int _roomId, String _roomName,
 			ArrayList<String> _userNameList) {
 		initComponents();
 		roomId = _roomId;
-		try {
-			chatList.setCellRenderer(new ChatCellRender());
-		} catch (MalformedURLException e) {
-			Util.errorReport(e.getMessage());
-		} catch (IOException e) {
-			Util.errorReport(e.getMessage());
-		}
+                try{
+                    chatList.setCellRenderer(new ChatCellRender());
+                }catch(MalformedURLException e){
+                    Util.errorReport(e.getMessage());
+                }
+                catch(IOException e){
+                    Util.errorReport(e.getMessage());
+                }
 	}
 
-	public RoomWindow(int _roomId) {
+	public RoomWindow(int _roomId)  {
 		initComponents();
 		roomId = _roomId;
-		try {
-			chatList.setCellRenderer(new ChatCellRender());
-		} catch (MalformedURLException e) {
-			Util.errorReport(e.getMessage());
-		} catch (IOException e) {
-			Util.errorReport(e.getMessage());
-		}
+                try{
+                    chatList.setCellRenderer(new ChatCellRender());
+                }catch(MalformedURLException e){
+                    Util.errorReport(e.getMessage());
+                }
+                catch(IOException e){
+                    Util.errorReport(e.getMessage());
+                }
 	}
 
 	/**
@@ -73,139 +76,174 @@ public class RoomWindow extends javax.swing.JFrame {
 	 */
 	@SuppressWarnings("unchecked")
 	// <editor-fold defaultstate="collapsed"
-	// <editor-fold defaultstate="collapsed"
-	// desc="Generated Code">//GEN-BEGIN:initComponents
-	private void initComponents() {
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
 
-		jLayeredPane1 = new javax.swing.JLayeredPane();
-		jScrollPane1 = new javax.swing.JScrollPane();
-		typeText = new javax.swing.JTextArea();
-		sendTextButton = new javax.swing.JButton();
-		jScrollPane2 = new javax.swing.JScrollPane();
-		chatList = new javax.swing.JList();
-		jToolBar1 = new javax.swing.JToolBar();
-		jButton1 = new javax.swing.JButton();
-		uploadFileButton = new javax.swing.JButton();
-		callButton = new javax.swing.JButton();
+        jLayeredPane1 = new javax.swing.JLayeredPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        typeText = new javax.swing.JTextArea();
+        sendTextButton = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        chatList = new javax.swing.JList();
+        jToolBar1 = new javax.swing.JToolBar();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
+        uploadFileButton = new javax.swing.JButton();
+        callButton = new javax.swing.JButton();
 
-		setBackground(new java.awt.Color(102, 153, 255));
+        setBackground(new java.awt.Color(102, 153, 255));
 
-		jLayeredPane1.setBackground(new java.awt.Color(102, 204, 255));
+        jLayeredPane1.setBackground(new java.awt.Color(102, 204, 255));
 
-		typeText.setBackground(new java.awt.Color(153, 204, 255));
-		typeText.setColumns(20);
-		typeText.setRows(2);
-		typeText.setBorder(new javax.swing.border.SoftBevelBorder(
-				javax.swing.border.BevelBorder.RAISED, null, null,
-				new java.awt.Color(0, 0, 0), new java.awt.Color(0, 51, 255)));
-		typeText.addKeyListener(new java.awt.event.KeyAdapter() {
-			@Override
-			public void keyTyped(java.awt.event.KeyEvent evt) {
-				typeTextKeyTyped(evt);
-			}
-		});
-		jScrollPane1.setViewportView(typeText);
+        typeText.setBackground(new java.awt.Color(153, 204, 255));
+        typeText.setColumns(20);
+        typeText.setRows(2);
+        typeText.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, null, new java.awt.Color(0, 0, 0), new java.awt.Color(0, 51, 255)));
+        typeText.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                typeTextKeyTyped(evt);
+            }
+        });
+        jScrollPane1.setViewportView(typeText);
 
-		jScrollPane1.setBounds(10, 290, 334, 48);
-		jLayeredPane1.add(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jScrollPane1.setBounds(14, 310, 360, 48);
+        jLayeredPane1.add(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-		sendTextButton.setText("jButton1");
-		sendTextButton.addMouseListener(new java.awt.event.MouseAdapter() {
-			@Override
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				sendTextButtonMouseReleased(evt);
-			}
-		});
-		sendTextButton.setBounds(360, 290, 170, 50);
-		jLayeredPane1.add(sendTextButton,
-				javax.swing.JLayeredPane.DEFAULT_LAYER);
+        sendTextButton.setText("Send");
+        sendTextButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                sendTextButtonMouseReleased(evt);
+            }
+        });
+        sendTextButton.setBounds(390, 310, 110, 50);
+        jLayeredPane1.add(sendTextButton, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-		chatList.setModel(chatModel);
-		jScrollPane2.setViewportView(chatList);
+        chatList.setModel(chatModel
+        );
+        jScrollPane2.setViewportView(chatList);
 
-		jScrollPane2.setBounds(10, 0, 500, 240);
-		jLayeredPane1.add(jScrollPane2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jScrollPane2.setBounds(10, 10, 490, 230);
+        jLayeredPane1.add(jScrollPane2, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-		jToolBar1.setRollover(true);
+        jToolBar1.setRollover(true);
 
-		jButton1.setText("jButton1");
-		jButton1.setFocusable(false);
-		jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-		jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-		jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
-			@Override
-			public void mouseClicked(java.awt.event.MouseEvent evt) {
-				jButton1MouseClicked(evt);
-			}
-		});
-		jToolBar1.add(jButton1);
+        jButton1.setText("jButton1");
+        jButton1.setFocusable(false);
+        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
+        jToolBar1.add(jButton1);
 
-		jToolBar1.setBounds(10, 250, 330, 30);
-		jLayeredPane1.add(jToolBar1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jButton2.setText("jButton2");
+        jButton2.setFocusable(false);
+        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton2);
 
-		uploadFileButton.setText("Upload...");
-		uploadFileButton.addMouseListener(new java.awt.event.MouseAdapter() {
-			@Override
-			public void mouseClicked(java.awt.event.MouseEvent evt) {
-				uploadFileButtonMouseClicked(evt);
-			}
-		});
-		uploadFileButton.setBounds(440, 250, 90, 23);
-		jLayeredPane1.add(uploadFileButton,
-				javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jButton3.setText("jButton3");
+        jButton3.setFocusable(false);
+        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton3);
 
-		callButton.setText("Call!!!!");
-		callButton.addMouseListener(new java.awt.event.MouseAdapter() {
-			@Override
-			public void mouseClicked(java.awt.event.MouseEvent evt) {
-				callButtonMouseClicked(evt);
-			}
-		});
-		callButton.setBounds(360, 250, 67, 23);
-		jLayeredPane1.add(callButton, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jButton4.setText("jButton4");
+        jButton4.setFocusable(false);
+        jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton4);
 
-		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(
-				getContentPane());
-		getContentPane().setLayout(layout);
-		layout.setHorizontalGroup(layout.createParallelGroup(
-				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-				layout.createSequentialGroup()
-						.addContainerGap()
-						.addComponent(jLayeredPane1,
-								javax.swing.GroupLayout.DEFAULT_SIZE, 550,
-								Short.MAX_VALUE).addContainerGap()));
-		layout.setVerticalGroup(layout.createParallelGroup(
-				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-				layout.createSequentialGroup()
-						.addGap(18, 18, 18)
-						.addComponent(jLayeredPane1,
-								javax.swing.GroupLayout.DEFAULT_SIZE, 344,
-								Short.MAX_VALUE).addContainerGap()));
+        jButton5.setText("jButton5");
+        jButton5.setFocusable(false);
+        jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton5);
 
-		pack();
-	}// </editor-fold>//GEN-END:initComponents
+        jButton6.setText("jButton6");
+        jButton6.setFocusable(false);
+        jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton6.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton6);
 
-	private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jButton1MouseClicked
-		// TODO add your handling code here:
-		Client.sendImg(roomId, 1);
-	}// GEN-LAST:event_jButton1MouseClicked
+        jButton7.setText("jButton7");
+        jButton7.setFocusable(false);
+        jButton7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton7.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton7);
 
-	private void uploadFileButtonMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_uploadFileButtonMouseClicked
-		// TODO add your handling code here:
-		JFileChooser chooser = new JFileChooser();
-		int returnVal = chooser.showOpenDialog(this);
-		if (returnVal == JFileChooser.APPROVE_OPTION) {
-			String fileName = chooser.getSelectedFile().getPath();
-			Client.uploadFile(roomId, fileName);
-		}
+        jToolBar1.setBounds(10, 250, 330, 30);
+        jLayeredPane1.add(jToolBar1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-	}// GEN-LAST:event_uploadFileButtonMouseClicked
+        uploadFileButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TaipeiHot/JazzChat/UI/uplode.jpg"))); // NOI18N
+        uploadFileButton.setPreferredSize(new java.awt.Dimension(50, 50));
+        uploadFileButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                uploadFileButtonMouseClicked(evt);
+            }
+        });
+        uploadFileButton.setBounds(450, 250, 50, 50);
+        jLayeredPane1.add(uploadFileButton, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-	private void callButtonMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_callButtonMouseClicked
-		// TODO add your handling code here:
-		videoWindow.setVisible(true);
-		Client.startVideoChat(roomId);
-	}// GEN-LAST:event_callButtonMouseClicked
+        callButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TaipeiHot/JazzChat/UI/Video-Transcription-Service.jpeg"))); // NOI18N
+        callButton.setToolTipText("");
+        callButton.setMaximumSize(new java.awt.Dimension(50, 50));
+        callButton.setMinimumSize(new java.awt.Dimension(30, 30));
+        callButton.setPreferredSize(new java.awt.Dimension(50, 50));
+        callButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                callButtonMouseClicked(evt);
+            }
+        });
+        callButton.setBounds(390, 250, 50, 50);
+        jLayeredPane1.add(callButton, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 515, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        // TODO add your handling code here:
+        Client.sendImg(roomId, 1);
+    }//GEN-LAST:event_jButton1MouseClicked
+
+    private void uploadFileButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_uploadFileButtonMouseClicked
+        // TODO add your handling code here:
+        JFileChooser chooser = new JFileChooser();
+        int returnVal = chooser.showOpenDialog(this);
+        if(returnVal == JFileChooser.APPROVE_OPTION) {
+            String fileName=chooser.getSelectedFile().getPath();
+            Client.uploadFile(roomId, fileName);
+        }
+        
+    }//GEN-LAST:event_uploadFileButtonMouseClicked
+
+    private void callButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_callButtonMouseClicked
+        // TODO add your handling code here:
+        //videoWindow.setVisible(true);
+        //MediaUtils.setLocalPlayer(roomId);
+        //MediaUtils.setRemotePlayer(roomId,"140.112.18.199");
+        Client.startVideoChat(roomId);
+    }//GEN-LAST:event_callButtonMouseClicked
 
 	private void sendTextButtonMouseReleased(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_sendTextButtonMouseReleased
 		// TODO add your handling code here:
@@ -263,17 +301,18 @@ public class RoomWindow extends javax.swing.JFrame {
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-				new RoomWindow(1).setVisible(true);
+                            new RoomWindow(1).setVisible(true);
 			}
 		});
 	}
 
 	/* funcrions and parameters by paul */
 	private final int roomId;
-	private ArrayList<String> userNameList = new ArrayList<String>();
+	private ArrayList<String> userNameList=new ArrayList<String>();
 	private String roomName;
-	DefaultListModel chatModel = new DefaultListModel();
-
+        DefaultListModel chatModel = new DefaultListModel();
+        
+        
 	public void roomNameChange(String _roomName) {
 		roomName = _roomName;
 	}
@@ -281,56 +320,58 @@ public class RoomWindow extends javax.swing.JFrame {
 	public void roomUserNameListChange(ArrayList<String> _userNameList) {
 		userNameList = _userNameList;
 	}
-
-	public void addUser(User user) {
-		userNameList.add(user.getNickname());
-	}
-
+        public void addUser(User user){
+            userNameList.add(user.getNickname());
+        }
 	public void showMessage(String name, String text) {
-		// Util.errorReport("QQQQQ");
-		// JLabel jl=new JLabel(name + ":" + text + "\n");
-		chatModel.addElement(name + ":" + text + "\n");
-		// box.add(jl);
-		// jl.setVisible(true);
-		JScrollBar vertical = jScrollPane2.getVerticalScrollBar();
-		vertical.setValue(vertical.getMaximum());
-	}
-
-	public void showFile(String myPath, String fileName) {
-		showMessage("me", myPath + " " + fileName);
-	}
-
-	public void confirmDownload(int roomId, String fileName, String filePath) {
-		Client.startDownload(roomId, fileName, filePath);
-	}
-
+                //Util.errorReport("QQQQQ");
+                //JLabel jl=new JLabel(name + ":" + text + "\n");
+                chatModel.addElement(name + ":" + text + "\n");
+		//box.add(jl);
+                //jl.setVisible(true);
+                JScrollBar vertical=jScrollPane2.getVerticalScrollBar();
+                vertical.setValue(vertical.getMaximum());
+        }
+        public void showFile(String myPath,String fileName){
+            showMessage("me",myPath+" "+fileName);
+        }
+        public void confirmDownload(int roomId,String fileName,String filePath){
+           Client.startDownload(roomId, fileName, filePath);
+        }
 	private void send() {
-
-		if (!typeText.getText().equals("")) {
-			Client.sendMessage(roomId, typeText.getText());
-			showMessage(Client.user.getNickname(), typeText.getText());
-			// showMessage("haha",typeText.getText());
-			typeText.setText("");
-
+		
+                if (!typeText.getText().equals("")) {
+			Client.sendMessage(roomId,typeText.getText());
+                        showMessage(Client.user.getNickname(), typeText.getText());
+			//showMessage("haha",typeText.getText());
+                        typeText.setText("");
+                        
 		}
 	}
+        public  VideoWindow videoWindow=new VideoWindow();
 
-	public VideoWindow videoWindow = new VideoWindow();
-
-	public void showImg(String name, String url) {
-		showMessage(name, url);
-	}
-
-	// Variables declaration - do not modify//GEN-BEGIN:variables
-	private javax.swing.JButton callButton;
-	private javax.swing.JList chatList;
-	private javax.swing.JButton jButton1;
-	private javax.swing.JLayeredPane jLayeredPane1;
-	private javax.swing.JScrollPane jScrollPane1;
-	private javax.swing.JScrollPane jScrollPane2;
-	private javax.swing.JToolBar jToolBar1;
-	private javax.swing.JButton sendTextButton;
-	private javax.swing.JTextArea typeText;
-	private javax.swing.JButton uploadFileButton;
-	// End of variables declaration//GEN-END:variables
+        
+        
+        public void showImg(String name,String url){
+            showMessage(name,url);
+        }
+        
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton callButton;
+    private javax.swing.JList chatList;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JLayeredPane jLayeredPane1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JButton sendTextButton;
+    private javax.swing.JTextArea typeText;
+    private javax.swing.JButton uploadFileButton;
+    // End of variables declaration//GEN-END:variables
 }
