@@ -228,6 +228,8 @@ public class Account extends ActiveRecord {
 		sendMessage(new String[]{"vchat", "accept", roomID+""});
 		return true;
 	}
-	
-	
+	public Boolean doneVchat(int roomID) {
+		sendMessage(new String[]{"vchat", "done", roomID+""});
+		return true;
+	}
 }
