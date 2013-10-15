@@ -64,7 +64,7 @@ public class Account extends ActiveRecord {
 		return FtpUtils.publicHtml()+"profile_pics/"+photo;
 	}
 	public void login(){
-		sendMessage(new String[]{"login","success",""+id,nickname,status,photoUrl()});
+		sendMessage(new String[]{"login","success",""+id,nickname,status,visible==0?"false":"true",photoUrl()});
 		for(Account c:friends())
 			showFriend(c);
 		for(Friend f:FriendTable.where("account_id2=? && status=?",new String[]{id+"","waiting"})){
@@ -77,7 +77,7 @@ public class Account extends ActiveRecord {
 		AccountTable.update(this);
 	}
 	public void showFriend(Account c){
-		sendMessage(new String[]{"friend","show",c.id+"",c.nickname,c.status,c.isonline()?"true":"false"});
+		sendMessage(new String[]{"friend","show",c.id+"",c.nickname,c.status,c.isonline()?"true":"false",c.photoUrl()});
 	}
 	public void online(){
 		if(this.visible==0)

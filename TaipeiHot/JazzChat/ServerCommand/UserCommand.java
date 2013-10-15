@@ -34,9 +34,9 @@ public class UserCommand extends ServerCommand {
 			return true;
 		}
 		else if(cmd.equals("false") && account.visible == 1){
+			account.offline();
 			account.visible = 0;
 			account.save();
-			account.offline();
 			return true;
 		}
 		else return Util.errorReport("user setvisible command fail: "+cmd);
