@@ -12,7 +12,8 @@ public class CommandManager {
 		cmdMap.put("message", new MessageCommand());
 		cmdMap.put("friend", new FriendCommand());
 		cmdMap.put("room", new RoomCommand());
-                cmdMap.put("file", new FileCommand());
+		cmdMap.put("file", new FileCommand());
+		cmdMap.put("vchat", new VChatCommand());
 	}
 
 	public void parseCmd(String cmd) throws CommandParsingErrorException {
