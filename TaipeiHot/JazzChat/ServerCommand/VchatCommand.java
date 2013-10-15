@@ -20,8 +20,6 @@ public class VchatCommand extends ServerCommand {
 				return acceptVchat();
 			else if(cmd.equals("reject"))
 				return rejectVchat();
-			else if(cmd.equals("done"))
-				return doneVchat();
 			return true;
 		}catch (NumberFormatException e){
 			return Util.errorReport("error in VchatCommand");
@@ -31,8 +29,8 @@ public class VchatCommand extends ServerCommand {
 		int roomID = Integer.valueOf(account.getMessage());
 		for(Account a:RoomTable.accounts(roomID)){
 			Account ac = Server.accountMap.get(a.id);
-			if(ac.id == account.id)continue;
 			if(ac==null)return account.rejectVchat(roomID);
+			if(ac.id == account.id)continue;
 			ac.sendMessage(new String[]{"vchat","invite",roomID+""});
 		}
 		return true;
@@ -70,16 +68,5 @@ public class VchatCommand extends ServerCommand {
 		}
 		return true;
 	}
-	private Boolean doneVchat(){
-		int roomID = Integer.valueOf(account.getMessage());
-		Account [] as = RoomTable.accounts(roomID);
-		if(as.length!=2){
-			return Util.errorReport("Do not vchat in public room!");
-		}
-		for(Account a:as){
-			if(a.id == account.id)continue;
-			account.doneVchat(roomID);
-		}
-		return true;
-	}
+	
 }
