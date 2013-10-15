@@ -23,9 +23,10 @@ public class FtpUtils {
 	final static String ID = "nmlab198";
 	final static String PASSWORD = "taipeihot";
 
-	public static String publicHtml(){
-		return "ftp://"+ID+":"+PASSWORD+"@"+IP+"/";
+	public static String publicHtml() {
+		return "ftp://" + ID + ":" + PASSWORD + "@" + IP + "/";
 	}
+
 	public static FTPClient createFtpConnection() throws NumberFormatException,
 			SocketException, IOException, NoSuchAlgorithmException {
 		FTPClient ftpClient;
@@ -83,7 +84,7 @@ public class FtpUtils {
 					Util.errorReport("FTP下載檔案[" + downloadPath + "]不存在");
 				} else {
 					OutputStream out = new FileOutputStream(new File(
-							myDownloadPath ));
+							myDownloadPath));
 					int read = 0;
 					byte[] bytes = new byte[1024];
 
@@ -134,11 +135,12 @@ public class FtpUtils {
 		FTPClient ftpClient = null;
 		OutputStream os = null;
 		try {
-                        //Util.errorReport("~~"+filePath);
+			// Util.errorReport("~~"+filePath);
 			ftpClient = createFtpConnection();
 			InputStream is = new FileInputStream(new File(filePath));
-                        //InputStream is = new FileInputStream(new File("C:\\Users\\Paul\\Desktop\\CoolNovoPortable\\如何移除.txt"));
-                        Util.errorReport(filePath);
+			// InputStream is = new FileInputStream(new
+			// File("C:\\Users\\Paul\\Desktop\\CoolNovoPortable\\如何移除.txt"));
+			Util.errorReport(filePath);
 			ftpClient.storeFile(fileName, is);
 		} catch (ConnectException e) {
 			Util.errorReport("FTP連線失敗: " + e);
@@ -155,6 +157,35 @@ public class FtpUtils {
 				}
 			}
 			Client.finishUpload(fileId);
+		}
+	}
+
+	public static void uploadFTPPhoto(String filePath, String fileName) {
+		FTPClient ftpClient = null;
+		OutputStream os = null;
+		try {
+			// Util.errorReport("~~"+filePath);
+			ftpClient = createFtpConnection();
+			InputStream is = new FileInputStream(new File(filePath));
+			// InputStream is = new FileInputStream(new
+			// File("C:\\Users\\Paul\\Desktop\\CoolNovoPortable\\如何移除.txt"));
+			Util.errorReport(filePath);
+			ftpClient.storeFile(fileName, is);
+		} catch (ConnectException e) {
+			Util.errorReport("FTP連線失敗: " + e);
+		} catch (Exception e) {
+			Util.errorReport("upload FTP資料失敗:" + e.toString());
+			throw new RuntimeException(e);
+		} finally {
+			closeFtpConnection(ftpClient);// 中斷FTP連線
+			if (os != null) {
+				try {
+					os.close();
+				} catch (IOException e) {
+					// DO NOTHING
+				}
+			}
+			Client.finishUploadPhoto();
 		}
 	}
 }

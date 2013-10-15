@@ -169,6 +169,11 @@ public class Client {
 				Integer.toString(fileId) });
 	}
 
+	public static void finishUploadPhoto() {
+		ClientUtils.sendStringsToServer(out, new String[] { "user", "photo",
+				"finish" });
+	}
+
 	public static void startDownload(int roomId, String fileName,
 			String filePath) {
 		FileDialog filedialog = new FileDialog(Client.mainWindow, "new",
@@ -242,6 +247,11 @@ public class Client {
 	public static void respondVideoChat(boolean accept, int roomId) {
 		ClientUtils.sendStringsToServer(out, new String[] { "vchat",
 				accept ? "accept" : "reject", Integer.toString(roomId) });
+	}
+
+	public static void userChangePhoto(String filepath) {
+		ClientUtils.sendStringsToServer(out, new String[] { "user", "photo",
+				"upload", filepath });
 	}
 
 }
