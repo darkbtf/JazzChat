@@ -40,6 +40,11 @@ public class FriendCommand implements Command {
 			System.out.println(Integer.toString(userId) + " " + userName);
 			Client.userSet.put(userId, tmpUser);
 			Client.mainWindow.friendShow(tmpUser);
+			if (online) {
+				Client.mainWindow.setOnlineById(userId);
+			} else {
+				Client.mainWindow.setOfflineById(userId);
+			}
 		} else if (cmd.equals("online")) {
 			int userId = Integer.parseInt(Client.getMessage());
 			Client.mainWindow.setOnlineById(userId);
