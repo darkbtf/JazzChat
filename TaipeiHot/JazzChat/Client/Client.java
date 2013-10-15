@@ -229,4 +229,15 @@ public class Client {
 		return "text";
 	}
 
+	public static void startVideoChat(int roomId) {
+		ClientUtils.sendStringsToServer(out, new String[] { "vchat", "invite",
+				Integer.toString(roomId) });
+	}
+
+	public static void respondVideoChat(boolean accept, int roomId) {
+		ClientUtils.sendStringsToServer(out, new String[] { "vchat",
+				accept ? "accept" : "reject", Integer.toString(roomId) });
+
+	}
+
 }
