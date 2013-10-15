@@ -33,10 +33,12 @@ public class FriendCommand implements Command {
 			int userId = Integer.parseInt(Client.getMessage());
 			String userName = Client.getMessage();
 			String status = Client.getMessage();
-			boolean online = Client.getMessage().equals("true") ? true : false;
+			boolean online = Client.getMessage().equals("true");
+			String profilePic = Client.getMessage();
 			User tmpUser = new User(userName, status);
 			tmpUser.id = userId;
 			tmpUser.setOnline(online);
+			tmpUser.setProfilePicUrl(profilePic);
 			System.out.println(Integer.toString(userId) + " " + userName);
 			Client.userSet.put(userId, tmpUser);
 			Client.mainWindow.friendShow(tmpUser);
