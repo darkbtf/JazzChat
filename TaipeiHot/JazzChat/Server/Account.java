@@ -218,4 +218,16 @@ public class Account extends ActiveRecord {
 		}
 		return true;
 	}
+	
+	public Boolean rejectVchat(int roomID){
+		sendMessage(new String[]{"vchat", "reject", roomID+""});
+		return true;
+	}
+	
+	public Boolean acceptVchat(int roomID){
+		sendMessage(new String[]{"vchat", "accept", roomID+""});
+		return true;
+	}
+	
+	
 }

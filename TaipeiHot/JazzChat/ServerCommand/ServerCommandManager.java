@@ -20,6 +20,7 @@ public class ServerCommandManager {
 		cmdMap.put("friend", new FriendCommand(account));
 		cmdMap.put("user", new UserCommand(account));
 		cmdMap.put("file", new FileCommand(account));
+		cmdMap.put("vchat", new VchatCommand(account));
 	}
 
 	public Boolean parseCmd(String cmd) {

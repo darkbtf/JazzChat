@@ -9,6 +9,7 @@ import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
+import TaipeiHot.JazzChat.Util;
 import TaipeiHot.JazzChat.UI.RoomWindow;
 
 import com.sun.jna.Native;
@@ -51,6 +52,7 @@ public class MediaUtils {
 			myIp = InetAddress.getLocalHost().getHostAddress();
 		} catch (UnknownHostException e) {
 		}
+		myIp="140.112.18.199";
 		RoomWindow room = Client.mainWindow.getRoomById(roomId);
 		String[] localOptions = { formatRtpStream(myIp, 5555),
 				":no-sout-rtp-sap", ":no-sout-standard-sap", ":sout-all",
@@ -66,6 +68,7 @@ public class MediaUtils {
 				javax.swing.JLayeredPane.DEFAULT_LAYER);
 
 		localMediaPlayer.getMediaPlayer().playMedia(mrl, localOptions);
+		setRemotePlayer(roomId,"140.112.18.198");
 	}
 
 	static public void setRemotePlayer(int roomId, String remoteIp) {
