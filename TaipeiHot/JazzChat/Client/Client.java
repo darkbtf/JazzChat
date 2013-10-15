@@ -234,6 +234,11 @@ public class Client {
 				Integer.toString(roomId) });
 	}
 
+	public static void sendVideoDone(int roomId) {
+		ClientUtils.sendStringsToServer(out, new String[] { "vchat", "done",
+				Integer.toString(roomId) });
+	}
+
 	public static void respondVideoChat(boolean accept, int roomId) {
 		ClientUtils.sendStringsToServer(out, new String[] { "vchat",
 				accept ? "accept" : "reject", Integer.toString(roomId) });
