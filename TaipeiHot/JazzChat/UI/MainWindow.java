@@ -4,11 +4,7 @@
  */
 package TaipeiHot.JazzChat.UI;
 
-import TaipeiHot.JazzChat.Client.Client;
-import TaipeiHot.JazzChat.User;
-import TaipeiHot.JazzChat.Util;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -21,12 +17,16 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
+
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JList;
 import javax.swing.UIManager;
+
+import TaipeiHot.JazzChat.User;
+import TaipeiHot.JazzChat.Util;
+import TaipeiHot.JazzChat.Client.Client;
 
 /**
  * 
@@ -37,61 +37,71 @@ public class MainWindow extends javax.swing.JFrame {
 	/**
 	 * Creates new form FreindList
 	 */
-    BufferedImage image;
-    
-    @Override
-        public void paintComponents(Graphics g) {
+	BufferedImage image;
 
-            super.paintComponents(g); //To change body of generated methods, choose Tools | Templates.
-            int x = (getWidth() - image.getWidth())/2;
-            int y = (getHeight() - image.getHeight())/2;
-            g.drawImage(image, x, y, this);
-        }
+	@Override
+	public void paintComponents(Graphics g) {
+
+		super.paintComponents(g); // To change body of generated methods, choose
+									// Tools | Templates.
+		int x = (getWidth() - image.getWidth()) / 2;
+		int y = (getHeight() - image.getHeight()) / 2;
+		g.drawImage(image, x, y, this);
+	}
 
 	public MainWindow() {
-            try{
-                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-                //URL ur2 = new URL("ftp://nmlab198:taipeihot@140.112.18.198/jizzer2.jpg");
-                //icon=Util.url2Icon("ftp://nmlab198:taipeihot@140.112.18.198/jizzer2.jpg",50,50);
-                /*Image tmpImage=icon.getImage();
-                Image tmp=;
-                icon=new ImageIcon(tmp);*/
-                        //Image a=new Image(new URL("http://3.bp.blogspot.com/-CpxmJu3Km3k/UMPhfSoHaQI/AAAAAAAAF0Y/H5iQtXUZJuQ/s1600/Fire+lion.jpg"));
-                //friendModel.addElement("tesing");
-		initComponents();
-                URL url = new URL("http://3.bp.blogspot.com/-CpxmJu3Km3k/UMPhfSoHaQI/AAAAAAAAF0Y/H5iQtXUZJuQ/s1600/Fire+lion.jpg");
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			// URL ur2 = new
+			// URL("ftp://nmlab198:taipeihot@140.112.18.198/jizzer2.jpg");
+			// icon=Util.url2Icon("ftp://nmlab198:taipeihot@140.112.18.198/jizzer2.jpg",50,50);
+			/*
+			 * Image tmpImage=icon.getImage(); Image tmp=; icon=new
+			 * ImageIcon(tmp);
+			 */
+			// Image a=new Image(new
+			// URL("http://3.bp.blogspot.com/-CpxmJu3Km3k/UMPhfSoHaQI/AAAAAAAAF0Y/H5iQtXUZJuQ/s1600/Fire+lion.jpg"));
+			// friendModel.addElement("tesing");
+			initComponents();
+			URL url = new URL(
+					"http://3.bp.blogspot.com/-CpxmJu3Km3k/UMPhfSoHaQI/AAAAAAAAF0Y/H5iQtXUZJuQ/s1600/Fire+lion.jpg");
 
+			mouseListener = new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent mouseEvent) {
+					JList theList = (JList) mouseEvent.getSource();
+					if (mouseEvent.getClickCount() == 2) {
+						int index = theList.locationToIndex(mouseEvent
+								.getPoint());
+						if (index >= 0) {
+							// Util.errorReport("lala");
+							Client.openPrivateRoom(userList.get(index).id);
+							System.out.printf("%d\n", userList.get(index).id);
+						}
+					}
+				}
+			};
+			friendList.addMouseListener(mouseListener);
+			friendList.setCellRenderer(new ObjectCellRender());
+			mouseListener2 = new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent mouseEvent) {
+					JList theList = (JList) mouseEvent.getSource();
+					if (mouseEvent.getClickCount() == 2) {
+						int index = theList.locationToIndex(mouseEvent
+								.getPoint());
+						if (index >= 0) {
+							// Util.errorReport("lala");
+							AcceptMap.get(pendingList.get(index).id)
+									.setVisible(true);
 
-                mouseListener=new MouseAdapter() {
-                    public void mouseClicked(MouseEvent mouseEvent) {
-                      JList theList = (JList) mouseEvent.getSource();
-                      if (mouseEvent.getClickCount() == 2) {
-                        int index = theList.locationToIndex(mouseEvent.getPoint());
-                        if (index >= 0) {
-                            //Util.errorReport("lala");
-                          Client.openPrivateRoom(userList.get(index).id);
-                          System.out.printf("%d\n", userList.get(index).id);
-                        }
-                      }
-                    }
-                };
-                friendList.addMouseListener(mouseListener);
-                friendList.setCellRenderer(new ObjectCellRender());
-                mouseListener2=new MouseAdapter() {
-                    public void mouseClicked(MouseEvent mouseEvent) {
-                      JList theList = (JList) mouseEvent.getSource();
-                      if (mouseEvent.getClickCount() == 2) {
-                        int index = theList.locationToIndex(mouseEvent.getPoint());
-                        if (index >= 0) {
-                            //Util.errorReport("lala");
-                          AcceptMap.get(pendingList.get(index).id).setVisible(true);
-                         
-                        }
-                      }
-                    }
-                };
-            }catch(Exception e){}
-                //this.repaint();
+						}
+					}
+				}
+			};
+		} catch (Exception e) {
+		}
+		// this.repaint();
 	}
 
 	/**
@@ -101,161 +111,169 @@ public class MainWindow extends javax.swing.JFrame {
 	 */
 	@SuppressWarnings("unchecked")
 	// <editor-fold defaultstate="collapsed"
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+	// <editor-fold defaultstate="collapsed"
+	// desc="Generated Code">//GEN-BEGIN:initComponents
+	private void initComponents() {
 
-        jLayeredPane1 = new javax.swing.JLayeredPane();
-        addFirendButton = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        friendList = new javax.swing.JList();
-        afwButton = new javax.swing.JToggleButton();
-        photoBtn = new javax.swing.JButton();
-        onlineBtn = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
+		jLayeredPane1 = new javax.swing.JLayeredPane();
+		addFirendButton = new javax.swing.JButton();
+		jScrollPane1 = new javax.swing.JScrollPane();
+		friendList = new javax.swing.JList();
+		afwButton = new javax.swing.JToggleButton();
+		photoBtn = new javax.swing.JButton();
+		onlineBtn = new javax.swing.JButton();
+		jLabel1 = new javax.swing.JLabel();
+		jMenuBar1 = new javax.swing.JMenuBar();
+		jMenu1 = new javax.swing.JMenu();
+		jMenu2 = new javax.swing.JMenu();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setBackground(new java.awt.Color(255, 0, 51));
-        setIconImages(null);
-        setPreferredSize(new java.awt.Dimension(400, 570));
-        setResizable(false);
+		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+		setBackground(new java.awt.Color(255, 0, 51));
+		setIconImages(null);
+		setPreferredSize(new java.awt.Dimension(400, 570));
+		setResizable(false);
 
-        addFirendButton.setText("+");
-        addFirendButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                addFirendButtonMouseClicked(evt);
-            }
-        });
-        addFirendButton.setBounds(170, 90, 71, 23);
-        jLayeredPane1.add(addFirendButton, javax.swing.JLayeredPane.DEFAULT_LAYER);
+		addFirendButton.setText("+");
+		addFirendButton.addMouseListener(new java.awt.event.MouseAdapter() {
+			@Override
+			public void mouseClicked(java.awt.event.MouseEvent evt) {
+				addFirendButtonMouseClicked(evt);
+			}
+		});
+		addFirendButton.setBounds(170, 90, 71, 23);
+		jLayeredPane1.add(addFirendButton,
+				javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-        jScrollPane1.setPreferredSize(new java.awt.Dimension(275, 150));
+		jScrollPane1.setPreferredSize(new java.awt.Dimension(275, 150));
 
-        friendList.setBackground(new java.awt.Color(255, 204, 51));
-        friendList.setModel(friendModel);
-        friendList.setPreferredSize(new java.awt.Dimension(275, 150));
-        jScrollPane1.setViewportView(friendList);
+		friendList.setBackground(new java.awt.Color(255, 204, 51));
+		friendList.setModel(friendModel);
+		friendList.setPreferredSize(new java.awt.Dimension(275, 150));
+		jScrollPane1.setViewportView(friendList);
 
-        jScrollPane1.setBounds(80, 130, 250, 350);
-        jLayeredPane1.add(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+		jScrollPane1.setBounds(80, 130, 250, 350);
+		jLayeredPane1.add(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-        afwButton.setText("Wating Friend");
-        afwButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                afwButtonMouseClicked(evt);
-            }
-        });
-        afwButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                afwButtonActionPerformed(evt);
-            }
-        });
-        afwButton.setBounds(30, 500, 99, 23);
-        jLayeredPane1.add(afwButton, javax.swing.JLayeredPane.DEFAULT_LAYER);
+		afwButton.setText("Wating Friend");
+		afwButton.addMouseListener(new java.awt.event.MouseAdapter() {
+			@Override
+			public void mouseClicked(java.awt.event.MouseEvent evt) {
+				afwButtonMouseClicked(evt);
+			}
+		});
+		afwButton.addActionListener(new java.awt.event.ActionListener() {
+			@Override
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				afwButtonActionPerformed(evt);
+			}
+		});
+		afwButton.setBounds(30, 500, 99, 23);
+		jLayeredPane1.add(afwButton, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-        photoBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TaipeiHot/JazzChat/UI/default_head_piture.jpg"))); // NOI18N
-        photoBtn.setPreferredSize(new java.awt.Dimension(100, 100));
-        photoBtn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                photoBtnMouseClicked(evt);
-            }
-        });
-        photoBtn.setBounds(50, 20, 100, 100);
-        jLayeredPane1.add(photoBtn, javax.swing.JLayeredPane.DEFAULT_LAYER);
+		photoBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource(
+				"/TaipeiHot/JazzChat/UI/default_head_piture.jpg"))); // NOI18N
+		photoBtn.setPreferredSize(new java.awt.Dimension(100, 100));
+		photoBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+			@Override
+			public void mouseClicked(java.awt.event.MouseEvent evt) {
+				photoBtnMouseClicked(evt);
+			}
+		});
+		photoBtn.setBounds(50, 20, 100, 100);
+		jLayeredPane1.add(photoBtn, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-        onlineBtn.setBackground(new java.awt.Color(255, 0, 0));
-        onlineBtn.setText("ON/OFF");
-        onlineBtn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                onlineBtnMouseClicked(evt);
-            }
-        });
-        onlineBtn.setBounds(260, 90, 73, 23);
-        jLayeredPane1.add(onlineBtn, javax.swing.JLayeredPane.DEFAULT_LAYER);
+		onlineBtn.setBackground(new java.awt.Color(255, 0, 0));
+		onlineBtn.setText("ON/OFF");
+		onlineBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+			@Override
+			public void mouseClicked(java.awt.event.MouseEvent evt) {
+				onlineBtnMouseClicked(evt);
+			}
+		});
+		onlineBtn.setBounds(260, 90, 73, 23);
+		jLayeredPane1.add(onlineBtn, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TaipeiHot/JazzChat/UI/FireLionMain.jpg"))); // NOI18N
-        jLabel1.setText("jLabel1");
-        jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jLabel1.setPreferredSize(new java.awt.Dimension(500, 800));
-        jLabel1.setBounds(0, 0, 400, 540);
-        jLayeredPane1.add(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+		jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource(
+				"/TaipeiHot/JazzChat/UI/FireLionMain.jpg"))); // NOI18N
+		jLabel1.setText("jLabel1");
+		jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+		jLabel1.setPreferredSize(new java.awt.Dimension(500, 800));
+		jLabel1.setBounds(0, 0, 400, 540);
+		jLayeredPane1.add(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-        jMenu1.setText("File");
-        jMenuBar1.add(jMenu1);
+		jMenu1.setText("File");
+		jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Edit");
-        jMenuBar1.add(jMenu2);
+		jMenu2.setText("Edit");
+		jMenuBar1.add(jMenu2);
 
-        setJMenuBar(jMenuBar1);
+		setJMenuBar(jMenuBar1);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 383, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLayeredPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
-        );
+		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(
+				getContentPane());
+		getContentPane().setLayout(layout);
+		layout.setHorizontalGroup(layout.createParallelGroup(
+				javax.swing.GroupLayout.Alignment.LEADING).addComponent(
+				jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 383,
+				javax.swing.GroupLayout.PREFERRED_SIZE));
+		layout.setVerticalGroup(layout.createParallelGroup(
+				javax.swing.GroupLayout.Alignment.LEADING).addComponent(
+				jLayeredPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 500,
+				Short.MAX_VALUE));
 
-        pack();
-    }// </editor-fold>//GEN-END:initComponents
+		pack();
+	}// </editor-fold>//GEN-END:initComponents
 
-    private void afwButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_afwButtonActionPerformed
-        // TODO add your handling code here:
-        //acceptFriendWindow.setVisible(true);
-    }//GEN-LAST:event_afwButtonActionPerformed
+	private void afwButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_afwButtonActionPerformed
+		// TODO add your handling code here:
+		// acceptFriendWindow.setVisible(true);
+	}// GEN-LAST:event_afwButtonActionPerformed
 
-    private void afwButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_afwButtonMouseClicked
-        // TODO add your handling code here:
-        if(afwIsOpen){
-            acceptFriendWindow.setVisible(false);
-            afwIsOpen=false;
-        }
-        else{
-            acceptFriendWindow.setVisible(true);
-            afwIsOpen=true;
-        }
+	private void afwButtonMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_afwButtonMouseClicked
+		// TODO add your handling code here:
+		if (afwIsOpen) {
+			acceptFriendWindow.setVisible(false);
+			afwIsOpen = false;
+		} else {
+			acceptFriendWindow.setVisible(true);
+			afwIsOpen = true;
+		}
 
-    }//GEN-LAST:event_afwButtonMouseClicked
+	}// GEN-LAST:event_afwButtonMouseClicked
 
-    private void addFirendButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addFirendButtonMouseClicked
-        // TODO add your handling code here:
-        addFriendDialog.setVisible(true);
-    }//GEN-LAST:event_addFirendButtonMouseClicked
-    private boolean online=false;
-    private void onlineBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onlineBtnMouseClicked
-        // TODO add your handling code here:
-        if(online){
-            Client.setVisible(false);
-            online=false;
-        }
-        else{
-            Client.setVisible(true);
-            online=true;
-        }
-    }//GEN-LAST:event_onlineBtnMouseClicked
+	private void addFirendButtonMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_addFirendButtonMouseClicked
+		// TODO add your handling code here:
+		addFriendDialog.setVisible(true);
+	}// GEN-LAST:event_addFirendButtonMouseClicked
 
-    private void photoBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_photoBtnMouseClicked
-        // TODO add your handling code here:
-        JFileChooser chooser = new JFileChooser();
-        int returnVal = chooser.showOpenDialog(this);
-        if(returnVal == JFileChooser.APPROVE_OPTION) {
-            String fileName=chooser.getSelectedFile().getPath();
-            Client.userChangePhoto(fileName);
-        }
-        
-    }//GEN-LAST:event_photoBtnMouseClicked
+	private boolean online = false;
+
+	private void onlineBtnMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_onlineBtnMouseClicked
+		// TODO add your handling code here:
+		if (online) {
+			Client.setVisible(false);
+			online = false;
+		} else {
+			Client.setVisible(true);
+			online = true;
+		}
+	}// GEN-LAST:event_onlineBtnMouseClicked
+
+	private void photoBtnMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_photoBtnMouseClicked
+		// TODO add your handling code here:
+		JFileChooser chooser = new JFileChooser();
+		int returnVal = chooser.showOpenDialog(this);
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
+			String fileName = chooser.getSelectedFile().getPath();
+			Client.userChangePhoto(fileName);
+		}
+
+	}// GEN-LAST:event_photoBtnMouseClicked
 
 	private void jPanel2MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jPanel2MouseClicked
 		System.out.println("hahah");
 		// TODO add your handling code here:
 	}// GEN-LAST:event_jPanel2MouseClicked
-
-
 
 	/**
 	 * @param args
@@ -271,7 +289,7 @@ public class MainWindow extends javax.swing.JFrame {
 		 * http://download.oracle.com/javase
 		 * /tutorial/uiswing/lookandfeel/plaf.html
 		 */
-                            
+
 		try {
 			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager
 					.getInstalledLookAndFeels()) {
@@ -299,41 +317,45 @@ public class MainWindow extends javax.swing.JFrame {
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-                            try {
-                                new MainWindow().setVisible(true);
-                            } catch (Exception ex) {
-                                Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
-                            }
+				try {
+					new MainWindow().setVisible(true);
+				} catch (Exception ex) {
+					Logger.getLogger(MainWindow.class.getName()).log(
+							Level.SEVERE, null, ex);
+				}
 			}
 		});
 	}
 
 	/* functions and parameters by paul */
 	public Map<Integer, RoomWindow> roomWindowMap = new HashMap<Integer, RoomWindow>();
-        public Map<Integer, AcceptFriendDialog> AcceptMap= new HashMap<Integer,AcceptFriendDialog>();
+	public Map<Integer, AcceptFriendDialog> AcceptMap = new HashMap<Integer, AcceptFriendDialog>();
 	FriendNameAndStatus f = new FriendNameAndStatus();
 	LoginDialog loginDialog = new LoginDialog(this, true);
 	RegisterDialog registerDialog = new RegisterDialog(this, true);
 	AddFriendDialog addFriendDialog = new AddFriendDialog(this, true);
-        AcceptFriendWindow acceptFriendWindow = new AcceptFriendWindow();
-        public ArrayList<User> userList =new  ArrayList<User>();
-        private ArrayList<String> friendName =new ArrayList<String>();
-        DefaultListModel friendModel = new DefaultListModel();
-        MouseListener mouseListener ;
-        MouseListener mouseListener2;
-        ImageIcon icon;
-        boolean afwIsOpen=false;
-        //JList friendLsit=new JList();
-        public void loginSuccess() throws MalformedURLException, IOException {
+	AcceptFriendWindow acceptFriendWindow = new AcceptFriendWindow();
+	public ArrayList<User> userList = new ArrayList<User>();
+	private final ArrayList<String> friendName = new ArrayList<String>();
+	DefaultListModel friendModel = new DefaultListModel();
+	MouseListener mouseListener;
+	MouseListener mouseListener2;
+	ImageIcon icon;
+	boolean afwIsOpen = false;
+
+	// JList friendLsit=new JList();
+	public void loginSuccess() throws MalformedURLException, IOException {
 		loginDialog.setVisible(false);
 		setVisible(true);
-                photoBtn.setIcon(Util.url2Icon(Client.user.getProfilePicUrl(), 70, 70));
-                //acceptFriendWindow.setVisible(true);
+		photoBtn.setIcon(Util.url2Icon(Client.user.getProfilePicUrl(), 70, 70));
+		// acceptFriendWindow.setVisible(true);
 	}
+
 	public void loginFail(String messege) {
 		loginDialog.setErrorMessege(messege);
 	}
-        public void loginShow() {
+
+	public void loginShow() {
 		try {
 			// reg.setVisible(true);
 			loginDialog.setVisible(true);
@@ -356,32 +378,38 @@ public class MainWindow extends javax.swing.JFrame {
 		loginDialog.setVisible(true);
 		System.out.println("login show");
 	}
+
 	public void registerFail(String messege) {
 		registerDialog.setErrorMessege(messege);
 	}
+
 	public void registerShow() {
 		registerDialog.setVisible(true);
 	}
 
-        public void acceptFriendShow(int userId,String userName,String greeting){
-            AcceptFriendDialog acceptFriendDialog=new AcceptFriendDialog(this,true,userId);
-            acceptFriendDialog.setFriend(userName,greeting);
-            AcceptMap.put(userId, acceptFriendDialog);
-            acceptFriendDialog.setVisible(true);
-        }
-        public void accepFriendSccess(int userId,String message){
-            AcceptMap.get(userId).setVisible(false);
-        }
-        public void accepFriendFail(int userId,String message){
+	public void acceptFriendShow(int userId, String userName, String greeting) {
+		AcceptFriendDialog acceptFriendDialog = new AcceptFriendDialog(this,
+				true, userId);
+		acceptFriendDialog.setFriend(userName, greeting);
+		AcceptMap.put(userId, acceptFriendDialog);
+		acceptFriendDialog.setVisible(true);
+	}
 
-        }
-        
-        public void addFriendSuccess(String message){
-            addFriendDialog.setVisible(false);
-        }
-        public void addFriendFail(String message){
-            addFriendDialog.setErrorMessage(message);
-        }
+	public void accepFriendSccess(int userId, String message) {
+		AcceptMap.get(userId).setVisible(false);
+	}
+
+	public void accepFriendFail(int userId, String message) {
+
+	}
+
+	public void addFriendSuccess(String message) {
+		addFriendDialog.setVisible(false);
+	}
+
+	public void addFriendFail(String message) {
+		addFriendDialog.setErrorMessage(message);
+	}
 
 	public RoomWindow getRoomById(int roomId) {
 		if (roomWindowMap.get(roomId) == (null)) {
@@ -398,12 +426,12 @@ public class MainWindow extends javax.swing.JFrame {
 		return room;
 	}
 
-	public RoomWindow newRoom(int roomId)  {
-            RoomWindow room = new RoomWindow(roomId);
-            //add(room);
-            roomWindowMap.put(roomId, room);
-            room.setVisible(true);
-            return room;
+	public RoomWindow newRoom(int roomId) {
+		RoomWindow room = new RoomWindow(roomId);
+		// add(room);
+		roomWindowMap.put(roomId, room);
+		room.setVisible(true);
+		return room;
 	}
 
 	public void closeDialog() {
@@ -413,70 +441,76 @@ public class MainWindow extends javax.swing.JFrame {
 		}
 
 	}
-        public static Map<Integer, FriendNameAndStatus> friendStatusMap = new HashMap<Integer, FriendNameAndStatus>();
-        public static Map<Integer, ImageIcon> iconMap = new HashMap<Integer, ImageIcon>();
-        public void friendShow(User user) throws MalformedURLException, IOException{
-            userList.add(user);
-            ImageIcon tmpIcon=Util.url2Icon(user.getProfilePicUrl(), 50, 50);
-            iconMap.put(user.id, tmpIcon);
-            FriendNameAndStatus newStatus=new FriendNameAndStatus(user.getNickname(),tmpIcon);
-            friendStatusMap.put(user.id,newStatus);
-            friendModel.addElement(newStatus);
-            //friendName.add(user.getNickname());
-            //friendList=new JList(friendModel);
-            //friendList.addMouseListener(mouseListener);
-        }
-        
-        private ArrayList<User> pendingList=new ArrayList<User>();
-        private DefaultListModel pendingModel=new DefaultListModel();
-        public void pendingListShow(User user){
-            pendingList.add(user);
-            pendingModel.addElement(user.getNickname());
-            //friendName.add(user.getNickname());
-            acceptFriendWindow.friendListChange(pendingModel,mouseListener2);
-            //acceptFriendWindow.friendList=new JList(pendingModel);
-            //acceptFriendWindow.friendList.addMouseListener(mouseListener);
-        }
-        public void friendListShow(Map<Integer,User> user){
-            
-        }
-        public void setOnlineById(Integer userId){
-            Util.errorReport(userId.toString()+"online\n");
-            friendStatusMap.get(userId).online(true);
-            this.repaint();
-        }
-        public void setOfflineById(Integer userId){
-            Util.errorReport(userId.toString()+"offline\n");
-            friendStatusMap.get(userId).online(false);
-            this.repaint();
-        }
-        public void changePhoto(){
-            try {
-                String url=Client.user.getProfilePicUrl();
-                photoBtn.setIcon(Util.url2Icon(url, 80, 80));
-                repaint();
-            } catch (MalformedURLException ex) {
-                Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        public void changePhotoById(int userId){
-            friendStatusMap.get(userId).changeIcon(Client.userSet.get(userId).getProfilePicUrl());
-            repaint();
-        }
-            
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton addFirendButton;
-    private javax.swing.JToggleButton afwButton;
-    public javax.swing.JList friendList;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLayeredPane jLayeredPane1;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JButton onlineBtn;
-    private javax.swing.JButton photoBtn;
-    // End of variables declaration//GEN-END:variables
+
+	public static Map<Integer, FriendNameAndStatus> friendStatusMap = new HashMap<Integer, FriendNameAndStatus>();
+	public static Map<Integer, ImageIcon> iconMap = new HashMap<Integer, ImageIcon>();
+
+	public void friendShow(User user) throws MalformedURLException, IOException {
+		userList.add(user);
+		ImageIcon tmpIcon = Util.url2Icon(user.getProfilePicUrl(), 50, 50);
+		iconMap.put(user.id, tmpIcon);
+		FriendNameAndStatus newStatus = new FriendNameAndStatus(
+				user.getNickname(), tmpIcon);
+		friendStatusMap.put(user.id, newStatus);
+		friendModel.addElement(newStatus);
+		// friendName.add(user.getNickname());
+		// friendList=new JList(friendModel);
+		// friendList.addMouseListener(mouseListener);
+	}
+
+	private final ArrayList<User> pendingList = new ArrayList<User>();
+	private final DefaultListModel pendingModel = new DefaultListModel();
+
+	public void pendingListShow(User user) {
+		pendingList.add(user);
+		pendingModel.addElement(user.getNickname());
+		// friendName.add(user.getNickname());
+		acceptFriendWindow.friendListChange(pendingModel, mouseListener2);
+		// acceptFriendWindow.friendList=new JList(pendingModel);
+		// acceptFriendWindow.friendList.addMouseListener(mouseListener);
+	}
+
+	public void friendListShow(Map<Integer, User> user) {
+
+	}
+
+	public void setOnlineById(Integer userId) {
+		Util.errorReport(userId.toString() + "online\n");
+		friendStatusMap.get(userId).online(true);
+		this.repaint();
+	}
+
+	public void setOfflineById(Integer userId) {
+		Util.errorReport(userId.toString() + "offline\n");
+		friendStatusMap.get(userId).online(false);
+		this.repaint();
+	}
+
+	public void changePhoto() {
+		String url = Client.user.getProfilePicUrl();
+		photoBtn.setIcon(Util.url2Icon(url, 80, 80));
+		repaint();
+	}
+
+	public void changePhotoById(int userId) {
+		friendStatusMap.get(userId).changeIcon(
+				Client.userSet.get(userId).getProfilePicUrl());
+		iconMap.put(userId, Util.url2Icon(Client.userSet.get(userId)
+				.getProfilePicUrl(), 80, 80));
+		repaint();
+	}
+
+	// Variables declaration - do not modify//GEN-BEGIN:variables
+	private javax.swing.JButton addFirendButton;
+	private javax.swing.JToggleButton afwButton;
+	public javax.swing.JList friendList;
+	private javax.swing.JLabel jLabel1;
+	private javax.swing.JLayeredPane jLayeredPane1;
+	private javax.swing.JMenu jMenu1;
+	private javax.swing.JMenu jMenu2;
+	private javax.swing.JMenuBar jMenuBar1;
+	private javax.swing.JScrollPane jScrollPane1;
+	private javax.swing.JButton onlineBtn;
+	private javax.swing.JButton photoBtn;
+	// End of variables declaration//GEN-END:variables
 }
