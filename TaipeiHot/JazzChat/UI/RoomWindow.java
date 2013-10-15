@@ -304,12 +304,7 @@ public class RoomWindow extends javax.swing.JFrame {
 		}
 	}
         public  VideoWindow videoWindow=new VideoWindow();
-        public void setRemoteVideoFrame(Canvas canvas){
-            videoWindow.yourVideo=canvas;
-        }
-        public void setLocalVideoFrame(Canvas canvas){
-            videoWindow.myVideo=canvas;
-        }
+
         
         
         public void showImg(String name,String url){
