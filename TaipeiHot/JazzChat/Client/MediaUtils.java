@@ -51,7 +51,7 @@ public class MediaUtils {
 		localCanvas.setBounds(380, 270, 150, 110);
 		room.videoWindow.jLayeredPane1.add(localCanvas,
 				javax.swing.JLayeredPane.DEFAULT_LAYER);
-
+		System.out.println(remoteIp);
 		localMediaPlayer.getMediaPlayer().playMedia(mrl, localOptions);
 	}
 
