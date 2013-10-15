@@ -24,6 +24,7 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JList;
 import javax.swing.UIManager;
 
@@ -156,6 +157,11 @@ public class MainWindow extends javax.swing.JFrame {
 
         photoBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TaipeiHot/JazzChat/UI/default_head_piture.jpg"))); // NOI18N
         photoBtn.setPreferredSize(new java.awt.Dimension(100, 100));
+        photoBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                photoBtnMouseClicked(evt);
+            }
+        });
         photoBtn.setBounds(50, 20, 100, 100);
         jLayeredPane1.add(photoBtn, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
@@ -232,6 +238,17 @@ public class MainWindow extends javax.swing.JFrame {
             online=true;
         }
     }//GEN-LAST:event_onlineBtnMouseClicked
+
+    private void photoBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_photoBtnMouseClicked
+        // TODO add your handling code here:
+        JFileChooser chooser = new JFileChooser();
+        int returnVal = chooser.showOpenDialog(this);
+        if(returnVal == JFileChooser.APPROVE_OPTION) {
+            String fileName=chooser.getSelectedFile().getPath();
+            Client.userChangePhoto(fileName);
+        }
+        
+    }//GEN-LAST:event_photoBtnMouseClicked
 
 	private void jPanel2MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jPanel2MouseClicked
 		System.out.println("hahah");
@@ -433,7 +450,21 @@ public class MainWindow extends javax.swing.JFrame {
             friendStatusMap.get(userId).online(false);
             this.repaint();
         }
-
+        public void changePhoto(){
+            try {
+                String url=Client.user.getProfilePicUrl();
+                photoBtn.setIcon(Util.url2Icon(url, 80, 80));
+                repaint();
+            } catch (MalformedURLException ex) {
+                Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        public void changePhotoById(int userId){
+            friendStatusMap.get(userId).changeIcon(Client.userSet.get(userId).getProfilePicUrl());
+            repaint();
+        }
             
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addFirendButton;
