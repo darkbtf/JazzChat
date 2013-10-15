@@ -243,7 +243,5 @@ public class Client {
 		ClientUtils.sendStringsToServer(out, new String[] { "vchat",
 				accept ? "accept" : "reject", Integer.toString(roomId) });
 	}
-	
-	//public static void 
 
 }
