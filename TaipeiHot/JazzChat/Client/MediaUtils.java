@@ -1,7 +1,7 @@
 package TaipeiHot.JazzChat.Client;
 
 import java.awt.Canvas;
-import java.net.InetAddress;
+import java.net.Inet4Address;
 import java.net.UnknownHostException;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
@@ -28,13 +28,6 @@ public class MediaUtils {
 		Native.loadLibrary(RuntimeUtil.getLibVlcLibraryName(), LibVlc.class);
 	}
 
-	public static void send() {
-	}
-
-	public static void receive() {
-		remoteMediaPlayer.getMediaPlayer().playMedia("rtp://@" + mrl);
-	}
-
 	private static String formatRtpStream(String serverAddress, int serverPort) {
 		StringBuilder sb = new StringBuilder(60);
 		sb.append(":sout=#transcode{vcodec=mp4v,vb=2048,scale=1,acodec=mpga,ab=128,channels=2,samplerate=44100}:duplicate{dst=display,dst=rtp{dst=");
@@ -45,17 +38,11 @@ public class MediaUtils {
 		return sb.toString();
 	}
 
-	static public void setLocalPlayer(int roomId) {
-		String myIp = "";
-		try {
-			myIp = InetAddress.getLocalHost().getHostAddress();
-		} catch (UnknownHostException e) {
-		}
+	static public void setLocalPlayer(int roomId, String remoteIp) {
 		RoomWindow room = Client.mainWindow.getRoomById(roomId);
-		String[] localOptions = { formatRtpStream(myIp, 5555),
+		String[] localOptions = { formatRtpStream(remoteIp, 5555),
 				":no-sout-rtp-sap", ":no-sout-standard-sap", ":sout-all",
 				":sout-keep", };
-
 		Canvas localCanvas = new Canvas();
 		CanvasVideoSurface localVideoSurface = mediaPlayerFactory
 				.newVideoSurface(localCanvas);
@@ -68,7 +55,12 @@ public class MediaUtils {
 		localMediaPlayer.getMediaPlayer().playMedia(mrl, localOptions);
 	}
 
-	static public void setRemotePlayer(int roomId, String remoteIp) {
+	static public void setRemotePlayer(int roomId) {
+		String myIp = "";
+		try {
+			myIp = Inet4Address.getLocalHost().getHostAddress();
+		} catch (UnknownHostException e) {
+		}
 		RoomWindow room = Client.mainWindow.getRoomById(roomId);
 
 		Canvas remoteCanvas = new Canvas();
@@ -80,8 +72,8 @@ public class MediaUtils {
 		room.videoWindow.jLayeredPane1.add(remoteCanvas,
 				javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-		remoteMediaPlayer.getMediaPlayer().playMedia(
-				"rtp://@" + remoteIp + ":5555");
+		remoteMediaPlayer.getMediaPlayer()
+				.playMedia("rtp://@" + myIp + ":5555");
 	}
 
 }
