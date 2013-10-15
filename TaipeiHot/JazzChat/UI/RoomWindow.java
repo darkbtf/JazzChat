@@ -17,6 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Box;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JScrollBar;
 
@@ -323,17 +324,18 @@ public class RoomWindow extends javax.swing.JFrame {
         public void addUser(User user){
             userNameList.add(user.getNickname());
         }
-	public void showMessage(String name, String text) {
+	public void showMessage(int userId, String text) {
                 //Util.errorReport("QQQQQ");
                 //JLabel jl=new JLabel(name + ":" + text + "\n");
-                chatModel.addElement(name + ":" + text + "\n");
+                ImageIcon tmpIcon=MainWindow.iconMap.get(userId);
+                chatModel.addElement(new ChatObject(text + "\n",tmpIcon));
 		//box.add(jl);
                 //jl.setVisible(true);
                 JScrollBar vertical=jScrollPane2.getVerticalScrollBar();
                 vertical.setValue(vertical.getMaximum());
         }
         public void showFile(String myPath,String fileName){
-            showMessage("me",myPath+" "+fileName);
+            showMessage(Client.user.id,myPath+" "+fileName);
         }
         public void confirmDownload(int roomId,String fileName,String filePath){
            Client.startDownload(roomId, fileName, filePath);
@@ -342,7 +344,7 @@ public class RoomWindow extends javax.swing.JFrame {
 		
                 if (!typeText.getText().equals("")) {
 			Client.sendMessage(roomId,typeText.getText());
-                        showMessage(Client.user.getNickname(), typeText.getText());
+                        showMessage(Client.user.id, typeText.getText());
 			//showMessage("haha",typeText.getText());
                         typeText.setText("");
                         
@@ -353,7 +355,7 @@ public class RoomWindow extends javax.swing.JFrame {
         
         
         public void showImg(String name,String url){
-            showMessage(name,url);
+            showMessage(-1,url);
         }
         
     // Variables declaration - do not modify//GEN-BEGIN:variables

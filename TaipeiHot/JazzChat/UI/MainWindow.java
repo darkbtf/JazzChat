@@ -13,12 +13,15 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JList;
@@ -47,10 +50,11 @@ public class MainWindow extends javax.swing.JFrame {
 	public MainWindow() {
             try{
                 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-                icon=new ImageIcon(getClass().getResource("https://github.com/darkbtf/JazzChat/pull/59"));
-                Image tmpImage=icon.getImage();
-                Image tmp=Util.resize((BufferedImage)tmpImage, 50, 50);
-                icon=new ImageIcon(tmp);
+                //URL ur2 = new URL("ftp://nmlab198:taipeihot@140.112.18.198/jizzer2.jpg");
+                //icon=Util.url2Icon("ftp://nmlab198:taipeihot@140.112.18.198/jizzer2.jpg",50,50);
+                /*Image tmpImage=icon.getImage();
+                Image tmp=;
+                icon=new ImageIcon(tmp);*/
                         //Image a=new Image(new URL("http://3.bp.blogspot.com/-CpxmJu3Km3k/UMPhfSoHaQI/AAAAAAAAF0Y/H5iQtXUZJuQ/s1600/Fire+lion.jpg"));
                 //friendModel.addElement("tesing");
 		initComponents();
@@ -104,7 +108,7 @@ public class MainWindow extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         friendList = new javax.swing.JList();
         afwButton = new javax.swing.JToggleButton();
-        addBtn = new javax.swing.JButton();
+        photoBtn = new javax.swing.JButton();
         onlineBtn = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -150,10 +154,10 @@ public class MainWindow extends javax.swing.JFrame {
         afwButton.setBounds(30, 500, 99, 23);
         jLayeredPane1.add(afwButton, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-        addBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TaipeiHot/JazzChat/UI/default_head_piture.jpg"))); // NOI18N
-        addBtn.setPreferredSize(new java.awt.Dimension(100, 100));
-        addBtn.setBounds(50, 20, 100, 100);
-        jLayeredPane1.add(addBtn, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        photoBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TaipeiHot/JazzChat/UI/default_head_piture.jpg"))); // NOI18N
+        photoBtn.setPreferredSize(new java.awt.Dimension(100, 100));
+        photoBtn.setBounds(50, 20, 100, 100);
+        jLayeredPane1.add(photoBtn, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         onlineBtn.setBackground(new java.awt.Color(255, 0, 0));
         onlineBtn.setText("ON/OFF");
@@ -303,9 +307,10 @@ public class MainWindow extends javax.swing.JFrame {
         ImageIcon icon;
         boolean afwIsOpen=false;
         //JList friendLsit=new JList();
-        public void loginSuccess() {
+        public void loginSuccess() throws MalformedURLException, IOException {
 		loginDialog.setVisible(false);
 		setVisible(true);
+                photoBtn.setIcon(Util.url2Icon(Client.user.getProfilePicUrl(), 70, 70));
                 //acceptFriendWindow.setVisible(true);
 	}
 	public void loginFail(String messege) {
@@ -378,6 +383,7 @@ public class MainWindow extends javax.swing.JFrame {
 
 	public RoomWindow newRoom(int roomId)  {
             RoomWindow room = new RoomWindow(roomId);
+            //add(room);
             roomWindowMap.put(roomId, room);
             room.setVisible(true);
             return room;
@@ -390,10 +396,13 @@ public class MainWindow extends javax.swing.JFrame {
 		}
 
 	}
-        public Map<Integer, FriendNameAndStatus> friendStatusMap = new HashMap<Integer, FriendNameAndStatus>();
-        public void friendShow(User user){
+        public static Map<Integer, FriendNameAndStatus> friendStatusMap = new HashMap<Integer, FriendNameAndStatus>();
+        public static Map<Integer, ImageIcon> iconMap = new HashMap<Integer, ImageIcon>();
+        public void friendShow(User user) throws MalformedURLException, IOException{
             userList.add(user);
-            FriendNameAndStatus newStatus=new FriendNameAndStatus(user.getNickname(),icon);
+            ImageIcon tmpIcon=Util.url2Icon(user.getProfilePicUrl(), 50, 50);
+            iconMap.put(user.id, tmpIcon);
+            FriendNameAndStatus newStatus=new FriendNameAndStatus(user.getNickname(),tmpIcon);
             friendStatusMap.put(user.id,newStatus);
             friendModel.addElement(newStatus);
             //friendName.add(user.getNickname());
@@ -425,8 +434,8 @@ public class MainWindow extends javax.swing.JFrame {
             this.repaint();
         }
 
+            
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton addBtn;
     private javax.swing.JButton addFirendButton;
     private javax.swing.JToggleButton afwButton;
     public javax.swing.JList friendList;
@@ -437,5 +446,6 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton onlineBtn;
+    private javax.swing.JButton photoBtn;
     // End of variables declaration//GEN-END:variables
 }

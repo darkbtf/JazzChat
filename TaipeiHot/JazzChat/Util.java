@@ -1,10 +1,16 @@
 package TaipeiHot.JazzChat;
 
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Deque;
 import java.util.Queue;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
 public class Util {
         public static BufferedImage resize(BufferedImage image, int width, int height) {
@@ -14,6 +20,17 @@ public class Util {
         g2d.drawImage(image, 0, 0, width, height, null);
         g2d.dispose();
         return bi;
+        }
+        public static ImageIcon url2Icon(String urlString,int w,int h) throws MalformedURLException, IOException{
+            URL url = new URL(urlString);
+            ImageIcon icon=new ImageIcon(Util.resize((BufferedImage)ImageIO.read(url), w, h));
+            return icon;    
+        }
+        
+        public static Image url2Image(String urlString,int w,int h) throws MalformedURLException, IOException{
+            URL url = new URL(urlString);
+            Image image=Util.resize((BufferedImage)ImageIO.read(url), w, h);
+            return image;    
         }
 	public static Boolean errorReport(String msg){
 		System.out.println(msg);

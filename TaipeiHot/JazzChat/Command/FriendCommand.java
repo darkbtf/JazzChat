@@ -2,6 +2,10 @@ package TaipeiHot.JazzChat.Command;
 
 import TaipeiHot.JazzChat.User;
 import TaipeiHot.JazzChat.Client.Client;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class FriendCommand implements Command {
 
@@ -41,7 +45,13 @@ public class FriendCommand implements Command {
 			tmpUser.setProfilePicUrl(profilePic);
 			System.out.println(Integer.toString(userId) + " " + userName);
 			Client.userSet.put(userId, tmpUser);
-			Client.mainWindow.friendShow(tmpUser);
+                    try {
+                        Client.mainWindow.friendShow(tmpUser);
+                    } catch (MalformedURLException ex) {
+                        Logger.getLogger(FriendCommand.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(FriendCommand.class.getName()).log(Level.SEVERE, null, ex);
+                    }
 			if (online) {
 				Client.mainWindow.setOnlineById(userId);
 			} else {

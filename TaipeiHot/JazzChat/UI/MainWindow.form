@@ -126,7 +126,7 @@
             </Constraint>
           </Constraints>
         </Component>
-        <Component class="javax.swing.JButton" name="addBtn">
+        <Component class="javax.swing.JButton" name="photoBtn">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/TaipeiHot/JazzChat/UI/default_head_piture.jpg"/>
