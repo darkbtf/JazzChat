@@ -78,7 +78,7 @@ public class LoginDialog extends javax.swing.JDialog {
         errorMessege.setBounds(160, 180, 40, 20);
         jLayeredPane1.add(errorMessege, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TaipeiHot/JazzChat/UI/FireLionMain.jpg"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TaipeiHot/JazzChat/UI/Tech-Help-Screen-Wallpaper.jpg"))); // NOI18N
         jLabel1.setText("jLabel1");
         jLabel1.setBounds(0, 0, 350, 220);
         jLayeredPane1.add(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
