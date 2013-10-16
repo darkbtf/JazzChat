@@ -7,11 +7,15 @@ package TaipeiHot.JazzChat.UI;
 import TaipeiHot.JazzChat.Client.Client;
 import TaipeiHot.JazzChat.User;
 import TaipeiHot.JazzChat.Util;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Set;
 import javax.swing.DefaultListModel;
+import javax.swing.JList;
 
 /**
  *
@@ -24,15 +28,45 @@ public class InviteFriendWindow extends javax.swing.JFrame {
      */
     public InviteFriendWindow() {
         initComponents();
-        friendList.setModel(waitList);
+        friendList.setModel(friend);
+        wait.setModel(waitList);
+        
         
         Set<User> set = new HashSet<User>();
         Iterator<Entry<Integer,User> > it = Client.userSet.entrySet().iterator();
         while (it.hasNext()) {
           waitList.addElement(it.next().getValue().getNickname());
-          
+          mouseListener3 = new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent mouseEvent) {
+                    JList theList = (JList) mouseEvent.getSource();
+                    if (mouseEvent.getClickCount() == 2) {
+                        int index = theList.locationToIndex(mouseEvent.getPoint());
+                        if (index >= 0) {
+                            friend.addElement(waitList.get(index));
+                            waitList.remove(index);
+                         }
+                     }
+                }
+            };
+        wait.addMouseListener(mouseListener3);
+        mouseListener2 = new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent mouseEvent) {
+                    JList theList = (JList) mouseEvent.getSource();
+                    if (mouseEvent.getClickCount() == 2) {
+                        int index = theList.locationToIndex(mouseEvent.getPoint());
+                        if (index >= 0) {
+                            waitList.addElement(friend.getElementAt(index));
+                            friend.removeElementAt(index);
+                         }
+                     }
+                }
+            };
+        friendList.addMouseListener(mouseListener2);
+        
         }
-            }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -126,7 +160,9 @@ public class InviteFriendWindow extends javax.swing.JFrame {
         });
     }
     DefaultListModel waitList=new DefaultListModel();
-    
+    DefaultListModel friend=new DefaultListModel();
+    public MouseListener mouseListener3;
+    public MouseListener mouseListener2;
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList friendList;
