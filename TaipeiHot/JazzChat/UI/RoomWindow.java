@@ -7,7 +7,6 @@ package TaipeiHot.JazzChat.UI;
 import TaipeiHot.JazzChat.Client.Client;
 import TaipeiHot.JazzChat.User;
 import TaipeiHot.JazzChat.Util;
-import java.awt.Canvas;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -360,20 +359,16 @@ public class RoomWindow extends javax.swing.JFrame {
 		}
 	}
         public  VideoWindow videoWindow=new VideoWindow();
-
+        public InviteFriendWindow invite=new InviteFriendWindow();
+        
         
         
         public void showImg(int userId,String url){
-            //url="ftp://nmlab198:taipeihot@140.112.18.198/jizzer2.jpg";
-            //url="http://upload.wikimedia.org/wikipedia/commons/d/db/Icono_xD_para_wikipedia.png";
-            //url="http://ragemaker.net/images/Neutral/01.png";
-            //URL _url = new URL(url);
-            //ImageIcon tmpIcon=new ImageIcon(Util.resize((BufferedImage)ImageIO.read(_url.openStream()), 50, 50));
-            //return icon;
+
             ImageIcon pIcon=MainWindow.iconMap.get(userId);
             Util.errorReport(url);
             ImageIcon tmpIcon;
-            tmpIcon = Util.url2Icon(url, 50, 50);
+            tmpIcon = Util.url2Icon(url, 50);
             chatModel.addElement(new ChatObject(pIcon,tmpIcon));
             scrollDown();
         }

@@ -42,7 +42,24 @@ public class Util {
 		}
 		return null;
 	}
-
+        public static ImageIcon url2Icon(String urlString,  int h) {
+		URL url;
+		ImageIcon icon;
+		try {
+			url = new URL(urlString);
+                        Image tmp=ImageIO.read(url);
+                        int w=tmp.getWidth(null)*h/tmp.getHeight(null);
+			icon = new ImageIcon(Util.resize(ImageIO.read(url), w, h));
+			return icon;
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 	public static Image url2Image(String urlString, int w, int h) {
 		Image image;
 		URL url;

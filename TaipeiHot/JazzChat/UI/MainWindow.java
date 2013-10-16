@@ -83,7 +83,22 @@ public class MainWindow extends javax.swing.JFrame {
 			};
 			friendList.addMouseListener(mouseListener);
 			friendList.setCellRenderer(new ObjectCellRender());
-			mouseListener2 = new MouseAdapter() {
+			mouseListener3 = new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent mouseEvent) {
+					JList theList = (JList) mouseEvent.getSource();
+					if (mouseEvent.getClickCount() == 2) {
+						int index = theList.locationToIndex(mouseEvent
+								.getPoint());
+						if (index >= 0) {
+							// Util.errorReport("lala");
+							wait
+
+						}
+					}
+				}
+			};
+                        mouseListener2 = new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent mouseEvent) {
 					JList theList = (JList) mouseEvent.getSource();
@@ -99,6 +114,7 @@ public class MainWindow extends javax.swing.JFrame {
 					}
 				}
 			};
+                        
 		} catch (Exception e) {
 		}
 		// this.repaint();
@@ -188,6 +204,11 @@ public class MainWindow extends javax.swing.JFrame {
         jLayeredPane1.add(onlineBtn, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         InviteBtn.setText("Invite!");
+        InviteBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                InviteBtnMouseClicked(evt);
+            }
+        });
         InviteBtn.setBounds(257, 50, 80, 23);
         jLayeredPane1.add(InviteBtn, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
@@ -219,6 +240,13 @@ public class MainWindow extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void InviteBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_InviteBtnMouseClicked
+        // TODO add your handling code here:
+        InviteFriendWindow invite=new InviteFriendWindow();
+        invite.setVisible(true);
+        
+    }//GEN-LAST:event_InviteBtnMouseClicked
 
 	private void afwButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_afwButtonActionPerformed
 		// TODO add your handling code here:
@@ -336,6 +364,8 @@ public class MainWindow extends javax.swing.JFrame {
 	DefaultListModel friendModel = new DefaultListModel();
 	MouseListener mouseListener;
 	MouseListener mouseListener2;
+        MouseListener mouseListener3;
+        MouseListener mouseListener4;
 	ImageIcon icon;
 	boolean afwIsOpen = false;
 

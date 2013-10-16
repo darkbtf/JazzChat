@@ -207,7 +207,7 @@ public class Client {
 	}
 
 	private static String getImgUrlById(int id) {
-		return "http://ragemaker.net/images/Neutral/0" + id + ".png";
+		return "ftp://nmlab198:taipeihot@140.112.18.198/cuteImage/" + id + ".png";
 	}
 
 	public static void sendImg(int roomId, int id) {
