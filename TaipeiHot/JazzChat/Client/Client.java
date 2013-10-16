@@ -256,4 +256,8 @@ public class Client {
 				"upload", filepath });
 	}
 
+	public static void addUserToRoom(int roomId, int userId) {
+		ClientUtils.sendStringsToServer(out, new String[] { "room", "adduser",
+				Integer.toString(roomId), Integer.toString(userId) });
+	}
 }
