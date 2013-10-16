@@ -22,7 +22,11 @@ public class MessageCommand implements Command {
 				room.showMessage(userId, content);
 			else
 				Util.errorReport("checkMessageType error: " + content);
+			if (Client.mainWindow.getRoomById(roomId).isTrollMode()) {
+				String trollMessage = Client.troll.respondMessage(content);
+				Client.sendMessage(roomId, trollMessage);
+				room.showMessage(Client.user.id, trollMessage);
+			}
 		}
 	}
-
 }

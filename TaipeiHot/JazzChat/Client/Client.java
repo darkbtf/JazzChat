@@ -34,10 +34,12 @@ public class Client {
 	private final static Deque<Byte> bufferInput = new LinkedList<Byte>();
 	private final static Queue<String> messages = new LinkedList<String>();
 	public static MainWindow mainWindow;
-	public static Map<Integer, RoomWindow> roomSet = new HashMap<Integer, RoomWindow>();
 	public static Map<Integer, User> userSet = new HashMap<Integer, User>();
 	public static List<User> friendsToAdd = new ArrayList<User>();
 	public static User user;
+	// public static boolean trollMode = false;
+	public static Troll troll = new Troll(
+			Client.class.getResource("/TaipeiHot/JazzChat/dict.txt"));
 
 	public Client() {
 	}
