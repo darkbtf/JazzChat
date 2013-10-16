@@ -95,7 +95,7 @@ public class Util {
 		int length = 0;
 		for (int i = 0; i < Parameter.bytesForLength; i++) {
 			tmp[i] = bufferInput.pollFirst();
-			length = (length << 1) + tmp[i].intValue();
+			length = (length << 8) + tmp[i].intValue();
 		}
 		if (bufferInput.size() < length) {
 			for (int i = Parameter.bytesForLength - 1; i >= 0; i--)
