@@ -94,15 +94,15 @@ public class RoomWindow extends javax.swing.JFrame {
         callButton = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         chatList = new javax.swing.JList();
+        jLabel1 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(102, 153, 255));
 
         jLayeredPane1.setBackground(new java.awt.Color(102, 204, 255));
 
-        typeText.setBackground(new java.awt.Color(153, 204, 255));
         typeText.setColumns(20);
         typeText.setRows(2);
-        typeText.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, null, new java.awt.Color(0, 0, 0), new java.awt.Color(0, 51, 255)));
+        typeText.setBorder(null);
         typeText.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 typeTextKeyTyped(evt);
@@ -110,7 +110,7 @@ public class RoomWindow extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(typeText);
 
-        jScrollPane1.setBounds(14, 310, 360, 48);
+        jScrollPane1.setBounds(14, 310, 360, 42);
         jLayeredPane1.add(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         sendTextButton.setText("Send");
@@ -124,7 +124,7 @@ public class RoomWindow extends javax.swing.JFrame {
 
         jToolBar1.setRollover(true);
 
-        jButton1.setText("jButton1");
+        jButton1.setText(">__<");
         jButton1.setFocusable(false);
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -138,7 +138,7 @@ public class RoomWindow extends javax.swing.JFrame {
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "5", " " }));
         jToolBar1.add(jComboBox1);
 
-        jToolBar1.setBounds(10, 250, 330, 30);
+        jToolBar1.setBounds(30, 260, 330, 30);
         jLayeredPane1.add(jToolBar1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         uploadFileButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TaipeiHot/JazzChat/UI/uplode.jpg"))); // NOI18N
@@ -174,6 +174,10 @@ public class RoomWindow extends javax.swing.JFrame {
 
         jScrollPane3.setBounds(10, 10, 490, 230);
         jLayeredPane1.add(jScrollPane3, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TaipeiHot/JazzChat/UI/FireLion.jpg"))); // NOI18N
+        jLabel1.setBounds(-10, 0, 520, 380);
+        jLayeredPane1.add(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -360,6 +364,7 @@ public class RoomWindow extends javax.swing.JFrame {
     private javax.swing.JList chatList;
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;

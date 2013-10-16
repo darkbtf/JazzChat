@@ -149,7 +149,7 @@ public class MainWindow extends javax.swing.JFrame {
         friendList.setPreferredSize(new java.awt.Dimension(275, 150));
         jScrollPane1.setViewportView(friendList);
 
-        jScrollPane1.setBounds(50, 130, 280, 350);
+        jScrollPane1.setBounds(60, 130, 280, 350);
         jLayeredPane1.add(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         afwButton.setText("Wating Friend");
