@@ -13,7 +13,7 @@ public class RoomCommand implements Command {
 			cmd = Client.getMessage();
 			int roomId = Integer.parseInt(Client.getMessage());
 			if (cmd.equals("public")) {
-				Client.mainWindow.newRoom(roomId);
+				Client.mainWindow.newPublicRoom(roomId);
 			} else if (cmd.equals("private")) {
 				Client.mainWindow.newRoom(roomId);
 			}
