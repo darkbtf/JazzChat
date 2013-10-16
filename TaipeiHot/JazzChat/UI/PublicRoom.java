@@ -24,13 +24,13 @@ import javax.swing.JScrollBar;
  * 
  * @author Paul
  */
-public class RoomWindow extends javax.swing.JFrame {
+public class PublicRoom extends javax.swing.JFrame {
 
 	/**
 	 * Creates new form RoomWindow
 	 */
         public Box box=Box.createVerticalBox();
-        public RoomWindow() {
+        public PublicRoom() {
 		initComponents();
                 roomId = 0;
                 try{
@@ -42,7 +42,7 @@ public class RoomWindow extends javax.swing.JFrame {
                     Util.errorReport(e.getMessage());
                 }
 	}
-	public RoomWindow(int _roomId, String _roomName,
+	public PublicRoom(int _roomId, String _roomName,
 			ArrayList<String> _userNameList) {
 		initComponents();
 		roomId = _roomId;
@@ -56,7 +56,7 @@ public class RoomWindow extends javax.swing.JFrame {
                 }
 	}
 
-	public RoomWindow(int _roomId)  {
+	public PublicRoom(int _roomId)  {
 		initComponents();
 		roomId = _roomId;
                 try{
@@ -87,6 +87,7 @@ public class RoomWindow extends javax.swing.JFrame {
         jToolBar1 = new javax.swing.JToolBar();
         jButton1 = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox();
+        inviteBtn = new javax.swing.JButton();
         uploadFileButton = new javax.swing.JButton();
         callButton = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -145,10 +146,18 @@ public class RoomWindow extends javax.swing.JFrame {
         });
         jToolBar1.add(jButton1);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", " " }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "5", " " }));
         jToolBar1.add(jComboBox1);
 
-        jToolBar1.setBounds(30, 260, 330, 30);
+        inviteBtn.setText("Add Friend");
+        inviteBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                inviteBtnMouseClicked(evt);
+            }
+        });
+        jToolBar1.add(inviteBtn);
+
+        jToolBar1.setBounds(20, 260, 350, 30);
         jLayeredPane1.add(jToolBar1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         uploadFileButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TaipeiHot/JazzChat/UI/uplode.jpg"))); // NOI18N
@@ -238,6 +247,11 @@ public class RoomWindow extends javax.swing.JFrame {
                
     }//GEN-LAST:event_TrolltButtonMouseClicked
 
+    private void inviteBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inviteBtnMouseClicked
+        // TODO add your handling code here:
+        invite.setVisible(true);
+    }//GEN-LAST:event_inviteBtnMouseClicked
+
 	private void sendTextButtonMouseReleased(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_sendTextButtonMouseReleased
 		// TODO add your handling code here:
 		send();
@@ -276,16 +290,16 @@ public class RoomWindow extends javax.swing.JFrame {
 				}
 			}
 		} catch (ClassNotFoundException ex) {
-			java.util.logging.Logger.getLogger(RoomWindow.class.getName()).log(
+			java.util.logging.Logger.getLogger(PublicRoom.class.getName()).log(
 					java.util.logging.Level.SEVERE, null, ex);
 		} catch (InstantiationException ex) {
-			java.util.logging.Logger.getLogger(RoomWindow.class.getName()).log(
+			java.util.logging.Logger.getLogger(PublicRoom.class.getName()).log(
 					java.util.logging.Level.SEVERE, null, ex);
 		} catch (IllegalAccessException ex) {
-			java.util.logging.Logger.getLogger(RoomWindow.class.getName()).log(
+			java.util.logging.Logger.getLogger(PublicRoom.class.getName()).log(
 					java.util.logging.Level.SEVERE, null, ex);
 		} catch (javax.swing.UnsupportedLookAndFeelException ex) {
-			java.util.logging.Logger.getLogger(RoomWindow.class.getName()).log(
+			java.util.logging.Logger.getLogger(PublicRoom.class.getName()).log(
 					java.util.logging.Level.SEVERE, null, ex);
 		}
 		// </editor-fold>
@@ -294,7 +308,7 @@ public class RoomWindow extends javax.swing.JFrame {
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-                            new RoomWindow(1).setVisible(true);
+                            new PublicRoom(1).setVisible(true);
 			}
 		});
 	}
@@ -336,7 +350,7 @@ public class RoomWindow extends javax.swing.JFrame {
                 }
                 
             } catch (InterruptedException ex) {
-                Logger.getLogger(RoomWindow.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PublicRoom.class.getName()).log(Level.SEVERE, null, ex);
             }
             
             repaint();
@@ -381,6 +395,7 @@ public class RoomWindow extends javax.swing.JFrame {
     private javax.swing.JButton TrolltButton;
     private javax.swing.JButton callButton;
     private javax.swing.JList chatList;
+    private javax.swing.JButton inviteBtn;
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;

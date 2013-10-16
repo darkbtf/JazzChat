@@ -83,21 +83,7 @@ public class MainWindow extends javax.swing.JFrame {
 			};
 			friendList.addMouseListener(mouseListener);
 			friendList.setCellRenderer(new ObjectCellRender());
-			mouseListener3 = new MouseAdapter() {
-				@Override
-				public void mouseClicked(MouseEvent mouseEvent) {
-					JList theList = (JList) mouseEvent.getSource();
-					if (mouseEvent.getClickCount() == 2) {
-						int index = theList.locationToIndex(mouseEvent
-								.getPoint());
-						if (index >= 0) {
-							// Util.errorReport("lala");
-							wait
 
-						}
-					}
-				}
-			};
                         mouseListener2 = new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent mouseEvent) {
