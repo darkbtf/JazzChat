@@ -337,23 +337,9 @@ public class PublicRoom extends javax.swing.JFrame {
                 scrollDown();
         }
         public void scrollDown(){
-            
-            try {
-                Thread.sleep(10);
-                for(int i=0;i<10;i++){
                 JScrollBar vertical=jScrollPane3.getVerticalScrollBar();
-                vertical.setMaximum(chatList.getHeight());
-                //vertical.setValue(vertical.getMaximum());
-                Util.errorReport(vertical.getMaximum()+" ");
                 vertical.setValue(vertical.getMaximum());
-                Util.errorReport(vertical.getMaximum()+" ");
-                }
-                
-            } catch (InterruptedException ex) {
-                Logger.getLogger(PublicRoom.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-            repaint();
+
         }
         public void showFile(String myPath,String fileName){
             showMessage(Client.user.id,myPath+" "+fileName);
