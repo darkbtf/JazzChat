@@ -147,7 +147,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         jScrollPane1.setPreferredSize(new java.awt.Dimension(275, 150));
 
-        friendList.setBackground(new java.awt.Color(255, 204, 51));
+        friendList.setBackground(new java.awt.Color(0, 51, 51));
         friendList.setModel(friendModel);
         friendList.setPreferredSize(new java.awt.Dimension(275, 150));
         jScrollPane1.setViewportView(friendList);
@@ -198,7 +198,7 @@ public class MainWindow extends javax.swing.JFrame {
         InviteBtn.setBounds(257, 50, 80, 23);
         jLayeredPane1.add(InviteBtn, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TaipeiHot/JazzChat/UI/FireLionMain.jpg"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TaipeiHot/JazzChat/UI/Tech-Help-Screen-Wallpaper.jpg"))); // NOI18N
         jLabel1.setText("jLabel1");
         jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jLabel1.setPreferredSize(new java.awt.Dimension(500, 800));
@@ -445,7 +445,16 @@ public class MainWindow extends javax.swing.JFrame {
 		room.setVisible(true);
 		return room;
 	}
-
+        
+        
+        public Map<Integer, PublicRoom> publicRoomMap = new HashMap<Integer, PublicRoom>();
+        public PublicRoom newPublicRoom(int roomId) {
+		PublicRoom room = new PublicRoom(roomId);
+		// add(room);
+		publicRoomMap.put(roomId, room);
+		room.setVisible(true);
+		return room;
+	}
 	public void closeDialog() {
 		try {
 			loginDialog.setVisible(false);

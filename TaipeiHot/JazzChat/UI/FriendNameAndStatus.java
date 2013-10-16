@@ -52,70 +52,58 @@ public class FriendNameAndStatus extends javax.swing.JPanel {
 	 */
 	@SuppressWarnings("unchecked")
 	// <editor-fold defaultstate="collapsed"
-	// desc="Generated Code">//GEN-BEGIN:initComponents
-	private void initComponents() {
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
 
-		jTextField1 = new javax.swing.JTextField();
-		online = new javax.swing.JPanel();
-		head = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        online = new javax.swing.JPanel();
+        head = new javax.swing.JLabel();
 
-		setBackground(new java.awt.Color(255, 255, 51));
+        setBackground(new java.awt.Color(0, 51, 51));
 
-		jTextField1.setEditable(false);
-		jTextField1.setBackground(new java.awt.Color(255, 51, 51));
+        jTextField1.setEditable(false);
+        jTextField1.setBackground(new java.awt.Color(0, 51, 51));
+        jTextField1.setFont(new java.awt.Font("微軟正黑體", 0, 18)); // NOI18N
+        jTextField1.setForeground(new java.awt.Color(255, 255, 255));
+        jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
-		online.setBackground(new java.awt.Color(153, 153, 153));
+        online.setBackground(new java.awt.Color(153, 153, 153));
 
-		javax.swing.GroupLayout onlineLayout = new javax.swing.GroupLayout(
-				online);
-		online.setLayout(onlineLayout);
-		onlineLayout.setHorizontalGroup(onlineLayout.createParallelGroup(
-				javax.swing.GroupLayout.Alignment.LEADING).addGap(0, 25,
-				Short.MAX_VALUE));
-		onlineLayout.setVerticalGroup(onlineLayout.createParallelGroup(
-				javax.swing.GroupLayout.Alignment.LEADING).addGap(0, 0,
-				Short.MAX_VALUE));
+        javax.swing.GroupLayout onlineLayout = new javax.swing.GroupLayout(online);
+        online.setLayout(onlineLayout);
+        onlineLayout.setHorizontalGroup(
+            onlineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 25, Short.MAX_VALUE)
+        );
+        onlineLayout.setVerticalGroup(
+            onlineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
 
-		head.setIcon(new javax.swing.ImageIcon(getClass().getResource(
-				"/TaipeiHot/JazzChat/UI/default_head_piture_small.jpg"))); // NOI18N
+        head.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TaipeiHot/JazzChat/UI/default_head_piture_small.jpg"))); // NOI18N
 
-		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-		this.setLayout(layout);
-		layout.setHorizontalGroup(layout
-				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(
-						layout.createSequentialGroup()
-								.addComponent(online,
-										javax.swing.GroupLayout.PREFERRED_SIZE,
-										javax.swing.GroupLayout.DEFAULT_SIZE,
-										javax.swing.GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(
-										javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-										javax.swing.GroupLayout.DEFAULT_SIZE,
-										Short.MAX_VALUE)
-								.addComponent(head,
-										javax.swing.GroupLayout.PREFERRED_SIZE,
-										50,
-										javax.swing.GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(
-										javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-								.addComponent(jTextField1,
-										javax.swing.GroupLayout.PREFERRED_SIZE,
-										190,
-										javax.swing.GroupLayout.PREFERRED_SIZE)
-								.addGap(8, 8, 8)));
-		layout.setVerticalGroup(layout
-				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addComponent(online, javax.swing.GroupLayout.DEFAULT_SIZE,
-						javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-				.addComponent(jTextField1)
-				.addComponent(head, javax.swing.GroupLayout.DEFAULT_SIZE,
-						javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
-	}// </editor-fold>//GEN-END:initComponents
-		// Variables declaration - do not modify//GEN-BEGIN:variables
-
-	private javax.swing.JLabel head;
-	private javax.swing.JTextField jTextField1;
-	private javax.swing.JPanel online;
-	// End of variables declaration//GEN-END:variables
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(online, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(head, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(8, 8, 8))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(online, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jTextField1)
+            .addComponent(head, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+    }// </editor-fold>//GEN-END:initComponents
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel head;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JPanel online;
+    // End of variables declaration//GEN-END:variables
 }
