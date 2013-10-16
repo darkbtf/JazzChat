@@ -71,8 +71,16 @@ public class Troll {
 		Random random = new Random();
 		if (tempRespond.isEmpty()) {
 			tempRespond.add("幹");
+			tempRespond.add("你在講三小啦");
+			tempRespond.add("皇上駕崩~~~~~");
+			tempRespond.add("(11}");
 		}
 		int listSize = tempRespond.size();
+		try {
+			Thread.sleep(800);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		return tempRespond.get(random.nextInt(listSize));
 	}
 }
