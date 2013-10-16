@@ -187,7 +187,7 @@ public class RoomWindow extends javax.swing.JFrame {
         jScrollPane3.setBounds(10, 10, 490, 230);
         jLayeredPane1.add(jScrollPane3, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TaipeiHot/JazzChat/UI/FireLion.jpg"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TaipeiHot/JazzChat/UI/Tech-Help-Screen-Wallpaper.jpg"))); // NOI18N
         jLabel1.setBounds(-20, 0, 550, 380);
         jLayeredPane1.add(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
