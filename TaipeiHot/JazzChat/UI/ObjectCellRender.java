@@ -36,10 +36,10 @@ public class ObjectCellRender extends JLabel implements ListCellRenderer{
 
     public ObjectCellRender() throws MalformedURLException, IOException {
         setOpaque(true);
-        setLayout(new BorderLayout(3, 3));
+        setLayout(new BorderLayout(1, 1));
         pnl = new JPanel(new GridLayout(0, 1, 0, 0));
-        pnl.setBorder(new EmptyBorder(0, 35, 0, 0));
-        add(pnl, BorderLayout.SOUTH); 
+        pnl.setBorder(new EmptyBorder(0, 0, 0, 0));
+        add(pnl, BorderLayout.WEST); 
         
         //super.getListeners(null);
     }

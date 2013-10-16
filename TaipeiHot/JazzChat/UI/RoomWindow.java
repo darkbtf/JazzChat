@@ -87,22 +87,22 @@ public class RoomWindow extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         typeText = new javax.swing.JTextArea();
         sendTextButton = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        chatList = new javax.swing.JList();
         jToolBar1 = new javax.swing.JToolBar();
         jButton1 = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox();
         uploadFileButton = new javax.swing.JButton();
         callButton = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        chatList = new javax.swing.JList();
+        jLabel1 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(102, 153, 255));
 
         jLayeredPane1.setBackground(new java.awt.Color(102, 204, 255));
 
-        typeText.setBackground(new java.awt.Color(153, 204, 255));
         typeText.setColumns(20);
         typeText.setRows(2);
-        typeText.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, null, new java.awt.Color(0, 0, 0), new java.awt.Color(0, 51, 255)));
+        typeText.setBorder(null);
         typeText.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 typeTextKeyTyped(evt);
@@ -110,7 +110,7 @@ public class RoomWindow extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(typeText);
 
-        jScrollPane1.setBounds(14, 310, 360, 48);
+        jScrollPane1.setBounds(14, 310, 360, 42);
         jLayeredPane1.add(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         sendTextButton.setText("Send");
@@ -122,16 +122,9 @@ public class RoomWindow extends javax.swing.JFrame {
         sendTextButton.setBounds(390, 310, 110, 50);
         jLayeredPane1.add(sendTextButton, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-        chatList.setModel(chatModel
-        );
-        jScrollPane2.setViewportView(chatList);
-
-        jScrollPane2.setBounds(10, 10, 490, 230);
-        jLayeredPane1.add(jScrollPane2, javax.swing.JLayeredPane.DEFAULT_LAYER);
-
         jToolBar1.setRollover(true);
 
-        jButton1.setText("jButton1");
+        jButton1.setText(">__<");
         jButton1.setFocusable(false);
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -145,7 +138,7 @@ public class RoomWindow extends javax.swing.JFrame {
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "5", " " }));
         jToolBar1.add(jComboBox1);
 
-        jToolBar1.setBounds(10, 250, 330, 30);
+        jToolBar1.setBounds(30, 260, 330, 30);
         jLayeredPane1.add(jToolBar1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         uploadFileButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TaipeiHot/JazzChat/UI/uplode.jpg"))); // NOI18N
@@ -170,6 +163,21 @@ public class RoomWindow extends javax.swing.JFrame {
         });
         callButton.setBounds(390, 250, 50, 50);
         jLayeredPane1.add(callButton, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        jScrollPane3.setPreferredSize(new java.awt.Dimension(0, 0));
+
+        chatList.setModel(chatModel
+        );
+        chatList.setValueIsAdjusting(true);
+        chatList.setVisibleRowCount(0);
+        jScrollPane3.setViewportView(chatList);
+
+        jScrollPane3.setBounds(10, 10, 490, 230);
+        jLayeredPane1.add(jScrollPane3, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TaipeiHot/JazzChat/UI/FireLion.jpg"))); // NOI18N
+        jLabel1.setBounds(-10, 0, 520, 380);
+        jLayeredPane1.add(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -291,17 +299,33 @@ public class RoomWindow extends javax.swing.JFrame {
             userNameList.add(user.getNickname());
         }
 	public void showMessage(int userId, String text) {
-                //Util.errorReport("QQQQQ");
-                //JLabel jl=new JLabel(name + ":" + text + "\n");
                 ImageIcon tmpIcon=MainWindow.iconMap.get(userId);
                 chatModel.addElement(new ChatObject(text + "\n",tmpIcon));
-		//box.add(jl);
-                //jl.setVisible(true);
-                JScrollBar vertical=jScrollPane2.getVerticalScrollBar();
+                repaint();
+                scrollDown();
+        }
+        public void scrollDown(){
+            
+            try {
+                Thread.sleep(10);
+                for(int i=0;i<10;i++){
+                JScrollBar vertical=jScrollPane3.getVerticalScrollBar();
+                vertical.setMaximum(chatList.getHeight());
+                //vertical.setValue(vertical.getMaximum());
+                Util.errorReport(vertical.getMaximum()+" ");
                 vertical.setValue(vertical.getMaximum());
+                Util.errorReport(vertical.getMaximum()+" ");
+                }
+                
+            } catch (InterruptedException ex) {
+                Logger.getLogger(RoomWindow.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            repaint();
         }
         public void showFile(String myPath,String fileName){
             showMessage(Client.user.id,myPath+" "+fileName);
+            scrollDown();
         }
         public void confirmDownload(int roomId,String fileName,String filePath){
            Client.startDownload(roomId, fileName, filePath);
@@ -324,22 +348,15 @@ public class RoomWindow extends javax.swing.JFrame {
             //url="ftp://nmlab198:taipeihot@140.112.18.198/jizzer2.jpg";
             //url="http://upload.wikimedia.org/wikipedia/commons/d/db/Icono_xD_para_wikipedia.png";
             //url="http://ragemaker.net/images/Neutral/01.png";
-            Util.errorReport(url);
-            
-            //ImageIcon tmpIcon;
-            try {
-            URL _url = new URL(url);
+            //URL _url = new URL(url);
+            //ImageIcon tmpIcon=new ImageIcon(Util.resize((BufferedImage)ImageIO.read(_url.openStream()), 50, 50));
+            //return icon;
             ImageIcon pIcon=MainWindow.iconMap.get(userId);
-            ImageIcon tmpIcon=new ImageIcon(Util.resize((BufferedImage)ImageIO.read(_url.openStream()), 50, 50));
-            //return icon;    
-                //tmpIcon = Util.url2Icon(url, 50, 50);
-                chatModel.addElement(new ChatObject(pIcon,tmpIcon));
-            } catch (MalformedURLException ex) {
-                Logger.getLogger(RoomWindow.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(RoomWindow.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
+            Util.errorReport(url);
+            ImageIcon tmpIcon;
+            tmpIcon = Util.url2Icon(url, 50, 50);
+            chatModel.addElement(new ChatObject(pIcon,tmpIcon));
+            scrollDown();
         }
         
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -347,9 +364,10 @@ public class RoomWindow extends javax.swing.JFrame {
     private javax.swing.JList chatList;
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JButton sendTextButton;
     private javax.swing.JTextArea typeText;
