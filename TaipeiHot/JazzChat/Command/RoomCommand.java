@@ -19,9 +19,9 @@ public class RoomCommand implements Command {
 			}
 		} else if (cmd.equals("name")) {
 			int roomId = Integer.parseInt(Client.getMessage());
-			String userName = Client.getMessage();
+			String roomName = Client.getMessage();
 			RoomWindow room = Client.mainWindow.getRoomById(roomId);
-			room.addUser(new User(userName, ""));
+			room.changeName(roomName);
 		} else if (cmd.equals("adduser")) {
 			int roomId = Integer.parseInt(Client.getMessage());
 			String userName = Client.getMessage();
