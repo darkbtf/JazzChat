@@ -266,4 +266,19 @@ public class Client {
 		ClientUtils.sendStringsToServer(out, new String[] { "room", "adduser",
 				Integer.toString(roomId), Integer.toString(userId) });
 	}
+
+	public static void changeStatus(String status) {
+		ClientUtils.sendStringsToServer(out, new String[] { "user", "status",
+				status });
+	}
+
+	public static void changeNickname(String nickname) {
+		ClientUtils.sendStringsToServer(out, new String[] { "user", "nickname",
+				nickname });
+	}
+
+	public static void changeRoomName(int roomId, String name) {
+		ClientUtils.sendStringsToServer(out,
+				new String[] { "room", Integer.toString(roomId), name });
+	}
 }
