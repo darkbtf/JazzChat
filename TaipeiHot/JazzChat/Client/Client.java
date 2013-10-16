@@ -207,7 +207,8 @@ public class Client {
 	}
 
 	private static String getImgUrlById(int id) {
-		return "ftp://nmlab198:taipeihot@140.112.18.198/cuteImage/" + id + ".png";
+		return "ftp://nmlab198:taipeihot@140.112.18.198/cuteImage/" + id
+				+ ".png";
 	}
 
 	public static void sendImg(int roomId, int id) {
@@ -219,7 +220,8 @@ public class Client {
 	}
 
 	public static String getImgUrlByString(String s) {
-		return getImgUrlById(Integer.valueOf(s.substring(1, s.length() - 1)));
+		int index = s.indexOf("}");
+		return getImgUrlById(Integer.valueOf(s.substring(1, index)));
 	}
 
 	public static boolean isNumber(String s) {
@@ -230,8 +232,12 @@ public class Client {
 	}
 
 	public static String checkMessageType(String message) {
-		if (message.startsWith("(") && message.endsWith("}")
-				&& Client.isNumber(message.substring(1, message.length() - 1)))
+		if (!message.startsWith("("))
+			return "text";
+		int index = message.indexOf("}");
+		if (index < 0)
+			return "text";
+		if (Client.isNumber(message.substring(1, index)))
 			return "image";
 		return "text";
 	}
