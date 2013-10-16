@@ -5,19 +5,16 @@
 package TaipeiHot.JazzChat.UI;
 
 import TaipeiHot.JazzChat.Client.Client;
-import TaipeiHot.JazzChat.Client.MediaUtils;
 import TaipeiHot.JazzChat.User;
 import TaipeiHot.JazzChat.Util;
 import java.awt.Canvas;
 import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
+
 import javax.swing.Box;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -84,6 +81,7 @@ public class RoomWindow extends javax.swing.JFrame {
     private void initComponents() {
 
         jLayeredPane1 = new javax.swing.JLayeredPane();
+        TrolltButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         typeText = new javax.swing.JTextArea();
         sendTextButton = new javax.swing.JButton();
@@ -100,6 +98,19 @@ public class RoomWindow extends javax.swing.JFrame {
 
         jLayeredPane1.setBackground(new java.awt.Color(102, 204, 255));
 
+        TrolltButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TaipeiHot/JazzChat/UI/trollBtnIcon.jpg"))); // NOI18N
+        TrolltButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        TrolltButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TrolltButtonMouseClicked(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                TrolltButtonMouseReleased(evt);
+            }
+        });
+        TrolltButton.setBounds(450, 310, 50, 50);
+        jLayeredPane1.add(TrolltButton, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
         typeText.setColumns(20);
         typeText.setRows(2);
         typeText.setBorder(null);
@@ -113,13 +124,13 @@ public class RoomWindow extends javax.swing.JFrame {
         jScrollPane1.setBounds(14, 310, 360, 42);
         jLayeredPane1.add(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-        sendTextButton.setText("Send");
+        sendTextButton.setIcon(new javax.swing.ImageIcon("D:\\Paul\\coding\\java\\ChetRoom\\src\\TaipeiHot\\JazzChat\\UI\\sendBtnIcon.jpg")); // NOI18N
         sendTextButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 sendTextButtonMouseReleased(evt);
             }
         });
-        sendTextButton.setBounds(390, 310, 110, 50);
+        sendTextButton.setBounds(390, 310, 50, 50);
         jLayeredPane1.add(sendTextButton, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         jToolBar1.setRollover(true);
@@ -142,6 +153,7 @@ public class RoomWindow extends javax.swing.JFrame {
         jLayeredPane1.add(jToolBar1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         uploadFileButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TaipeiHot/JazzChat/UI/uplode.jpg"))); // NOI18N
+        uploadFileButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         uploadFileButton.setPreferredSize(new java.awt.Dimension(50, 50));
         uploadFileButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -153,6 +165,7 @@ public class RoomWindow extends javax.swing.JFrame {
 
         callButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TaipeiHot/JazzChat/UI/Video-Transcription-Service.jpeg"))); // NOI18N
         callButton.setToolTipText("");
+        callButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         callButton.setMaximumSize(new java.awt.Dimension(50, 50));
         callButton.setMinimumSize(new java.awt.Dimension(30, 30));
         callButton.setPreferredSize(new java.awt.Dimension(50, 50));
@@ -176,16 +189,14 @@ public class RoomWindow extends javax.swing.JFrame {
         jLayeredPane1.add(jScrollPane3, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TaipeiHot/JazzChat/UI/FireLion.jpg"))); // NOI18N
-        jLabel1.setBounds(-10, 0, 520, 380);
+        jLabel1.setBounds(-20, 0, 550, 380);
         jLayeredPane1.add(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 515, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jLayeredPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 525, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -214,11 +225,19 @@ public class RoomWindow extends javax.swing.JFrame {
 
     private void callButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_callButtonMouseClicked
         // TODO add your handling code here:
-        //videoWindow.setVisible(true);
-        //MediaUtils.setLocalPlayer(roomId);
-        //MediaUtils.setRemotePlayer(roomId,"140.112.18.199");
         Client.startVideoChat(roomId);
     }//GEN-LAST:event_callButtonMouseClicked
+
+    private void TrolltButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TrolltButtonMouseReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TrolltButtonMouseReleased
+
+    private void TrolltButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TrolltButtonMouseClicked
+        // TODO add your handling code here:
+        if(troll)troll=false;
+        else troll=true;
+               
+    }//GEN-LAST:event_TrolltButtonMouseClicked
 
 	private void sendTextButtonMouseReleased(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_sendTextButtonMouseReleased
 		// TODO add your handling code here:
@@ -358,8 +377,13 @@ public class RoomWindow extends javax.swing.JFrame {
             chatModel.addElement(new ChatObject(pIcon,tmpIcon));
             scrollDown();
         }
+        private boolean troll=false;
+        public boolean isTrollMode(){
+            return troll;
+        }
         
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton TrolltButton;
     private javax.swing.JButton callButton;
     private javax.swing.JList chatList;
     private javax.swing.JButton jButton1;
