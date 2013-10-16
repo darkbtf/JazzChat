@@ -24,7 +24,7 @@ public class AccountRegister extends ServerCommand {
 		}
 		account.id = 0;
 		account.nickname = account.email;
-		account.status = "I love Joy Wang ^^";
+		account.status = "你今天被狂全咬了嗎?";
 		account.visible = 1;
 		account.photo = "default";
         Server.accountMap.put(account.id, account);
