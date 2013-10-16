@@ -73,6 +73,22 @@ public class Troll {
 			tempRespond.add("幹");
 			tempRespond.add("你在講三小啦");
 			tempRespond.add("皇上駕崩~~~~~");
+			tempRespond.add("吃飽了沒");
+			tempRespond.add("你有聽過安麗嗎");
+			tempRespond.add("你怎麼不去吃屎");
+			tempRespond.add("你是誰");
+			tempRespond.add("jizz");
+			tempRespond.add("jizz");
+			tempRespond.add("jizz");
+			tempRespond.add("(1}");
+			tempRespond.add("(2}");
+			tempRespond.add("(3}");
+			tempRespond.add("(4}");
+			tempRespond.add("(5}");
+			tempRespond.add("(6}");
+			tempRespond.add("(7}");
+			tempRespond.add("(8}");
+			tempRespond.add("(10}");
 			tempRespond.add("(11}");
 		}
 		int listSize = tempRespond.size();
