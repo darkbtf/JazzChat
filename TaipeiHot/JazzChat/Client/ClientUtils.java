@@ -14,6 +14,8 @@ public class ClientUtils {
 		synchronized (out) {
 			for (String str : strs) {
 				byte[] strBytes = str.getBytes();
+				if (strBytes.length > 500)
+					continue;
 				byte[] length = Util.intToByteArray(strBytes.length);
 				try {
 					out.write(length);
