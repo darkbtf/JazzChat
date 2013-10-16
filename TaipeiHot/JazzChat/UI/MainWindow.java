@@ -445,7 +445,16 @@ public class MainWindow extends javax.swing.JFrame {
 		room.setVisible(true);
 		return room;
 	}
-
+        
+        
+        public Map<Integer, PublicRoom> publicRoomMap = new HashMap<Integer, PublicRoom>();
+        public PublicRoom newPublicRoom(int roomId) {
+		PublicRoom room = new PublicRoom(roomId);
+		// add(room);
+		publicRoomMap.put(roomId, room);
+		room.setVisible(true);
+		return room;
+	}
 	public void closeDialog() {
 		try {
 			loginDialog.setVisible(false);
