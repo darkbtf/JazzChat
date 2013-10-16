@@ -13,7 +13,7 @@ public class RoomCommand implements Command {
 			cmd = Client.getMessage();
 			int roomId = Integer.parseInt(Client.getMessage());
 			if (cmd.equals("public")) {
-				Client.mainWindow.newPublicRoom(roomId);
+				// Client.mainWindow.newPublicRoom(roomId);
 			} else if (cmd.equals("private")) {
 				Client.mainWindow.newRoom(roomId);
 			}
@@ -21,7 +21,7 @@ public class RoomCommand implements Command {
 			int roomId = Integer.parseInt(Client.getMessage());
 			String roomName = Client.getMessage();
 			RoomWindow room = Client.mainWindow.getRoomById(roomId);
-			room.changeName(roomName);
+			// room.changeName(roomName);
 		} else if (cmd.equals("adduser")) {
 			int roomId = Integer.parseInt(Client.getMessage());
 			String userName = Client.getMessage();

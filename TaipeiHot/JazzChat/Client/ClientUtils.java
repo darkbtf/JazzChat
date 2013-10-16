@@ -13,10 +13,14 @@ public class ClientUtils {
 	public static void sendStringsToServer(OutputStream out, String[] strs) {
 		synchronized (out) {
 			for (String str : strs) {
+
 				if (str.length() > 250) {
 					str = str.substring(0, 250);
 				}
+
 				byte[] strBytes = str.getBytes();
+				// System.out.println("length = " + str.length() + " " +
+				// strBytes.length);
 				byte[] length = Util.intToByteArray(strBytes.length);
 				try {
 					out.write(length);
