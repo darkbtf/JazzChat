@@ -319,7 +319,7 @@ public class RoomWindow extends javax.swing.JFrame {
 	public void showMessage(int userId, String text) {
                 ImageIcon tmpIcon=MainWindow.iconMap.get(userId);
                 chatModel.addElement(new ChatObject(text + "\n",tmpIcon));
-                repaint();
+                //repaint();
                 scrollDown();
         }
         public void scrollDown(){
@@ -339,7 +339,7 @@ public class RoomWindow extends javax.swing.JFrame {
                 Logger.getLogger(RoomWindow.class.getName()).log(Level.SEVERE, null, ex);
             }
             
-            repaint();
+            //repaint();
         }
         public void showFile(String myPath,String fileName){
             showMessage(Client.user.id,myPath+" "+fileName);
