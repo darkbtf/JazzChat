@@ -122,6 +122,7 @@ public class MainWindow extends javax.swing.JFrame {
         afwButton = new javax.swing.JToggleButton();
         photoBtn = new javax.swing.JButton();
         onlineBtn = new javax.swing.JButton();
+        InviteBtn = new javax.swing.JToggleButton();
         jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -185,6 +186,10 @@ public class MainWindow extends javax.swing.JFrame {
         });
         onlineBtn.setBounds(260, 90, 73, 23);
         jLayeredPane1.add(onlineBtn, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        InviteBtn.setText("Invite!");
+        InviteBtn.setBounds(257, 50, 80, 23);
+        jLayeredPane1.add(InviteBtn, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TaipeiHot/JazzChat/UI/FireLionMain.jpg"))); // NOI18N
         jLabel1.setText("jLabel1");
@@ -492,6 +497,7 @@ public class MainWindow extends javax.swing.JFrame {
 	}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JToggleButton InviteBtn;
     private javax.swing.JButton addFirendButton;
     private javax.swing.JToggleButton afwButton;
     public javax.swing.JList friendList;
