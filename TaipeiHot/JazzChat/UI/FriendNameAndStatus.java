@@ -26,11 +26,12 @@ public class FriendNameAndStatus extends javax.swing.JPanel {
 		// jTextField1.setText(name);
 	}
 
-	public FriendNameAndStatus(String name, ImageIcon icon) {
+	public FriendNameAndStatus(String name, ImageIcon icon,String status) {
 		initComponents();
 		head.setIcon(icon);
 		jTextField1.setText(name);
 		this.name = name;
+                this.status.setText(status);
 	}
 
 	public void online(Boolean a) {
@@ -44,7 +45,12 @@ public class FriendNameAndStatus extends javax.swing.JPanel {
 	public void changeIcon(String url) {
 		head.setIcon(Util.url2Icon(url, 50, 50));
 	}
-
+        public void chanegeStatus(String status){
+            this.status.setText(status);
+        }
+        public void changeNickname(String nameName){
+            this.jTextField1.setText(nameName);
+        }
 	/**
 	 * This method is called from within the constructor to initialize the form.
 	 * WARNING: Do NOT modify this code. The content of this method is always
@@ -58,6 +64,7 @@ public class FriendNameAndStatus extends javax.swing.JPanel {
         jTextField1 = new javax.swing.JTextField();
         online = new javax.swing.JPanel();
         head = new javax.swing.JLabel();
+        status = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(0, 51, 51));
 
@@ -82,6 +89,10 @@ public class FriendNameAndStatus extends javax.swing.JPanel {
 
         head.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TaipeiHot/JazzChat/UI/default_head_piture_small.jpg"))); // NOI18N
 
+        status.setBackground(new java.awt.Color(0, 51, 51));
+        status.setFont(new java.awt.Font("新細明體", 0, 10)); // NOI18N
+        status.setForeground(new java.awt.Color(255, 255, 255));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -91,19 +102,23 @@ public class FriendNameAndStatus extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(head, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(8, 8, 8))
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(status, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(online, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jTextField1)
             .addComponent(head, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(status, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(online, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel head;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JPanel online;
+    private javax.swing.JLabel status;
     // End of variables declaration//GEN-END:variables
 }

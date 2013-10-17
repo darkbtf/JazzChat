@@ -10,8 +10,10 @@ import TaipeiHot.JazzChat.Util;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import javax.swing.DefaultListModel;
@@ -26,47 +28,37 @@ public class InviteFriendWindow extends javax.swing.JFrame {
     /**
      * Creates new form InviteFriendWindow
      */
-    public InviteFriendWindow() {
+    Map<String, Integer> nick2Id = new HashMap<String, Integer>();
+    private int roomId=0;
+    public InviteFriendWindow(int id) {
         initComponents();
+        roomId=id;
         friendList.setModel(friend);
         wait.setModel(waitList);
-        
-        
-        Set<User> set = new HashSet<User>();
+
         Iterator<Entry<Integer,User> > it = Client.userSet.entrySet().iterator();
         while (it.hasNext()) {
-          waitList.addElement(it.next().getValue().getNickname());
-          mouseListener3 = new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent mouseEvent) {
-                    JList theList = (JList) mouseEvent.getSource();
-                    if (mouseEvent.getClickCount() == 2) {
-                        int index = theList.locationToIndex(mouseEvent.getPoint());
-                        if (index >= 0) {
-                            friend.addElement(waitList.get(index));
-                            waitList.remove(index);
-                         }
-                     }
-                }
-            };
-        wait.addMouseListener(mouseListener3);
-        mouseListener2 = new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent mouseEvent) {
-                    JList theList = (JList) mouseEvent.getSource();
-                    if (mouseEvent.getClickCount() == 2) {
-                        int index = theList.locationToIndex(mouseEvent.getPoint());
-                        if (index >= 0) {
-                            waitList.addElement(friend.getElementAt(index));
-                            friend.removeElementAt(index);
-                         }
-                     }
-                }
-            };
-        friendList.addMouseListener(mouseListener2);
-        
+            User u = it.next().getValue();
+            waitList.addElement(u.getNickname());
+            nick2Id.put(u.getNickname(),u.id);
         }
-}
+        mouseListener3 = new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent mouseEvent) {
+                    JList theList = (JList) mouseEvent.getSource();
+                    if (mouseEvent.getClickCount() == 2) {
+                        int index = theList.locationToIndex(mouseEvent.getPoint());
+                        if (index >= 0) {
+                            friend.addElement(waitList.getElementAt(index));
+                            //waitList.removeElement(index);
+                         }
+                     }
+                }
+        };
+        wait.addMouseListener(mouseListener3);
+
+        
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -77,13 +69,18 @@ public class InviteFriendWindow extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
+        inviteFriendBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         friendList = new javax.swing.JList();
         jScrollPane2 = new javax.swing.JScrollPane();
         wait = new javax.swing.JList();
 
-        jButton1.setText("Invite!!");
+        inviteFriendBtn.setText("Invite!!");
+        inviteFriendBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                inviteFriendBtnMouseClicked(evt);
+            }
+        });
 
         jScrollPane1.setViewportView(friendList);
 
@@ -97,7 +94,7 @@ public class InviteFriendWindow extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addComponent(inviteFriendBtn)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -113,12 +110,22 @@ public class InviteFriendWindow extends javax.swing.JFrame {
                     .addComponent(jScrollPane1)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
+                .addComponent(inviteFriendBtn)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void inviteFriendBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inviteFriendBtnMouseClicked
+        // TODO add your handling code here:
+        //addUserToRoom
+        for(int i=0;i<friend.getSize();i++){
+            Util.errorReport(friend.getElementAt(i).toString());
+            Util.errorReport(nick2Id.get(friend.getElementAt(i).toString())+"");
+            Client.addUserToRoom(roomId,nick2Id.get(friend.getElementAt(i).toString()));
+        }
+    }//GEN-LAST:event_inviteFriendBtnMouseClicked
 
     /**
      * @param args the command line arguments
@@ -155,7 +162,7 @@ public class InviteFriendWindow extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new InviteFriendWindow().setVisible(true);
+                new InviteFriendWindow(1).setVisible(true);
             }
         });
     }
@@ -166,7 +173,7 @@ public class InviteFriendWindow extends javax.swing.JFrame {
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList friendList;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton inviteFriendBtn;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JList wait;

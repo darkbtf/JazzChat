@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 import javax.swing.Box;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JScrollBar;
 
@@ -308,6 +309,7 @@ public class RoomWindow extends javax.swing.JFrame {
         
 	public void changeName(String _roomName) {
 		roomName = _roomName;
+                setTitle(roomName);
 	}
 
 	public void changeUserNameList(ArrayList<String> _userNameList) {
@@ -317,6 +319,9 @@ public class RoomWindow extends javax.swing.JFrame {
             userNameList.add(user.getNickname());
         }
 	public void showMessage(int userId, String text) {
+                if(Client.user.id!=userId){
+                    changeName(Client.userSet.get(userId).getNickname());
+                }
                 ImageIcon tmpIcon=MainWindow.iconMap.get(userId);
                 chatModel.addElement(new ChatObject(text + "\n",tmpIcon));
                 //repaint();
@@ -330,21 +335,29 @@ public class RoomWindow extends javax.swing.JFrame {
             showMessage(Client.user.id,myPath+" "+fileName);
             scrollDown();
         }
-        public void confirmDownload(int roomId,String fileName,String filePath){
-           Client.startDownload(roomId, fileName, filePath);
+        public void confirmDownload(final int roomId,final String fileName,final String filePath){
+           //ChatObject obj=new ChatObject(MainWindow.iconMap.get(Client.user.id),MainWindow.iconMap.get(Client.user.id));
+ 
+           //obj.add(new JButton("aa"));
+           //chatModel.addElement(obj);
+            
+            DownLoad d=new DownLoad(this,true,roomId,fileName,filePath);
+            d.setVisible(true);
         }
 	private void send() {
-		
-                if (!typeText.getText().equals("")) {
-			Client.sendMessage(roomId,typeText.getText());
-                        showMessage(Client.user.id, typeText.getText());
-			//showMessage("haha",typeText.getText());
-                        typeText.setText("");
-                        
-		}
+            String content = typeText.getText();
+            if (!content.equals("\n")) {
+                Client.sendMessage(roomId,typeText.getText());
+                if(Client.checkMessageType(content).equals("image")){
+                    showImg(Client.user.id,Client.getImgUrlByString(content));
+                }
+                else
+                    showMessage(Client.user.id, typeText.getText());
+                typeText.setText("");
+            }
 	}
         public  VideoWindow videoWindow=new VideoWindow();
-        public InviteFriendWindow invite=new InviteFriendWindow();
+        public InviteFriendWindow invite=new InviteFriendWindow(1);
         
         
         
