@@ -41,6 +41,8 @@ public class PublicRoom extends javax.swing.JFrame {
                 catch(IOException e){
                     Util.errorReport(e.getMessage());
                 }
+                invite=new InviteFriendWindow(roomId);
+
 	}
 	public PublicRoom(int _roomId, String _roomName,
 			ArrayList<String> _userNameList) {
@@ -54,6 +56,7 @@ public class PublicRoom extends javax.swing.JFrame {
                 catch(IOException e){
                     Util.errorReport(e.getMessage());
                 }
+                invite=new InviteFriendWindow(roomId);
 	}
 
 	public PublicRoom(int _roomId)  {
@@ -67,6 +70,7 @@ public class PublicRoom extends javax.swing.JFrame {
                 catch(IOException e){
                     Util.errorReport(e.getMessage());
                 }
+                invite=new InviteFriendWindow(roomId);
 	}
 
 	/**
@@ -196,7 +200,7 @@ public class PublicRoom extends javax.swing.JFrame {
         jScrollPane3.setBounds(10, 10, 490, 230);
         jLayeredPane1.add(jScrollPane3, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TaipeiHot/JazzChat/UI/FireLion.jpg"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TaipeiHot/JazzChat/UI/Tech-Help-Screen-Wallpaper.jpg"))); // NOI18N
         jLabel1.setBounds(-20, 0, 550, 380);
         jLayeredPane1.add(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
@@ -311,10 +315,11 @@ public class PublicRoom extends javax.swing.JFrame {
                             new PublicRoom(1).setVisible(true);
 			}
 		});
+                
 	}
 
 	/* funcrions and parameters by paul */
-	private final int roomId;
+	public final int roomId;
 	private ArrayList<String> userNameList=new ArrayList<String>();
 	private String roomName;
         DefaultListModel chatModel = new DefaultListModel();
@@ -339,6 +344,7 @@ public class PublicRoom extends javax.swing.JFrame {
         public void scrollDown(){
                 JScrollBar vertical=jScrollPane3.getVerticalScrollBar();
                 vertical.setValue(vertical.getMaximum());
+                
 
         }
         public void showFile(String myPath,String fileName){
@@ -359,7 +365,8 @@ public class PublicRoom extends javax.swing.JFrame {
 		}
 	}
         public  VideoWindow videoWindow=new VideoWindow();
-        public InviteFriendWindow invite=new InviteFriendWindow();
+        public InviteFriendWindow invite;
+        
         
         
         

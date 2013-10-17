@@ -62,7 +62,7 @@ public class LoginDialog extends javax.swing.JDialog {
                 loginButtonMouseClicked(evt);
             }
         });
-        loginButton.setBounds(140, 120, 71, 23);
+        loginButton.setBounds(120, 120, 90, 23);
         jLayeredPane1.add(loginButton, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         registerButton.setText("Register");
@@ -71,7 +71,7 @@ public class LoginDialog extends javax.swing.JDialog {
                 registerButtonMouseClicked(evt);
             }
         });
-        registerButton.setBounds(140, 150, 71, 23);
+        registerButton.setBounds(120, 150, 90, 23);
         jLayeredPane1.add(registerButton, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         errorMessege.setText("            ");
