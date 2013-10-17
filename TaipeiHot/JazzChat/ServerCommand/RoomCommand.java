@@ -71,8 +71,11 @@ public class RoomCommand extends ServerCommand {
 		int user_id = Integer.valueOf(account.getMessage());
 		if(RoomAccountTable.where("account_id="+user_id+" && room_id="+room_id).length!=0)
 			return true;// User has already in room
-		for(RoomAccount a:RoomAccountTable.where("room_id="+room_id))
-			Server.accountMap.get(a).sendMessage(new String[]{"room","adduser",""+room_id,""+user_id});// TODO: not id only
+		for(RoomAccount a:RoomAccountTable.where("room_id="+room_id)){
+			Account ac =Server.accountMap.get(a.account_id);
+			if(ac!=null)
+				ac.sendMessage(new String[]{"room","adduser",""+room_id,""+user_id});// TODO: not id only
+		}
 		RoomAccountTable.insert(new RoomAccount(0,room_id,user_id));
 		return true;
 	}

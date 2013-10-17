@@ -214,6 +214,7 @@ public class Account extends ActiveRecord {
 			out.write(byteStream);
 			out.flush();
 		} catch (IOException e) {
+			connecting=false;
 			return Util.errorReport("sendMessage to "+nickname+" fail");
 		}
 		return true;
