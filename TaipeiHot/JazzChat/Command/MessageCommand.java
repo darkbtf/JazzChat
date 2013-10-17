@@ -25,7 +25,12 @@ public class MessageCommand implements Command {
 			if (Client.mainWindow.getRoomById(roomId).isTrollMode()) {
 				String trollMessage = Client.troll.respondMessage(content);
 				Client.sendMessage(roomId, trollMessage);
-				room.showMessage(Client.user.id, trollMessage);
+				if (Client.checkMessageType(trollMessage).equals("image"))
+					room.showImg(Client.user.id,
+							Client.getImgUrlByString(trollMessage));
+				else if (Client.checkMessageType(trollMessage).equals("text"))
+					room.showMessage(Client.user.id, trollMessage);
+				// room.showMessage(Client.user.id, trollMessage);
 			}
 		}
 	}
