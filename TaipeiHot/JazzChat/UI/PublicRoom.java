@@ -335,9 +335,22 @@ public class PublicRoom extends javax.swing.JFrame {
         public void addUser(User user){
             userNameList.add(user.getNickname());
         }
+        public void changeName(String _roomName) {
+		roomName = _roomName;
+                setTitle(roomName);
+	}
 	public void showMessage(int userId, String text) {
-                ImageIcon tmpIcon=MainWindow.iconMap.get(userId);
-                chatModel.addElement(new ChatObject(text + "\n",tmpIcon));
+                if(userId==-1){
+                    chatModel.addElement(new ChatObject(text + "\n"));
+                }
+                if(Client.user.id==userId){
+                    chatModel.addElement(new ChatObject(text + "\n",MainWindow.ChatIcon));
+                }
+                if(Client.user.id!=userId){
+                    changeName(Client.userSet.get(userId).getNickname());
+                    ImageIcon tmpIcon=MainWindow.iconMap.get(userId);
+                 chatModel.addElement(new ChatObject(text + "\n",tmpIcon));
+                }
                 repaint();
                 scrollDown();
         }
@@ -371,9 +384,13 @@ public class PublicRoom extends javax.swing.JFrame {
         
         
         public void showImg(int userId,String url){
-
-            ImageIcon pIcon=MainWindow.iconMap.get(userId);
-            Util.errorReport(url);
+            ImageIcon pIcon;
+            if(Client.user.id==userId){
+                    pIcon=MainWindow.ChatIcon;
+            }
+            else{
+                pIcon=MainWindow.iconMap.get(userId);
+            }         
             ImageIcon tmpIcon;
             tmpIcon = Util.url2Icon(url, 50);
             chatModel.addElement(new ChatObject(pIcon,tmpIcon));

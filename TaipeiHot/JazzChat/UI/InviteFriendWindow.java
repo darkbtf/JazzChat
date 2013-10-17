@@ -120,11 +120,13 @@ public class InviteFriendWindow extends javax.swing.JFrame {
     private void inviteFriendBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inviteFriendBtnMouseClicked
         // TODO add your handling code here:
         //addUserToRoom
+        setVisible(false);
         for(int i=0;i<friend.getSize();i++){
             Util.errorReport(friend.getElementAt(i).toString());
             Util.errorReport(nick2Id.get(friend.getElementAt(i).toString())+"");
             Client.addUserToRoom(roomId,nick2Id.get(friend.getElementAt(i).toString()));
         }
+        
     }//GEN-LAST:event_inviteFriendBtnMouseClicked
 
     /**

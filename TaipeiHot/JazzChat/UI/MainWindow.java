@@ -336,6 +336,8 @@ public class MainWindow extends javax.swing.JFrame {
         MouseListener mouseListener3;
         MouseListener mouseListener4;
 	ImageIcon icon;
+        public static ImageIcon godIcon;
+        public static ImageIcon ChatIcon;
 	boolean afwIsOpen = false;
 
 	// JList friendLsit=new JList();
@@ -343,6 +345,8 @@ public class MainWindow extends javax.swing.JFrame {
 		loginDialog.setVisible(false);
 		setVisible(true);
 		photoBtn.setIcon(Util.url2Icon(Client.user.getProfilePicUrl(), 95  , 95));
+                ChatIcon=Util.url2Icon(Client.user.getProfilePicUrl(), 50  , 50);
+                godIcon=Util.url2Icon("ftp://nmlab198:taipeihot@140.112.18.198/godIcon.png", 50,50);
 		// acceptFriendWindow.setVisible(true);
 	}
 
@@ -507,6 +511,7 @@ public class MainWindow extends javax.swing.JFrame {
         public void statusPhoto() {
 		String url = Client.user.getProfilePicUrl();
 		photoBtn.setIcon(Util.url2Icon(url, 95, 95));
+                ChatIcon=Util.url2Icon(Client.user.getProfilePicUrl(), 50  , 50);
 		repaint();
 	}
 
