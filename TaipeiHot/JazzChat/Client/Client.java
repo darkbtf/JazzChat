@@ -273,7 +273,7 @@ public class Client {
 	}
 
 	public static void changeNickname(String nickname) {
-		ClientUtils.sendStringsToServer(out, new String[] { "user", "nickname",
+		ClientUtils.sendStringsToServer(out, new String[] { "user", "name",
 				nickname });
 	}
 
