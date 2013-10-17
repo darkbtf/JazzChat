@@ -71,6 +71,15 @@ public class FriendCommand implements Command {
 			String url = Client.getMessage();
 			Client.userSet.get(userId).setProfilePicUrl(url);
 			Client.mainWindow.changePhotoById(userId);
+		} else if (cmd.equals("status")) {
+			int userId = Integer.parseInt(Client.getMessage());
+			String status = Client.getMessage();
+			Client.mainWindow.changeStatusById(userId, status);
+		} else if (cmd.equals("name")) {
+			int userId = Integer.parseInt(Client.getMessage());
+			String name = Client.getMessage();
+			Client.mainWindow.changeNicknameById(userId, name);
+
 		}
 	}
 }
