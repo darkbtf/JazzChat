@@ -74,10 +74,12 @@ public class LoginDialog extends javax.swing.JDialog {
         registerButton.setBounds(120, 150, 90, 23);
         jLayeredPane1.add(registerButton, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
+        errorMessege.setForeground(new java.awt.Color(255, 255, 255));
         errorMessege.setText("            ");
-        errorMessege.setBounds(160, 180, 40, 20);
+        errorMessege.setBounds(100, 180, 140, 20);
         jLayeredPane1.add(errorMessege, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TaipeiHot/JazzChat/UI/Tech-Help-Screen-Wallpaper.jpg"))); // NOI18N
         jLabel1.setText("jLabel1");
         jLabel1.setBounds(0, 0, 350, 220);

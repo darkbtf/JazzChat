@@ -219,7 +219,9 @@ public class RoomWindow extends javax.swing.JFrame {
         if(returnVal == JFileChooser.APPROVE_OPTION) {
             String fileName=chooser.getSelectedFile().getPath();
             Client.uploadFile(roomId, fileName);
+            showMessage(-1,"Send "+chooser.getSelectedFile().getName()+" success!!!");
         }
+        
         
     }//GEN-LAST:event_uploadFileButtonMouseClicked
 
@@ -319,11 +321,18 @@ public class RoomWindow extends javax.swing.JFrame {
             userNameList.add(user.getNickname());
         }
 	public void showMessage(int userId, String text) {
+                if(userId==-1){
+                    chatModel.addElement(new ChatObject(text + "\n",MainWindow.godIcon));
+                }
+                if(Client.user.id==userId){
+                    chatModel.addElement(new ChatObject(text + "\n",MainWindow.ChatIcon));
+                }
                 if(Client.user.id!=userId){
                     changeName(Client.userSet.get(userId).getNickname());
+                    ImageIcon tmpIcon=MainWindow.iconMap.get(userId);
+                 chatModel.addElement(new ChatObject(text + "\n",tmpIcon));
                 }
-                ImageIcon tmpIcon=MainWindow.iconMap.get(userId);
-                chatModel.addElement(new ChatObject(text + "\n",tmpIcon));
+               
                 //repaint();
                 scrollDown();
         }
@@ -332,7 +341,7 @@ public class RoomWindow extends javax.swing.JFrame {
                 vertical.setValue(vertical.getMaximum());
         }
         public void showFile(String myPath,String fileName){
-            showMessage(Client.user.id,myPath+" "+fileName);
+            showMessage(-1,"DownLoad "+fileName+" done!");
             scrollDown();
         }
         public void confirmDownload(final int roomId,final String fileName,final String filePath){
@@ -363,8 +372,13 @@ public class RoomWindow extends javax.swing.JFrame {
         
         public void showImg(int userId,String url){
 
-            ImageIcon pIcon=MainWindow.iconMap.get(userId);
-            Util.errorReport(url);
+            ImageIcon pIcon;
+            if(Client.user.id==userId){
+                    pIcon=MainWindow.ChatIcon;
+            }
+            else{
+                pIcon=MainWindow.iconMap.get(userId);
+            }         
             ImageIcon tmpIcon;
             tmpIcon = Util.url2Icon(url, 50);
             chatModel.addElement(new ChatObject(pIcon,tmpIcon));
